@@ -6,6 +6,12 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+/*MintUI*/
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+Vue.use(MintUI)
+/*MintUI end*/
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
