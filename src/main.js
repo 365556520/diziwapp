@@ -6,10 +6,11 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-import MuseUI from 'muse-ui';
-import 'muse-ui/dist/muse-ui.css';
-
-Vue.use(MuseUI);
+/*MuseUI*/
+import MuseUI from 'muse-ui'
+import 'muse-ui/dist/muse-ui.css'
+Vue.use(MuseUI)
+/*MuseUI end*/
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
