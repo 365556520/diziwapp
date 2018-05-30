@@ -1,4 +1,3 @@
-<script src="../../扩展包/material-design-icons-master/gulpfile.babel.js"></script>
 <template>
   <div id="app">
     <!--顶部-->
@@ -6,8 +5,8 @@
       <mu-col span="12">
         <mu-appbar class="navtop" color="deepPurple400" >
           <!--导航左侧-->
-          <mu-button icon slot="left">
-            <mu-icon size="36" value="navigate_before"  @click.prevent="back()"></mu-icon>
+          <mu-button icon slot="left"  @click.prevent="back()">
+            <mu-icon size="36" value="navigate_before" ></mu-icon>
           </mu-button>
           <!--导航左侧 end-->
           <!--导航中间标题-->
@@ -47,10 +46,10 @@
     <mu-row>
       <mu-col span="12"> <mu-container class="navbottom"   >
         <mu-bottom-nav :value.sync="shift" color="deepPurple400" shift>
-          <mu-bottom-nav-item value="movies" title="首页" icon="ondemand_video" to="/"></mu-bottom-nav-item>
-          <mu-bottom-nav-item value="music" title="热门咨询" icon="music_note"  to="/Hot"></mu-bottom-nav-item>
-          <mu-bottom-nav-item value="books" title="游戏" icon="books" to="/Hot"></mu-bottom-nav-item>
-          <mu-bottom-nav-item value="pictures" title="我的" icon="photo" to="/MyProfile"></mu-bottom-nav-item>
+          <mu-bottom-nav-item value="movies" title="首页" icon="home" to="/"></mu-bottom-nav-item>
+          <mu-bottom-nav-item value="music" title="热门咨询" icon="comment"  to="/Hot"></mu-bottom-nav-item>
+          <mu-bottom-nav-item value="books" title="游戏" icon="videogame_asset" to="/Hot"></mu-bottom-nav-item>
+          <mu-bottom-nav-item value="pictures" title="我的" icon="person" to="/MyProfile"></mu-bottom-nav-item>
         </mu-bottom-nav>
       </mu-container></mu-col>
     </mu-row>

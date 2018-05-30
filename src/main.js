@@ -11,6 +11,11 @@ import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 Vue.use(MuseUI)
 /*MuseUI end*/
+/*vue-awesome-swiper轮播插件*/
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+Vue.use(VueAwesomeSwiper)
+/*vue-awesome-swiper轮播插件 end*/
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
