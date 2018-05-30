@@ -1,6 +1,6 @@
 <template>
 <div>
- 首页
+   热门咨询
 </div>
 </template>
 

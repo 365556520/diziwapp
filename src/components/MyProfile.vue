@@ -1,6 +1,6 @@
 <template>
 <div>
- 首页
+我的个人资料
 </div>
 </template>
 

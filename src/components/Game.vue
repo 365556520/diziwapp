@@ -1,6 +1,6 @@
 <template>
 <div>
- 首页
+游戏资料
 </div>
 </template>
 
