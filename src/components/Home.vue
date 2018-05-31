@@ -18,7 +18,7 @@
      </mu-col>
     </mu-row>
     <!--轮播图end-->
-<br><mu-flex class="flex-wrapper" justify-content="center"><h5>班车查询</h5></mu-flex><br>
+<br><mu-flex class="flex-wrapper" justify-content="center"><h3>班车查询</h3></mu-flex>
 <mu-divider></mu-divider>
  <mu-row class="mymargin chaxun">
    <mu-col span="12" >
