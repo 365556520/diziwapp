@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Hot from '@/components/Hot'
 import MyProfile from '@/components/MyProfile'
+import Game from '@/components/Game'
 
 Vue.use(Router)
 
@@ -19,9 +20,9 @@ export default new Router({
           component: Hot
       },
       {   /*游戏资料*/
-          path:'/Home',
-          name:'Home',
-          component: Home
+          path:'/Game',
+          name:'Game',
+          component: Game
       },
       {   /*个人资料*/
           path:'/MyProfile',

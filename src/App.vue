@@ -48,7 +48,7 @@
         <mu-bottom-nav :value.sync="shift" color="deepPurple400" shift>
           <mu-bottom-nav-item value="movies" title="首页" icon="home" to="/"></mu-bottom-nav-item>
           <mu-bottom-nav-item value="music" title="热门咨询" icon="comment"  to="/Hot"></mu-bottom-nav-item>
-          <mu-bottom-nav-item value="books" title="游戏" icon="videogame_asset" to="/Hot"></mu-bottom-nav-item>
+          <mu-bottom-nav-item value="books" title="游戏" icon="videogame_asset" to="/Game"></mu-bottom-nav-item>
           <mu-bottom-nav-item value="pictures" title="我的" icon="person" to="/MyProfile"></mu-bottom-nav-item>
         </mu-bottom-nav>
       </mu-container></mu-col>

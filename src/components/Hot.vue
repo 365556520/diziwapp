@@ -1,12 +1,14 @@
 <template>
 <div>
    热门咨询
+
+
 </div>
 </template>
 
 <script>
 export default {
-  name: 'Home',
+  name: 'Hot',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
