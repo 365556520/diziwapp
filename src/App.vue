@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <div id="app" class="bgimg">
     <!--顶部-->
     <mu-row>
       <mu-col span="12">
-        <mu-appbar class="navtop" color="deepPurple400" >
+        <mu-appbar class="navtop" color="purple" >
           <!--导航左侧-->
           <mu-button icon slot="left"  @click.prevent="back()">
             <mu-icon size="36" value="navigate_before" ></mu-icon>
@@ -45,7 +45,7 @@
     <!--底部导航-->
     <mu-row>
       <mu-col span="12"> <mu-container class="navbottom"   >
-        <mu-bottom-nav :value.sync="shift" color="deepPurple400" shift>
+        <mu-bottom-nav :value.sync="shift" color="purple" shift>
           <mu-bottom-nav-item value="movies" title="首页" icon="home" to="/"></mu-bottom-nav-item>
           <mu-bottom-nav-item value="music" title="热门咨询" icon="comment"  to="/Hot"></mu-bottom-nav-item>
           <mu-bottom-nav-item value="books" title="游戏" icon="videogame_asset" to="/Game"></mu-bottom-nav-item>
@@ -73,6 +73,10 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .bgimg{
+    background: #eeeeee;
+    background-attachment: fixed;
+  }
  .navtop{
    /*设置顶部导航的位置和长宽*/
    width: 100%;

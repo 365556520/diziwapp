@@ -1,37 +1,53 @@
 <template>
 <div>
-<mu-row>
- <mu-col span="12">
-  <div class="grid-cell">
-    <!-- swiper 轮播-->
-    <swiper :options="swiperOption">
-     <swiper-slide>Slide 1</swiper-slide>
-     <swiper-slide>Slide 2</swiper-slide>
-     <swiper-slide>Slide 3</swiper-slide>
-     <swiper-slide>Slide 4</swiper-slide>
-     <div class="swiper-scrollbar" slot="scrollbar">
-     </div>
-    </swiper>
-    <!-- swiper end-->
-  </div>
- </mu-col>
-</mu-row>
-
- <mu-row>
-   <mu-col span="12">
-       <mu-select label="Filerable Select" filterable v-model="filterable.value1" full-width>
-           <mu-option v-for="city,index in citys" :key="city" :label="city" :value="city"></mu-option>
-       </mu-select>
+    <!--轮播图-->
+    <mu-row>
+     <mu-col span="12">
+      <div class="grid-cell">
+        <!-- swiper 轮播-->
+        <swiper :options="swiperOption">
+         <swiper-slide>Slide 1</swiper-slide>
+         <swiper-slide>Slide 2</swiper-slide>
+         <swiper-slide>Slide 3</swiper-slide>
+         <swiper-slide>Slide 4</swiper-slide>
+         <div class="swiper-scrollbar" slot="scrollbar">
+         </div>
+        </swiper>
+        <!-- swiper end-->
+      </div>
+     </mu-col>
+    </mu-row>
+    <!--轮播图end-->
+<br><mu-flex class="flex-wrapper" justify-content="center"><h5>班车查询</h5></mu-flex><br>
+<mu-divider></mu-divider>
+ <mu-row class="mymargin chaxun">
+   <mu-col span="12" >
+       <mu-text-field label="起始" label-float ></mu-text-field><br/>
+       <mu-text-field label="终点" label-float ></mu-text-field>
+        &nbsp; &nbsp; &nbsp;<mu-button color="purple" large>查询</mu-button>
    </mu-col>
  </mu-row>
-    <mu-divider></mu-divider>
- <mu-row>
-     <mu-col span="6"><mu-paper class="demo-paper" :z-depth="5">1</mu-paper></mu-col>
-     <mu-col span="6"><mu-paper class="demo-paper" :z-depth="5">2</mu-paper></mu-col>
-     <mu-col span="6"><mu-paper class="demo-paper" :z-depth="5">3</mu-paper></mu-col>
-     <mu-col span="6"><mu-paper class="demo-paper" :z-depth="5">4</mu-paper></mu-col>
- </mu-row>
-
+    <mu-divider></mu-divider><br/>
+     <mu-row >
+             <mu-col span="4" class="demo-paper" >
+                 <mu-button color="purple"   class="btsize">ssss </mu-button>
+             </mu-col>
+             <mu-col span="4"  class="demo-paper">
+                     <mu-button color="purple"  class="btsize">Success</mu-button>
+             </mu-col>
+             <mu-col span="4"  class="demo-paper">
+                     <mu-button color="purple"  class="btsize">Success</mu-button>
+             </mu-col>
+             <mu-col span="4" class="demo-paper" >
+                 <mu-button color="purple"  class="btsize">Success</mu-button>
+             </mu-col>
+             <mu-col span="4"  class="demo-paper">
+                 <mu-button color="purple"  class="btsize">Success</mu-button>
+             </mu-col>
+             <mu-col span="4"  class="demo-paper">
+                 <mu-button color="purple"  class="btsize">Success</mu-button>
+             </mu-col>
+     </mu-row>
 </div>
 </template>
 
@@ -40,25 +56,6 @@ export default {
   name: 'Home',
   data () {
     return {
-        citys: [
-            'Alabama', 'Alaska', 'American Samoa', 'Arizona',
-            'Arkansas', 'California', 'Colorado', 'Connecticut',
-            'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-            'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-            'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-            'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-            'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-            'Missouri', 'Montana', 'Nebraska', 'Nevada',
-            'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-            'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-            'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-            'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-            'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-            'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-        ],
-        filterable: {
-            value1: '',
-        },
         swiperOption: {
             spaceBetween: 30,
             effect: 'fade', //渐变效果
@@ -78,11 +75,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .btsize{
+        width: 100%;
+        height: 120px;
+    }
     .swiper-slide {
-    width: 100%;
-    height: 200px;
+        width: 100%;
+        height: 220px;
     }
     .demo-paper{
-        margin :3px;
+        padding :2px;
+        width: 100%;
+    }
+    .chaxun{
+        padding :5px;
+    }
+    .mymargin{
+        margin:2px 2px 0px 0px;
     }
 </style>
