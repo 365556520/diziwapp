@@ -3,7 +3,7 @@
     <!--顶部-->
     <mu-row>
       <mu-col span="12">
-        <mu-appbar class="navtop" color="purple" >
+        <mu-appbar class="navtop" color="blue500" >
           <!--导航左侧-->
           <mu-button icon slot="left"  @click.prevent="back()">
             <mu-icon size="36" value="navigate_before" ></mu-icon>
@@ -45,11 +45,11 @@
     <!--底部导航-->
     <mu-row>
       <mu-col span="12"> <mu-container class="navbottom"   >
-        <mu-bottom-nav :value.sync="shift" color="purple" shift>
-          <mu-bottom-nav-item value="movies" title="首页" icon="home" to="/"></mu-bottom-nav-item>
-          <mu-bottom-nav-item value="music" title="热门咨询" icon="comment"  to="/Hot"></mu-bottom-nav-item>
-          <mu-bottom-nav-item value="books" title="游戏" icon="videogame_asset" to="/Game"></mu-bottom-nav-item>
-          <mu-bottom-nav-item value="pictures" title="我的" icon="person" to="/MyProfile"></mu-bottom-nav-item>
+        <mu-bottom-nav :value.sync="shift" color="blue500" shift>
+          <mu-bottom-nav-item value="Home" title="首页" icon="home" to="/"></mu-bottom-nav-item>
+          <mu-bottom-nav-item value="Hot" title="热门咨询" icon="comment"  to="/Hot"></mu-bottom-nav-item>
+          <mu-bottom-nav-item value="Game" title="游戏" icon="videogame_asset" to="/Game"></mu-bottom-nav-item>
+          <mu-bottom-nav-item value="MyProfile" title="我的" icon="person" to="/MyProfile"></mu-bottom-nav-item>
         </mu-bottom-nav>
       </mu-container></mu-col>
     </mu-row>
@@ -59,22 +59,32 @@
 <script>
 export default {
     name: 'App',
+    created: function () {
+        this.isroute();
+    },
+    mounted(){ //这个挂在第一次进入页面后运行一次提后不会执行
+        this.isroute();
+    },
     data () {
         return {
-            shift: 'movies'
+            shift:''
         }
     },
     methods:{
         back(){
             this.$router.back();
         },
+        isroute(){
+            this.shift = this.$route.name;
+            console.log(this.shift);
+        }
     }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .bgimg{
-    background: #eeeeee;
+    background: #fffde7;
     background-attachment: fixed;
   }
  .navtop{
