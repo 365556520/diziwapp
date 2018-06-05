@@ -5,11 +5,10 @@
      <mu-col span="12">
       <div class="grid-cell">
         <!-- swiper 轮播-->
-        <swiper :options="swiperOption">
-         <swiper-slide>Slide 1</swiper-slide>
-         <swiper-slide>Slide 2</swiper-slide>
-         <swiper-slide>Slide 3</swiper-slide>
-         <swiper-slide>Slide 4</swiper-slide>
+        <swiper :options="swiperOption" >
+         <swiper-slide  v-for="v in slides" :key="v.id">
+                 <img :src="v.preview">
+         </swiper-slide>
          <div class="swiper-scrollbar" slot="scrollbar">
          </div>
         </swiper>
@@ -71,6 +70,13 @@ export default {
   name: 'Home',
   data () {
     return {
+        //轮播图
+        slides:[
+            {id:1,preview:'static/images/1.jpg'},
+            {id:2,preview:'static/images/2.jpg'},
+            {id:3,preview:'static/images/3.jpg'},
+            {id:4,preview:'static/images/4.jpg'},
+        ],
         citys: [
             '西峡', '南阳', '中国', 'Arizona',
         ],

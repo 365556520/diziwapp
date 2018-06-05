@@ -5,7 +5,7 @@
       <mu-list-item avatar :ripple="true" button>
          <mu-list-item-action>
             <mu-avatar>
-               <img src="../assets/images/avatar.jpg">
+               <img src="static/images/avatar.jpg">
             </mu-avatar>
          </mu-list-item-action>
          <mu-list-item-content>
@@ -24,7 +24,7 @@
       <mu-list-item avatar :ripple="true" button>
          <mu-list-item-action>
             <mu-avatar>
-               <img src="../assets/images/avatar.jpg">
+               <img src="static/images/avatar.jpg">
             </mu-avatar>
          </mu-list-item-action>
          <mu-list-item-content>
@@ -43,7 +43,7 @@
       <mu-list-item avatar :ripple="true" button>
          <mu-list-item-action>
             <mu-avatar>
-               <img src="../assets/images/avatar.jpg">
+               <img src="static/images/avatar.jpg">
             </mu-avatar>
          </mu-list-item-action>
          <mu-list-item-content>
@@ -62,7 +62,7 @@
       <mu-list-item avatar :ripple="true" button>
          <mu-list-item-action>
             <mu-avatar>
-               <img src="../assets/images/avatar.jpg">
+               <img src="static/images/avatar.jpg">
             </mu-avatar>
          </mu-list-item-action>
          <mu-list-item-content>
@@ -81,7 +81,7 @@
       <mu-list-item avatar :ripple="true" button>
          <mu-list-item-action>
             <mu-avatar>
-               <img src="../assets/images/avatar.jpg">
+               <img src="static/images/avatar.jpg">
             </mu-avatar>
          </mu-list-item-action>
          <mu-list-item-content>

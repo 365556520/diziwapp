@@ -6,7 +6,7 @@
            <mu-list-item-content>
                <mu-row justify-content="center">
                    <mu-avatar :size="size">
-                       <img src="../assets/images/avatar.jpg">
+                       <img src="static/images/avatar.jpg">
                    </mu-avatar>
                </mu-row>
                <mu-flex class="flex-wrapper" justify-content="center">
