@@ -7,7 +7,9 @@
         <!-- swiper 轮播-->
         <swiper :options="swiperOption" >
          <swiper-slide  v-for="v in slides" :key="v.id">
-                 <img :src="v.preview">
+             <div class="swiper-zoom-container">
+                 <img :src="v.preview" class="myimg">
+             </div>
          </swiper-slide>
          <div class="swiper-scrollbar" slot="scrollbar">
          </div>
@@ -75,7 +77,6 @@ export default {
             {id:1,preview:'static/images/1.jpg'},
             {id:2,preview:'static/images/2.jpg'},
             {id:3,preview:'static/images/3.jpg'},
-            {id:4,preview:'static/images/4.jpg'},
         ],
         citys: [
             '西峡', '南阳', '中国', 'Arizona',
@@ -94,7 +95,7 @@ export default {
                 hide: true
             },
             autoplay: {//自动轮播
-                delay: 2500,
+                delay: 2000,
                 disableOnInteraction: false
             },
         }
@@ -107,10 +108,11 @@ export default {
 <style scoped>
     .btsize{
         width: 100%;
-        height: 120px;
+        height: 200px;
     }
 
     .swiper-slide {
+        background-position: center;background-size: cover;
         height: 220px;
         width: 60%;
     }
@@ -129,5 +131,13 @@ export default {
     }
     .mymargin{
         margin:2px 2px 0px 0px;
+    }
+    .swiper-zoom-container{
+        max-width:100%;
+        width:100%;
+        height: 200px;
+    }
+    .myimg{
+
     }
 </style>
