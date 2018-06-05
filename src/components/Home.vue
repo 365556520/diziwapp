@@ -85,6 +85,8 @@ export default {
             value2: '',
         },
         swiperOption: {
+            slidesPerView: 'auto',
+            centeredSlides: true,
             spaceBetween: 30,
             effect: 'fade', //渐变效果
             scrollbar: {
@@ -107,9 +109,16 @@ export default {
         width: 100%;
         height: 120px;
     }
+
     .swiper-slide {
-        width: 100%;
         height: 220px;
+        width: 60%;
+    }
+    .swiper-slide:nth-child(2n) {
+        width: 40%;
+    }
+    .swiper-slide:nth-child(3n) {
+        width: 20%;
     }
     .demo-paper{
         padding :2px;
