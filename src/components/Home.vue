@@ -112,7 +112,7 @@
 <style scoped>
     .btsize {
         width: 100%;
-        height: 150px;
+        height: 120px;
     }
 
     .swiper-slide {

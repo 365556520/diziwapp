@@ -10,7 +10,7 @@
                         </mu-avatar>
                     </mu-row>
                     <mu-flex class="flex-wrapper" justify-content="center">
-                        <mu-flex class="flex-demo" justify-content="center">name</mu-flex>
+                        <mu-flex class="flex-demo" justify-content="center">请登录</mu-flex>
                     </mu-flex>
                 </mu-list-item-content>
             </mu-list-item>

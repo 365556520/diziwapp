@@ -16,19 +16,7 @@
                     <!--导航中间标题end-->
                     <!--导航右侧-->
                     <mu-menu placement="top-start" slot="right">
-                        <mu-button flat>MENU</mu-button>
-                        <mu-list slot="content">
-                            <mu-list-item button>
-                                <mu-list-item-content>
-                                    <mu-list-item-title>Menu Item 1</mu-list-item-title>
-                                </mu-list-item-content>
-                            </mu-list-item>
-                            <mu-list-item button>
-                                <mu-list-item-content>
-                                    <mu-list-item-title>Menu Item 2</mu-list-item-title>
-                                </mu-list-item-content>
-                            </mu-list-item>
-                        </mu-list>
+                        <mu-button flat> </mu-button>
                     </mu-menu>
                     <!--导航右侧 end-->
                 </mu-appbar>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        游戏资料
+
     </div>
 </template>
 
@@ -9,7 +9,7 @@
         name: 'Game',
         data () {
             return {
-                msg: 'Welcome to Your Vue.js App',
+
             }
         }
     }
