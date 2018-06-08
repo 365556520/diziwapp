@@ -22,7 +22,7 @@
                         <mu-list-item-after-text>{{v.date}}</mu-list-item-after-text>
                     </mu-list-item-content>
                 </mu-list-item>
-                <mu-divider  ></mu-divider>
+                <mu-divider></mu-divider>
             </div>
         </mu-list>
     </div>
