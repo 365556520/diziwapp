@@ -1,6 +1,8 @@
 <template>
     <div>
-
+        <mu-ripple class="mu-ripple-demo demo-3" color="red" :opacity="0.5">
+            Click Me
+        </mu-ripple>
     </div>
 </template>
 

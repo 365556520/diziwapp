@@ -99,15 +99,12 @@
         margin: 0;
         padding: 0;
     }
-
     .diziw-content {
         margin: 61px 1px 61px 1px;
     }
-
     a {
         /*去掉标签下划线 把点后颜色设置成白色*/
         text-decoration: none;
         color: #ffffff;
     }
-
 </style>
