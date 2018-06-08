@@ -5,7 +5,7 @@
                 <mu-list-item avatar :ripple="true" button>
                     <mu-list-item-action>
                             <img  class="demo-paper" src="static/images/avatar.jpg">
-                    </mu-list-item-action>  &nbsp;	&nbsp;	&nbsp;
+                    </mu-list-item-action>&nbsp;&nbsp;
                     <mu-list-item-content>
                         <mu-list-item-title>这个周末一起吃饭么?</mu-list-item-title><br>
                         <mu-list-item-sub-title>
