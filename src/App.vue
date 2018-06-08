@@ -3,7 +3,7 @@
         <!--顶部-->
         <mu-row>
             <mu-col span="12">
-                <mu-appbar class="navtop" color="blue500">
+                <mu-appbar class="navtop" color="red500">
                     <!--导航左侧-->
                     <mu-button icon slot="left" @click.prevent="back()">
                         <mu-icon size="36" value="navigate_before"></mu-icon>
@@ -34,7 +34,7 @@
         <mu-row>
             <mu-col span="12">
                 <mu-container class="navbottom">
-                    <mu-bottom-nav :value.sync="shift" color="blue500" shift>
+                    <mu-bottom-nav :value.sync="shift" color="red500" shift>
                         <mu-bottom-nav-item value="Home" title="首页" icon="home" to="/"></mu-bottom-nav-item>
                         <mu-bottom-nav-item value="Hot" title="热门咨询" icon="comment" to="/Hot"></mu-bottom-nav-item>
                         <mu-bottom-nav-item value="Game" title="游戏" icon="videogame_asset"

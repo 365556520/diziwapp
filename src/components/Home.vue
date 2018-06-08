@@ -26,18 +26,18 @@
         <mu-divider></mu-divider>
         <mu-row class="mymargin chaxun">
             <mu-col span="7">
-                <mu-select label="起点" filterable full-width v-model="filterable.value1" icon="person_pin_circle">
+                <mu-select color="red500" label="起点" filterable full-width v-model="filterable.value1" icon="person_pin_circle">
                     <mu-option v-for="city,index in citys" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
                 <br/>
-                <mu-select label="终点" filterable full-width v-model="filterable.value12" icon="pin_drop">
+                <mu-select color="red500" label="终点" filterable full-width v-model="filterable.value12" icon="pin_drop">
                     <mu-option v-for="city,index in citys" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
             </mu-col>
             <mu-col span="5"><br><br><br>
                 <mu-flex class="flex-wrapper" justify-content="center">
                     <mu-flex class="flex-demo" justify-content="center">
-                        <mu-button fab large color="blue500">
+                        <mu-button fab large color="red500">
                             <mu-icon value="search"></mu-icon>
                         </mu-button>
                     </mu-flex>
@@ -49,22 +49,22 @@
         <br/>
         <mu-row>
             <mu-col span="4" class="demo-paper">
-                <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                <mu-button color="red500" class="btsize">按钮1</mu-button>
             </mu-col>
             <mu-col span="4" class="demo-paper">
-                <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                <mu-button color="red500" class="btsize">按钮1</mu-button>
             </mu-col>
             <mu-col span="4" class="demo-paper">
-                <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                <mu-button color="red500" class="btsize">按钮1</mu-button>
             </mu-col>
             <mu-col span="4" class="demo-paper">
-                <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                <mu-button color="red500" class="btsize">按钮1</mu-button>
             </mu-col>
             <mu-col span="4" class="demo-paper">
-                <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                <mu-button color="red500" class="btsize">按钮1</mu-button>
             </mu-col>
             <mu-col span="4" class="demo-paper">
-                <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                <mu-button color="red500" class="btsize">按钮1</mu-button>
             </mu-col>
         </mu-row>
     </div>

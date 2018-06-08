@@ -23,25 +23,25 @@
                 <mu-list-item-action>
                     <mu-icon value="inbox"></mu-icon>
                 </mu-list-item-action>
-                <mu-list-item-title>Inbox</mu-list-item-title>
+                <mu-list-item-title>我的消息</mu-list-item-title>
             </mu-list-item>
             <mu-list-item button :ripple="true">
                 <mu-list-item-action>
                     <mu-icon value="grade"></mu-icon>
                 </mu-list-item-action>
-                <mu-list-item-title>Stared</mu-list-item-title>
+                <mu-list-item-title>我的关注</mu-list-item-title>
             </mu-list-item>
             <mu-list-item button :ripple="true">
                 <mu-list-item-action>
                     <mu-icon value="send"></mu-icon>
                 </mu-list-item-action>
-                <mu-list-item-title>Sent mail</mu-list-item-title>
+                <mu-list-item-title>我的邮箱</mu-list-item-title>
             </mu-list-item>
             <mu-list-item button :ripple="true">
                 <mu-list-item-action>
                     <mu-icon value="drafts"></mu-icon>
                 </mu-list-item-action>
-                <mu-list-item-title>Drafts</mu-list-item-title>
+                <mu-list-item-title>退出登录</mu-list-item-title>
             </mu-list-item>
         </mu-list>
 

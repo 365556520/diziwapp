@@ -1,5 +1,12 @@
 <template>
     <div>
+        <!--导航条-->
+        <swiper class="swipenavbg swipernav" :options="swiperOption">
+            <swiper-slide v-for="v in tags" :key="v.id" >
+                <h3>{{v.name}}</h3>
+            </swiper-slide>
+        </swiper>
+        <!--导航条结束-->
         <mu-list textline="three-line" >
             <div v-for="v in article" :key="v.id">
                 <mu-list-item avatar :ripple="true" button>
@@ -31,6 +38,23 @@
                     {id:4,articleimg:'static/images/avatar.jpg',articleTitle:'韩国大战日本4',subTitle:'最近韩国对日时间灭了半个日本',date:'2018年12月1日'},
                     {id:5,articleimg:'static/images/avatar.jpg',articleTitle:'韩国大战日本5',subTitle:'最近韩国对日时间灭了半个日本',date:'2018年12月1日'}
                 ],
+                swiperOption: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                    freeMode: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    }
+                },
+                tags:[
+                    {id:1,name:'新闻'},
+                    {id:2,name:'二手车'},
+                    {id:3,name:'房介'},
+                    {id:4,name:'八卦'},
+                    {id:5,name:'姻缘'},
+                    {id:6,name:'基金交易'},
+                ],
             }
         }
     }
@@ -44,4 +68,11 @@
         min-width: 100px;
         height: 80px;
     }
+    .swipernav {
+        text-align: center;
+        background-color:#f44336;
+        color:#f0f0f0;
+    }
+
+
 </style>
