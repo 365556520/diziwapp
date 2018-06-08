@@ -6,6 +6,7 @@
                 <h3>{{v.name}}</h3>
             </swiper-slide>
         </swiper>
+        <mu-divider></mu-divider>
         <!--导航条结束-->
         <mu-list textline="three-line" >
             <div v-for="v in article" :key="v.id">
@@ -21,7 +22,7 @@
                         <mu-list-item-after-text>{{v.date}}</mu-list-item-after-text>
                     </mu-list-item-content>
                 </mu-list-item>
-                <mu-divider></mu-divider>
+                <mu-divider  ></mu-divider>
             </div>
         </mu-list>
     </div>
@@ -39,8 +40,8 @@
                     {id:5,articleimg:'static/images/avatar.jpg',articleTitle:'韩国大战日本5',subTitle:'最近韩国对日时间灭了半个日本',date:'2018年12月1日'}
                 ],
                 swiperOption: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
+                    slidesPerView: 4,
+                    spaceBetween: 10,
                     freeMode: true,
                     pagination: {
                         el: '.swiper-pagination',
@@ -63,15 +64,13 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .articleimg {
-        width: 100px;
-        max-width: 100px;
-        min-width: 100px;
+        width: 110px;
+        max-width: 110px;
+        min-width: 110px;
         height: 80px;
     }
     .swipernav {
         text-align: center;
-        background-color:#f44336;
-        color:#f0f0f0;
     }
 
 

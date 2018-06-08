@@ -39,7 +39,7 @@
             </mu-list-item>
             <mu-list-item button :ripple="true">
                 <mu-list-item-action>
-                    <mu-icon value="drafts"></mu-icon>
+                    <mu-icon value="power_settings_new"></mu-icon>
                 </mu-list-item-action>
                 <mu-list-item-title>退出登录</mu-list-item-title>
             </mu-list-item>
