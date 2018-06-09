@@ -16,7 +16,7 @@
                     <!--导航中间标题end-->
                     <!--导航右侧-->
                     <mu-menu placement="top-start" slot="right">
-                        <mu-button flat> </mu-button>
+                        <mu-button flat></mu-button>
                     </mu-menu>
                     <!--导航右侧 end-->
                 </mu-appbar>
@@ -62,14 +62,20 @@
                 shift: ''
             }
         },
+        computed: {
+            sortStudent: function () {
+                return sortByKey(this.students, 'age');
+            }
+        },
         methods: {
             back(){
                 this.$router.back();
+                this.shift = this.$route.name;
             },
             isroute(){
                 this.shift = this.$route.name;
                 console.log(this.shift);
-            }
+            },
         }
     }
 </script>
@@ -99,9 +105,11 @@
         margin: 0;
         padding: 0;
     }
+
     .diziw-content {
         margin: 61px 1px 61px 1px;
     }
+
     a {
         /*去掉标签下划线 把点后颜色设置成白色*/
         text-decoration: none;
