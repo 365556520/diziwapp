@@ -25,11 +25,11 @@
         <mu-divider></mu-divider>
         <mu-row class="mymargin chaxun">
             <mu-col span="7">
-                <mu-select color="red500" label="起点" filterable full-width v-model="filterable.value1" icon="person_pin_circle">
+                <mu-select color="red500" label="起点" filterable full-width v-model="filterable.value1" icon="person_pin_circle" chips >
                     <mu-option v-for="city,index in citys" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
                 <br/>
-                <mu-select color="red500" label="终点" filterable full-width v-model="filterable.value12" icon="pin_drop">
+                <mu-select color="red500" label="终点" filterable full-width v-model="filterable.value12" icon="pin_drop" chips >
                     <mu-option v-for="city,index in citys" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
             </mu-col>
@@ -82,7 +82,7 @@
                     {id: 4, preview: "static/images/4.jpg"},
                 ],
                 citys: [
-                    '西峡', '南阳', '中国', 'Arizona',
+                    '西峡', '南阳', '中国', 'Arizona', 'Arizona2', 'Arizona3', 'Arizona4',
                 ],
                 filterable: {
                     value1: '',

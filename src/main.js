@@ -25,6 +25,7 @@ import {
     TextField,
     SubHeader,
     Helpers,
+    Drawer
 } from 'muse-ui';
 import theme from 'muse-ui/lib/theme';
 import 'muse-ui/lib/styles/theme.less';
@@ -46,6 +47,7 @@ Vue.use(Switch)
 Vue.use(TextField);
 Vue.use(SubHeader);
 Vue.use(Helpers);
+Vue.use(Drawer);
 /*MuseUI end*/
 
 /*vue-awesome-swiper轮播插件*/

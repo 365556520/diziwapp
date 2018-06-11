@@ -5,9 +5,22 @@
             <mu-col span="12">
                 <mu-appbar class="navtop" color="red500">
                     <!--导航左侧-->
-                    <mu-button icon slot="left" @click.prevent="back()">
+                    <mu-button icon slot="left" style="margin-left: 16px" @click="open = !open">
                         <mu-icon size="36" value="navigate_before"></mu-icon>
                     </mu-button>
+                    <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">
+                        <mu-list>
+                            <mu-list-item button>
+                                <mu-list-item-title>Menu Item 1</mu-list-item-title>
+                            </mu-list-item>
+                            <mu-list-item button>
+                                <mu-list-item-title>Menu Item 2</mu-list-item-title>
+                            </mu-list-item>
+                            <mu-list-item button>
+                                <mu-list-item-title @click="open = false">Close</mu-list-item-title>
+                            </mu-list-item>
+                        </mu-list>
+                    </mu-drawer>
                     <!--导航左侧 end-->
                     <!--导航中间标题-->
                     <mu-flex justify-content="center">
@@ -59,7 +72,10 @@
         },
         data () {
             return {
-                shift: ''
+                shift: '',
+                docked: false,
+                open: false,
+                position: 'left'
             }
         },
         computed: {
