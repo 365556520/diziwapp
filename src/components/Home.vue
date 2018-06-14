@@ -25,11 +25,13 @@
         <mu-divider></mu-divider>
         <mu-row class="mymargin chaxun">
             <mu-col span="7">
-                <mu-select color="red500" label="起点" filterable full-width v-model="filterable.start" icon="person_pin_circle" chips >
+                <mu-select color="red500" label="起点" filterable full-width v-model="filterable.start"
+                           icon="person_pin_circle" chips>
                     <mu-option v-for="city,index in buses_start" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
                 <br/>
-                <mu-select color="red500" label="终点" filterable full-width v-model="filterable.end" icon="pin_drop" chips >
+                <mu-select color="red500" label="终点" filterable full-width v-model="filterable.end" icon="pin_drop"
+                           chips>
                     <mu-option v-for="city,index in buses_end" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
             </mu-col>
@@ -42,6 +44,21 @@
                     </mu-flex>
                 </mu-flex>
             </mu-col>
+        <!--弹出框-->
+            <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
+                <mu-appbar color="red500" title="Fullscreen Diaolog">
+                    <mu-button slot="left" icon @click="closeFullscreenDialog">
+                        <mu-icon value="close"></mu-icon>
+                    </mu-button>
+                    <mu-button slot="right" flat @click="closeFullscreenDialog">
+                        Done
+                    </mu-button>
+                </mu-appbar>
+                <div style="padding: 24px;">
+                    this is a fullscreen dialog
+                </div>
+            </mu-dialog>
+            <!--弹出框end-->
         </mu-row>
         <!--班车查询-->
         <mu-divider></mu-divider>
@@ -73,10 +90,10 @@
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
-            this.axios.get(this.GLOBAL.serverSrc+'api/getBusesRouteall').then((response) => {
-               this.buses_start = response.data.data.buses_start;
-               this.buses_midway = response.data.data.buses_midway;
-               this.buses_end = response.data.data.buses_end;
+            this.axios.get(this.GLOBAL.serverSrc + 'api/getBusesRouteall').then((response) => {
+                this.buses_start = response.data.data.buses_start;
+                this.buses_midway = response.data.data.buses_midway;
+                this.buses_end = response.data.data.buses_end;
             })
         },
         data () {
@@ -109,13 +126,14 @@
                         delay: 2000,
                         disableOnInteraction: false
                     },
-                }
+                },
+                openFullscreen: false,
             }
         },
-        methods:{
+        methods: {
             //点击查询
             search(){
-                this.axios.get(this.GLOBAL.serverSrc+'api/getBusesRouteId/', {
+                this.axios.get(this.GLOBAL.serverSrc + 'api/getBusesRouteId/', {
                     params: {
                         buses_start: this.filterable.start,
                         buses_end: this.filterable.end,
@@ -127,7 +145,11 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+                this.openFullscreen = true;
             },
+            closeFullscreenDialog () {
+                this.openFullscreen = false;
+            }
         }
     }
 </script>
