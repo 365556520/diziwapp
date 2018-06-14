@@ -25,18 +25,18 @@
         <mu-divider></mu-divider>
         <mu-row class="mymargin chaxun">
             <mu-col span="7">
-                <mu-select color="red500" label="起点" filterable full-width v-model="filterable.value1" icon="person_pin_circle" chips >
-                    <mu-option v-for="city,index in citys" :key="city" :label="city" :value="city"></mu-option>
+                <mu-select color="red500" label="起点" filterable full-width v-model="filterable.start" icon="person_pin_circle" chips >
+                    <mu-option v-for="city,index in buses_start" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
                 <br/>
-                <mu-select color="red500" label="终点" filterable full-width v-model="filterable.value12" icon="pin_drop" chips >
-                    <mu-option v-for="city,index in citys" :key="city" :label="city" :value="city"></mu-option>
+                <mu-select color="red500" label="终点" filterable full-width v-model="filterable.end" icon="pin_drop" chips >
+                    <mu-option v-for="city,index in buses_end" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
             </mu-col>
             <mu-col span="5"><br><br><br>
                 <mu-flex class="flex-wrapper" justify-content="center">
                     <mu-flex class="flex-demo" justify-content="center">
-                        <mu-button fab large color="red500">
+                        <mu-button fab large color="red500" @click.prevent="search()">
                             <mu-icon value="search"></mu-icon>
                         </mu-button>
                     </mu-flex>
@@ -72,6 +72,13 @@
 <script>
     export default {
         name: 'Home',
+        mounted(){ //这个挂在第一次进入页面后运行一次
+            this.axios.get(this.GLOBAL.serverSrc+'api/getBusesRouteall').then((response) => {
+               this.buses_start = response.data.data.buses_start;
+               this.buses_midway = response.data.data.buses_midway;
+               this.buses_end = response.data.data.buses_end;
+            })
+        },
         data () {
             return {
                 //轮播图
@@ -81,13 +88,14 @@
                     {id: 3, preview: "static/images/3.jpg"},
                     {id: 4, preview: "static/images/4.jpg"},
                 ],
-                citys: [
-                    '西峡', '南阳', '中国', 'Arizona', 'Arizona2', 'Arizona3', 'Arizona4',
-                ],
+                buses_start: [],
+                buses_midway: [],
+                buses_end: [],
                 filterable: {
-                    value1: '',
-                    value2: '',
+                    start: '',
+                    end: '',
                 },
+                /*轮播*/
                 swiperOption: {
                     slidesPerView: 'auto',
                     centeredSlides: true,
@@ -103,6 +111,23 @@
                     },
                 }
             }
+        },
+        methods:{
+            //点击查询
+            search(){
+                this.axios.get(this.GLOBAL.serverSrc+'api/getBusesRouteId/', {
+                    params: {
+                        buses_start: this.filterable.start,
+                        buses_end: this.filterable.end,
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
         }
     }
 </script>
