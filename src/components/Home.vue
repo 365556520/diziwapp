@@ -35,6 +35,7 @@
                     <mu-option v-for="city,index in buses_end" :key="city" :label="city" :value="city"></mu-option>
                 </mu-select>
             </mu-col>
+            <!--查询按钮-->
             <mu-col span="5"><br><br><br>
                 <mu-flex class="flex-wrapper" justify-content="center">
                     <mu-flex class="flex-demo" justify-content="center">
@@ -44,18 +45,29 @@
                     </mu-flex>
                 </mu-flex>
             </mu-col>
-        <!--弹出框-->
+            <!--查询按钮end-->
+            <!--弹出框-->
             <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
-                <mu-appbar color="red500" title="Fullscreen Diaolog">
+                <mu-appbar color="red500" :title="filterable.start + '→' + filterable.end">
                     <mu-button slot="left" icon @click="closeFullscreenDialog">
                         <mu-icon value="close"></mu-icon>
                     </mu-button>
-                    <mu-button slot="right" flat @click="closeFullscreenDialog">
-                        Done
-                    </mu-button>
                 </mu-appbar>
                 <div style="padding: 24px;">
-                    this is a fullscreen dialog
+                    <mu-expansion-panel v-for="v in searchbuses" :key="v.id" :expand="true">
+                        <div slot="header"><h3>班线 : {{v.buses_start}}—{{v.buses_midway}}—{{v.buses_end}}</h3></div>
+                        <div slot="default" v-for="value in v.get_buses" :key="value.id">
+                            <mu-divider></mu-divider>
+                            <H4>车号:{{value.buses_name}}</H4>
+                            <span>
+                                发车时间:{{value.buses_start_date}}<br>
+                                返回时间:{{value.buses_end_date}}<br>
+                                联系电话:{{value.buses_phone}}
+                            </span>
+                        </div>
+                        <br>
+                        <mu-divider color="red500"></mu-divider>
+                    </mu-expansion-panel>
                 </div>
             </mu-dialog>
             <!--弹出框end-->
@@ -105,13 +117,6 @@
                     {id: 3, preview: "static/images/3.jpg"},
                     {id: 4, preview: "static/images/4.jpg"},
                 ],
-                buses_start: [],
-                buses_midway: [],
-                buses_end: [],
-                filterable: {
-                    start: '',
-                    end: '',
-                },
                 /*轮播*/
                 swiperOption: {
                     slidesPerView: 'auto',
@@ -127,26 +132,43 @@
                         disableOnInteraction: false
                     },
                 },
+                //始点
+                buses_start: [],
+                //途经
+                buses_midway: [],
+                //终点
+                buses_end: [],
+                //绑定输入框值
+                filterable: {
+                    start: '',
+                    end: '',
+                },
+                searchbuses: ['asdas'],
+                //查询按钮弹出页面开关
                 openFullscreen: false,
             }
         },
         methods: {
             //点击查询
             search(){
+                this.openFullscreen = true;
                 this.axios.get(this.GLOBAL.serverSrc + 'api/getBusesRouteId/', {
                     params: {
                         buses_start: this.filterable.start,
                         buses_end: this.filterable.end,
                     }
                 })
-                    .then(function (response) {
-                        console.log(response);
+                    .then((response) => {
+                        if (response.data.code == 200) {
+                            this.searchbuses = response.data.data;
+                            console.log(response.data.data);
+                        }
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.log(error);
                     });
-                this.openFullscreen = true;
             },
+            //弹出框关闭按钮
             closeFullscreenDialog () {
                 this.openFullscreen = false;
             }
@@ -160,27 +182,22 @@
         width: 100%;
         height: 120px;
     }
-
     .swiper-slide {
         background-position: center;
         background-size: cover;
         height: 220px;
         width: 60%;
     }
-
     .swiper-slide:nth-child(2n) {
         width: 40%;
     }
-
     .swiper-slide:nth-child(3n) {
         width: 20%;
     }
-
     .demo-paper {
         padding: 2px;
         width: 100%;
     }
-
     .chaxun {
         padding: 5px;
     }

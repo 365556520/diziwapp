@@ -26,10 +26,12 @@ import {
     SubHeader,
     Helpers,
     Drawer,
-    Dialog
+    Dialog,
+    ExpansionPanel,
 } from 'muse-ui';
 import theme from 'muse-ui/lib/theme';
 import 'muse-ui/lib/styles/theme.less';
+import 'typeface-roboto'
 Vue.use(AppBar);
 Vue.use(Avatar);
 Vue.use(BottomNav);
@@ -50,6 +52,7 @@ Vue.use(SubHeader);
 Vue.use(Helpers);
 Vue.use(Drawer);
 Vue.use(Dialog);
+Vue.use(ExpansionPanel);
 /*MuseUI end*/
 
 /*vue-awesome-swiper轮播插件*/
