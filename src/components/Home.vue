@@ -140,7 +140,7 @@
                 buses_end: [],
                 //绑定输入框值
                 filterable: {
-                    start: '',
+                    start: '西峡',
                     end: '',
                 },
                 searchbuses: ['asdas'],
