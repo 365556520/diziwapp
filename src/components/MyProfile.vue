@@ -32,7 +32,7 @@
                             <mu-text-field type="password" v-model="validateForm.password" prop="password"></mu-text-field>
                         </mu-form-item>
                         <mu-form-item prop="isAgree" :rules="argeeRules">
-                            <mu-checkbox label="同意用户协议" v-model="validateForm.isAgree"></mu-checkbox>
+                            <mu-checkbox label="记住我" v-model="validateForm.isAgree"></mu-checkbox>
                         </mu-form-item>
                         <mu-form-item>
                             <mu-button color="primary" @click="submit">提交</mu-button>
