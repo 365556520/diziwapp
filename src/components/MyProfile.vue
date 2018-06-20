@@ -25,17 +25,17 @@
             <div style="padding: 24px;">
                 <mu-container>
                     <mu-form ref="form" :model="validateForm" class="mu-demo-form">
-                        <mu-form-item label="用户名" help-text="帮助文字" prop="username" :rules="usernameRules">
+                        <mu-form-item label="用户名" help-text="请输入用户名" prop="username" :rules="usernameRules">
                             <mu-text-field v-model="validateForm.username" prop="username"></mu-text-field>
                         </mu-form-item>
                         <mu-form-item label="密码" prop="password" :rules="passwordRules">
                             <mu-text-field type="password" v-model="validateForm.password" prop="password"></mu-text-field>
                         </mu-form-item>
-                        <mu-form-item prop="isAgree" :rules="argeeRules">
+                        <mu-form-item prop="isAgree" >
                             <mu-checkbox label="记住我" v-model="validateForm.isAgree"></mu-checkbox>
                         </mu-form-item>
                         <mu-form-item>
-                            <mu-button color="primary" @click="submit">提交</mu-button>
+                            <mu-button color="primary" @click="submit()">提交</mu-button>
                             <mu-button @click="clear">重置</mu-button>
                         </mu-form-item>
                     </mu-form>
@@ -92,7 +92,6 @@
                     { validate: (val) => !!val, message: '必须填写密码'},
                     { validate: (val) => val.length >= 3 && val.length <= 10, message: '密码长度大于3小于10'}
                 ],
-                argeeRules: [{ validate: (val) => !!val, message: '必须同意用户协议'}],
                 validateForm: {
                     username: '',
                     password: '',
@@ -105,7 +104,8 @@
                 this.openFullscreen = true;
             },
             submit () {
-                this.$refs.form.validate().then((result) => {
+                let data = {'username':this.validateForm.username,'password':this.validateForm.password}
+                this.$refs.form.validate(this.GLOBAL.serverSrc +'/login',data).then((result) => {
                     console.log('form valid: ', result)
                 });
             },
