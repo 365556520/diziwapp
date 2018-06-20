@@ -105,9 +105,16 @@
             },
             submit () {
                 let data = {'username':this.validateForm.username,'password':this.validateForm.password}
-                this.$refs.form.validate(this.GLOBAL.serverSrc +'/login',data).then((result) => {
-                    console.log('form valid: ', result)
+
+
+                this.axios.post(this.GLOBAL.serverSrc +'/login',data).then(function (response) {
+                    console.log(response);
+                }).catch(function (error) {
+                    alert(error);
                 });
+   /*             this.$refs.form.validate(this.GLOBAL.serverSrc +'/login',data).then((result) => {
+                    console.log('form valid: ', result)
+                });*/
             },
             clear () {
                 this.$refs.form.clear();
