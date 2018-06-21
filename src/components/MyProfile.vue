@@ -105,7 +105,7 @@
             },
             submit () {
                 let data = {'username':this.validateForm.username,'password':this.validateForm.password}
-                this.axios.post(this.GLOBAL.serverSrc +'/login',data).then(function (response) {
+                this.axios.post(this.GLOBAL.serverSrc +'oauth/clients',data).then(function (response) {
                     console.log(response);
                 }).catch(function (error) {
                     alert(error);
