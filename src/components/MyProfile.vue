@@ -104,8 +104,8 @@
                 this.openFullscreen = true;
             },
             submit () {
-                let data = {'username':this.validateForm.username,'password':this.validateForm.password}
-                this.axios.post(this.GLOBAL.serverSrc +'oauth/clients',data).then(function (response) {
+                let data = this.validateForm
+                this.axios.post(this.GLOBAL.serverSrc +'api/login',data).then(function (response) {
                     console.log(response);
                 }).catch(function (error) {
                     alert(error);

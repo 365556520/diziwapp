@@ -4,6 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 Vue.config.productionTip = false
+
+/*自定义全局变量*/
+import global from './components/config/Global'//引用文件
+Vue.prototype.GLOBAL = global//挂载到Vue实例上面
+/*自定义全局变量end*/
 /*MuseUI*/
 import 'muse-ui/lib/styles/base.less';
 import {
@@ -68,12 +73,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 /*vue-axios end*/
-
-/*自定义全局变量*/
-import global from './components/config/Global'//引用文件
-Vue.prototype.GLOBAL = global//挂载到Vue实例上面
-/*自定义全局变量end*/
-
+/*qs封装数据(跨域登录用到)*/
+import qs from 'qs'
+Vue.use(qs)
+/*qs封装数据end*/
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
