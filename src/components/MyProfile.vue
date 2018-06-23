@@ -95,7 +95,10 @@
                 validateForm: {
                     username: '',
                     password: '',
-                    isAgree: false
+                    isAgree: false,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
                 }
             }
         },
