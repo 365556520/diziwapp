@@ -96,9 +96,6 @@
                     username: '',
                     password: '',
                     isAgree: false,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
                 }
             }
         },
@@ -107,7 +104,13 @@
                 this.openFullscreen = true;
             },
             submit () {
-                let data = this.validateForm
+                let data = {
+                    username:this.validateForm.username,
+                    password:this.validateForm.password,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }
                 this.axios.post(this.GLOBAL.serverSrc +'api/login',data).then(function (response) {
                     if(response.status==200){
                         console.log(response);
