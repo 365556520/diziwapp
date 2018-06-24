@@ -109,7 +109,9 @@
             submit () {
                 let data = this.validateForm
                 this.axios.post(this.GLOBAL.serverSrc +'api/login',data).then(function (response) {
-                    console.log(response);
+                    if(response.status==200){
+                        console.log(response);
+                    }
                 }).catch(function (error) {
                     alert(error);
                 });
