@@ -107,20 +107,18 @@
                 let data = {
                     username:this.validateForm.username,
                     password:this.validateForm.password,
+                    //跨域响应头
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                 }
-                this.axios.post(this.GLOBAL.serverSrc +'api/login',data).then(function (response) {
+                this.axios.post(this.GLOBAL.serverSrc +'api/login',data).then((response) => {
                     if(response.status==200){
                         console.log(response);
                     }
-                }).catch(function (error) {
+                }).catch((error) =>{
                     alert(error);
                 });
-   /*             this.$refs.form.validate(this.GLOBAL.serverSrc +'/login',data).then((result) => {
-                    console.log('form valid: ', result)
-                });*/
             },
             clear () {
                 this.$refs.form.clear();

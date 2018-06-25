@@ -3,7 +3,6 @@
         <mu-ripple class="mu-ripple-demo demo-3" color="red" :opacity="0.5">
           <p>Click Me</p>
         </mu-ripple>
-
     </div>
 </template>
 <script>
@@ -13,7 +12,7 @@
             return {
                 color:'red',
             }
-        }
+        },
     }
 </script>
 
