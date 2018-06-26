@@ -1,25 +1,43 @@
 <template>
     <div >
-        <mu-ripple class="mu-ripple-demo demo-3" color="red" :opacity="0.5">
+
           <p>Click Me</p>
-            <panda :here="message"></panda>
-        </mu-ripple>
+            <component v-bind:is="who"></component>
+            <button @click="changeComponent">changeComponent</button>
     </div>
 </template>
 <script>
+    var componentA={
+        template:`<div style="color:red;">I'm componentA</div>`
+    }
+    var componentB={
+        template:`<div style="color:green;">I'm componentB</div>`
+    }
+    var componentC={
+        template:`<div style="color:pink;">I'm componentC</div>`
+    }
 
     export default {
         name: 'Game',
         data () {
             return {
-                color:'red',
-                message:'Si Chuan'
+                who:'componentA'
             }
         },
         components:{
-            "panda":{
-                template:`<div style="color:red;">Panda from {{ here }}.</div>`,
-                props:['here']
+            "componentA":componentA,
+            "componentB":componentB,
+            "componentC":componentC,
+        },
+        methods:{
+            changeComponent:function(){
+                if(this.who=='componentA'){
+                    this.who='componentB';
+                }else if(this.who=='componentB'){
+                    this.who='componentC';
+                }else{
+                    this.who='componentA';
+                }
             }
         }
     }
