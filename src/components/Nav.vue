@@ -5,8 +5,8 @@
             <mu-col span="12">
                 <mu-appbar class="navtop" color="red500">
                     <!--导航左侧-->
-                    <mu-button icon slot="left" style="margin-left: 16px" @click="open = !open">
-                        <mu-icon size="36" value="navigate_before"></mu-icon>
+                    <mu-button icon slot="left" @click="open = !open">
+                        <mu-icon size="36" value="account_circle"></mu-icon>
                     </mu-button>
                     <!--导航左侧 end-->
                     <!--导航中间标题-->
@@ -14,11 +14,7 @@
                         Title
                     </mu-flex>
                     <!--导航中间标题end-->
-                    <!--导航右侧-->
-                    <mu-menu placement="top-start" slot="right">
-                        <mu-button flat></mu-button>
-                    </mu-menu>
-                    <!--导航右侧 end-->
+
                 </mu-appbar>
                 <!--抽屉导航-->
                 <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">

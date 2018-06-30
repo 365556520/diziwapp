@@ -1,13 +1,11 @@
 <template>
     <div >
-
-          <p>Click Me</p>
+        <p>Click Me</p>
             <component v-bind:is="who"></component>
             <button @click="changeComponent">changeComponent</button>
         <p v-for="v in newPrice" >
         {{v.title}}-----{{v.date}}
         </p>
-
         <p>今日温度：{{temperature}}°C</p>
         <p>穿衣建议:{{this.suggestion}}</p>
         <p>
