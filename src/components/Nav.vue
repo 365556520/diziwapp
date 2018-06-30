@@ -8,19 +8,6 @@
                     <mu-button icon slot="left" style="margin-left: 16px" @click="open = !open">
                         <mu-icon size="36" value="navigate_before"></mu-icon>
                     </mu-button>
-                    <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">
-                        <mu-list>
-                            <mu-list-item button>
-                                <mu-list-item-title>Menu Item 1</mu-list-item-title>
-                            </mu-list-item>
-                            <mu-list-item button>
-                                <mu-list-item-title>Menu Item 2</mu-list-item-title>
-                            </mu-list-item>
-                            <mu-list-item button>
-                                <mu-list-item-title @click="open = false">Close</mu-list-item-title>
-                            </mu-list-item>
-                        </mu-list>
-                    </mu-drawer>
                     <!--导航左侧 end-->
                     <!--导航中间标题-->
                     <mu-flex justify-content="center">
@@ -33,6 +20,21 @@
                     </mu-menu>
                     <!--导航右侧 end-->
                 </mu-appbar>
+                <!--抽屉导航-->
+                <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">
+                    <mu-list>
+                        <mu-list-item button>
+                            <mu-list-item-title>Menu Item 1</mu-list-item-title>
+                        </mu-list-item>
+                        <mu-list-item button>
+                            <mu-list-item-title>Menu Item 2</mu-list-item-title>
+                        </mu-list-item>
+                        <mu-list-item button>
+                            <mu-list-item-title @click="open = false">Close</mu-list-item-title>
+                        </mu-list-item>
+                    </mu-list>
+                </mu-drawer>
+                <!--抽屉导航 end-->
             </mu-col>
         </mu-row>
         <!--顶部end-->
@@ -89,10 +91,10 @@
                 this.shift = this.$route.name;
             },
             isroute(){
-                if(this.$route.name == "Nav"){
-                    this.$router.push({path:'/Home'});
+                if (this.$route.name == "Nav") {
+                    this.$router.push({path: '/Home'});
                     this.shift = 'Home';
-                }else {
+                } else {
                     this.shift = this.$route.name;
                 }
                 console.log(this.shift);
@@ -107,7 +109,6 @@
         background: rgba(255, 253, 231, 0);
         background-attachment: fixed;
     }
-
     .navtop {
         /*设置顶部导航的位置和长宽*/
         width: 100%;
@@ -115,7 +116,6 @@
         position: fixed;
         left: 0px;
     }
-
     .navbottom {
         /*设置底部导航的位置和长宽*/
         width: 100%;
@@ -131,7 +131,6 @@
     .diziw-content {
         margin: 61px 1px 61px 1px;
     }
-
     a {
         /*去掉标签下划线 把点后颜色设置成白色*/
         text-decoration: none;
