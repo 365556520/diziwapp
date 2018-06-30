@@ -39,10 +39,15 @@
         </mu-row>
         <!--顶部end-->
         <!--内容区域-->
+
+
+
         <mu-row class="diziw-content">
-            <mu-col span="12">
-                <router-view></router-view>
-            </mu-col>
+            <transition name="fade">
+                <mu-col span="12">
+                    <router-view></router-view>
+                </mu-col>
+            </transition>
         </mu-row>
         <!--内容区域 end-->
         <!--底部导航-->
