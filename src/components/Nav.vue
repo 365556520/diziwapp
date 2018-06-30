@@ -89,7 +89,12 @@
                 this.shift = this.$route.name;
             },
             isroute(){
-                this.shift = this.$route.name;
+                if(this.$route.name == "Nav"){
+                    this.$router.push({path:'/Home'});
+                    this.shift = 'Home';
+                }else {
+                    this.shift = this.$route.name;
+                }
                 console.log(this.shift);
             },
         }
