@@ -37,7 +37,6 @@
         <!--内容区域-->
 
 
-
         <mu-row class="diziw-content">
             <transition name="fade">
                 <mu-col span="12">
@@ -101,7 +100,7 @@
                 console.log(this.shift);
             },
         },
-        beforeRouteEnter:(to,from,next)=>{
+        beforeRouteEnter: (to, from, next) => {
             console.log("准备进入路由模板");
             next();
         },
@@ -118,6 +117,7 @@
         background: rgba(255, 253, 231, 0);
         background-attachment: fixed;
     }
+
     .navtop {
         /*设置顶部导航的位置和长宽*/
         width: 100%;
@@ -125,6 +125,7 @@
         position: fixed;
         left: 0px;
     }
+
     .navbottom {
         /*设置底部导航的位置和长宽*/
         width: 100%;
@@ -140,6 +141,7 @@
     .diziw-content {
         margin: 61px 1px 61px 1px;
     }
+
     a {
         /*去掉标签下划线 把点后颜色设置成白色*/
         text-decoration: none;

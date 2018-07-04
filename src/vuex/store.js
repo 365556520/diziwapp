@@ -3,10 +3,26 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 //状态数据
 const state={
-    count:3
+    count:3,//测试数据
+    userToken:'',//用户token身份
+    userName:'',//用户名字
+    hasEnter:'',//用户登录状态
 }
 //状态数据修改
 const mutations={
+    //设置token
+    setToken(state,token){
+        state.userToken = token;
+    },
+    //设置名字
+    setName(state,name){
+        state.userName = name;
+    },
+    //设置用户登录状态
+    setHasEntere(state,hasEnter){
+        state.hasEnter = hasEnter;
+    },
+    //下面是测试
     add(state,n){
         state.count+=n;
     },

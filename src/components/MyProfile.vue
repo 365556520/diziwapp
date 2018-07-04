@@ -77,6 +77,7 @@
 </template>
 
 <script>
+    import {mapState,mapMutations,mapGetters} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
     export default {
         name: 'MyProfile',
         data () {
@@ -99,11 +100,18 @@
                 }
             }
         },
+        computed:{//数据计算
+            ...mapState(['userToken']),
+        },
         methods: {
+            //用vuex存登录token和用户名字
+            ...mapMutations([
+                'setToken','setName'
+            ]),
             login(){
                 this.openFullscreen = true;
             },
-            submit () {
+            submit () { //登录提交按钮
                 let data = {
                     username:this.validateForm.username,
                     password:this.validateForm.password,
@@ -114,19 +122,36 @@
                 }
                 this.axios.post(this.GLOBAL.serverSrc +'api/login',data).then((response) => {
                     if(response.status==200){
+                        this.setToken(response.data.token);//把token保存到vuex里面
+                        this.getUser(this.userToken);
+                        this.closeFullscreenDialog();//关闭登录
                         console.log(response);
                     }
                 }).catch((error) =>{
                     alert(error);
                 });
             },
-            clear () {
+            clear () {//重置
                 this.$refs.form.clear();
                 this.validateForm = {
                     username: '',
                     password: '',
                     isAgree: false
                 };
+            },
+            getUser(userToken){ //获取用户信息
+                let usertoken =  {
+                    Headers: {
+                       'Accept':'application/json',
+                       'Authorization':'Bearer '+userToken
+                    }
+                }
+                console.log(usertoken)
+                this.axios.post(this.GLOBAL.serverSrc +'api/passport',usertoken).then((response) => {
+                    console.log(response)
+                }).catch((error) =>{
+                    alert(error);
+                });
             },
             //弹出框关闭按钮
             closeFullscreenDialog () {

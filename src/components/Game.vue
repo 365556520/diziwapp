@@ -1,6 +1,7 @@
 <template>
     <div >
         <p>{{count}}</p>
+        <p>{{userToken}}</p>
         <button @click="add(10)">+</button>
         <button @click="reduce">-</button>
             <component v-bind:is="who"></component>
@@ -46,7 +47,7 @@
             }
         },
         computed:{//数据计算
-            ...mapState(['count']),
+            ...mapState(['count','userToken']),
             ...mapGetters(["count"]),
             newPrice:function(){
                 return this.price.reverse('date');
