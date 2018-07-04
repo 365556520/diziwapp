@@ -1,6 +1,8 @@
 <template>
     <div >
-        <p>Click Me</p>
+        <p>{{count}}</p>
+        <button @click="add(10)">+</button>
+        <button @click="reduce">-</button>
             <component v-bind:is="who"></component>
             <button @click="changeComponent">changeComponent</button>
         <p v-for="v in newPrice" >
@@ -9,13 +11,14 @@
         <p>今日温度：{{temperature}}°C</p>
         <p>穿衣建议:{{this.suggestion}}</p>
         <p>
-            <button @click="add">添加温度</button>
-            <button @click="reduce">减少温度</button>
+            <button @click="add2">添加温度</button>
+            <button @click="reduce2">减少温度</button>
 
         </p>
     </div>
 </template>
 <script>
+    import {mapState,mapMutations,mapGetters} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
     var componentA={
         template:`<div style="color:red;">I'm componentA</div>`
     }
@@ -34,17 +37,20 @@
                 price:[
                     {title:'香港或就“装甲车被扣”事件追责 起诉涉事运输公司',date:'2017/3/10'},
                     {title:'日本第二大准航母服役 外媒：针对中国潜艇',date:'2017/3/12'},
-                    {title:'中国北方将有明显雨雪降温天气 南方阴雨持续',date:'2017/3/31'},
                     {title:'起底“最短命副市长”：不到40天落马，全家被查',date:'2017/3/21'},
+                    {title:'中国北方将有明显雨雪降温天气 南方阴雨持续',date:'2017/3/31'},
+
                 ],
                 temperature:14,
                 suggestion:'夹克长裙',
             }
         },
-        computed:{
+        computed:{//数据计算
+            ...mapState(['count']),
+            ...mapGetters(["count"]),
             newPrice:function(){
                 return this.price.reverse('date');
-            }
+            },
         },
         components:{
             "componentA":componentA,
@@ -52,6 +58,9 @@
             "componentC":componentC,
         },
         methods:{
+            ...mapMutations([
+                'add','reduce'
+            ]),
             changeComponent:function(){
                 if(this.who=='componentA'){
                     this.who='componentB';
@@ -61,10 +70,10 @@
                     this.who='componentA';
                 }
             },
-            add:function(){
+            add2:function(){
                 this.temperature+=5;
             },
-            reduce:function(){
+            reduce2:function(){
                 this.temperature-=5;
             }
         },

@@ -5,6 +5,12 @@ import App from './App'
 import router from './router'
 Vue.config.productionTip = false
 
+
+/*vuex全局应用*/
+import store from './vuex/store'
+
+/*vuex全局应用end*/
+
 /*自定义全局变量*/
 import global from './components/config/Global'//引用文件
 Vue.prototype.GLOBAL = global//挂载到Vue实例上面
@@ -81,6 +87,7 @@ Vue.use(qs)
 new Vue({
     el: '#app',
     router,
+    store,
     components: {App},
     template: '<App/>'
 })
