@@ -141,9 +141,9 @@
             },
             getUser(userToken){ //获取用户信息
                 let usertoken =  {
-                    Headers: {
+                    headers: {
                        'Accept':'application/json',
-                       'Authorization':'Bearer '+userToken
+                       'xsrfCookieName':'Bearer '+userToken
                     }
                 }
                 console.log(usertoken)
