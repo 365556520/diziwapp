@@ -10,7 +10,7 @@
                         </mu-avatar>
                     </mu-row>
                     <mu-flex class="flex-wrapper" justify-content="center">
-                        <mu-flex class="flex-demo"  justify-content="center">请登录</mu-flex>
+                        <mu-flex class="flex-demo"  justify-content="center">{{userName}}</mu-flex>
                     </mu-flex>
                 </mu-list-item-content>
             </mu-list-item>
@@ -101,7 +101,7 @@
             }
         },
         computed:{//数据计算
-            ...mapState(['userToken']),
+            ...mapState(['userToken','userName']),
         },
         methods: {
             //用vuex存登录token和用户名字
@@ -135,14 +135,15 @@
                 };
             },
             getUser(userToken){ //获取用户信息
-                this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' +userToken;
+                this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' + userToken; //token认证响应头
                 let usertoken =  {
                     headers:{
-                        'Accept':'application/json'
+                        'Accept':'application/json',
                     }
                 }
                 console.log(usertoken)
                 this.axios.post('api/passport',usertoken).then((response) => {
+                  this.setName(response.data.user.name);
                     console.log(response)
                 }).catch((error) =>{
                     alert(error);
