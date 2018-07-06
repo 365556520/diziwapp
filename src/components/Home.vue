@@ -102,7 +102,7 @@
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
-            this.axios.get(this.GLOBAL.serverSrc + 'api/getBusesRouteall').then((response) => {
+            this.axios.get('api/getBusesRouteall').then((response) => {
                 this.buses_start = response.data.data.buses_start;
                 this.buses_midway = response.data.data.buses_midway;
                 this.buses_end = response.data.data.buses_end;
@@ -152,7 +152,7 @@
             //点击查询
             search(){
                 this.openFullscreen = true;
-                this.axios.get(this.GLOBAL.serverSrc + 'api/getBusesRouteId/', {
+                this.axios.get('api/getBusesRouteId/', {
                     params: {
                         buses_start: this.filterable.start,
                         buses_end: this.filterable.end,

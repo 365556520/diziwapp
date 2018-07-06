@@ -8,7 +8,6 @@ Vue.config.productionTip = false
 
 /*vuex全局应用*/
 import store from './vuex/store'
-
 /*vuex全局应用end*/
 
 /*自定义全局变量*/
@@ -78,6 +77,8 @@ Vue.use(VueAwesomeSwiper)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
+axios.defaults.baseURL = 'http://diziw.cn/';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 /*vue-axios end*/
 /*qs封装数据(跨域登录用到)*/
 import qs from 'qs'

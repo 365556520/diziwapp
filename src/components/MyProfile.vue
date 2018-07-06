@@ -115,15 +115,10 @@
                 let data = {
                     username:this.validateForm.username,
                     password:this.validateForm.password,
-                    //跨域响应头
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
                 }
-                this.axios.post(this.GLOBAL.serverSrc +'api/login',data).then((response) => {
+                this.axios.post('api/login',data).then((response) => {
                     if(response.status==200){
                         this.setToken(response.data.token);//把token保存到vuex里面
-                        this.getUser(this.userToken);
                         this.closeFullscreenDialog();//关闭登录
                         console.log(response);
                     }
@@ -140,14 +135,14 @@
                 };
             },
             getUser(userToken){ //获取用户信息
+                this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' +userToken;
                 let usertoken =  {
-                    headers: {
-                       'Accept':'application/json',
-                       'xsrfCookieName':'Bearer '+userToken
+                    headers:{
+                        'Accept':'application/json'
                     }
                 }
                 console.log(usertoken)
-                this.axios.post(this.GLOBAL.serverSrc +'api/passport',usertoken).then((response) => {
+                this.axios.post('api/passport',usertoken).then((response) => {
                     console.log(response)
                 }).catch((error) =>{
                     alert(error);
@@ -156,6 +151,7 @@
             //弹出框关闭按钮
             closeFullscreenDialog () {
                 this.openFullscreen = false;
+                this.getUser(this.userToken);
             }
         }
     }
