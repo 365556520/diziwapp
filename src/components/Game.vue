@@ -1,7 +1,6 @@
 <template>
     <div >
         <p>{{count}}</p>
-        <p>{{userToken}}</p>
         <button @click="add(10)">+</button>
         <button @click="reduce">-</button>
             <component v-bind:is="who"></component>
