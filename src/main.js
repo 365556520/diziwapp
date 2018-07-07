@@ -8,6 +8,8 @@ Vue.config.productionTip = false
 
 /*vuex全局应用*/
 import store from './vuex/store'
+
+//状态数据
 /*vuex全局应用end*/
 
 /*自定义全局变量*/

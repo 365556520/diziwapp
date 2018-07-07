@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate' //持久化存储状态信息
 Vue.use(Vuex);
-//状态数据
+
 const state={
     count:3,//测试数据
     userToken:'',//用户token身份
-    userName:'',//用户名字
-    hasEnter:'',//用户登录状态
+    userdata:{
+        userName:'',//用户名字
+        hasEnter:'',//用户登录状态
+    },
 }
 //状态数据修改
 const mutations={
@@ -16,11 +19,27 @@ const mutations={
     },
     //设置名字
     setName(state,name){
-        state.userName = name;
+        state.userdata.userName = name;
     },
     //设置用户登录状态
     setHasEntere(state,hasEnter){
-        state.hasEnter = hasEnter;
+        state.userdata.hasEnter = hasEnter;
+    },
+    //获取token方法
+    getToken(state){
+        return  state.userToken;
+    },
+    //删除用户状态
+    deleteUser(state){
+        if (state.userToken != ''){
+            //清空tiken和用户信息
+            state.userToken = '';
+            state.userdata = {
+                userName:'',//用户名字
+                hasEnter:'',//用户登录状态
+             };
+        }
+        return state;
     },
     //下面是测试
     add(state,n){
@@ -40,7 +59,9 @@ const getters = {
 export default new Vuex.Store({
     state,
     mutations,
-    getters
+    getters,
+    // ...这样配置表示把VUEX中的所有数据存到localStorage中
+    plugins: [createPersistedState()]
 })
 
 

@@ -10,7 +10,7 @@
                         </mu-avatar>
                     </mu-row>
                     <mu-flex class="flex-wrapper" justify-content="center">
-                        <mu-flex class="flex-demo"  justify-content="center">{{userName}}</mu-flex>
+                        <mu-flex class="flex-demo"  justify-content="center">{{userdata.userName}}</mu-flex>
                     </mu-flex>
                 </mu-list-item-content>
             </mu-list-item>
@@ -65,7 +65,7 @@
                 </mu-list-item-action>
                 <mu-list-item-title>我的邮箱</mu-list-item-title>
             </mu-list-item>
-            <mu-list-item button :ripple="true">
+            <mu-list-item button :ripple="true"  @click.prevent="quitUser()">
                 <mu-list-item-action>
                     <mu-icon value="power_settings_new"></mu-icon>
                 </mu-list-item-action>
@@ -101,15 +101,19 @@
             }
         },
         computed:{//数据计算
-            ...mapState(['userToken','userName']),
+            ...mapState(['userToken','userdata']),
         },
         methods: {
-            //用vuex存登录token和用户名字
+            //用vuex里面的方法
             ...mapMutations([
-                'setToken','setName'
+                'setToken',
+                'setName',
+                'deleteUser'
             ]),
             login(){
-                this.openFullscreen = true;
+                if(this.userToken==''){
+                    this.openFullscreen = true;
+                }
             },
             submit () { //登录提交按钮
                 let data = {
@@ -134,25 +138,12 @@
                     isAgree: false
                 };
             },
-            getUser(userToken){ //获取用户信息
-                this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' + userToken; //token认证响应头
-                let usertoken =  {
-                    headers:{
-                        'Accept':'application/json',
-                    }
-                }
-                console.log(usertoken)
-                this.axios.post('api/passport',usertoken).then((response) => {
-                  this.setName(response.data.user.name);
-                    console.log(response)
-                }).catch((error) =>{
-                    alert(error);
-                });
-            },
             //弹出框关闭按钮
             closeFullscreenDialog () {
                 this.openFullscreen = false;
-                this.getUser(this.userToken);
+            },
+            quitUser(){
+                this.deleteUser();//删除用户
             }
         }
     }
