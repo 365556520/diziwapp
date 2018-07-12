@@ -47,7 +47,7 @@
             </mu-col>
             <!--查询按钮end-->
             <!--弹出框-->
-            <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
+            <mu-dialog width="360" transition="slide-bottom" scrollable fullscreen :open.sync="openFullscreen">
                 <mu-appbar color="red500" :title="filterable.start + '→' + filterable.end">
                     <mu-button slot="left" icon @click="closeFullscreenDialog">
                         <mu-icon value="close"></mu-icon>
