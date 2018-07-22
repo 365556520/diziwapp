@@ -121,7 +121,7 @@
     .navtop {
         /*设置顶部导航的位置和长宽*/
         width: 100%;
-        height: 60px;
+        height: 50px;
         position: fixed;
         left: 0px;
     }
@@ -129,7 +129,7 @@
     .navbottom {
         /*设置底部导航的位置和长宽*/
         width: 100%;
-        height: 56px;
+        height: 55px;
         position: fixed;
         max-width: 100%;
         bottom: 0px;
@@ -139,7 +139,7 @@
     }
 
     .diziw-content {
-        margin: 61px 1px 61px 1px;
+        margin: 50px 1px 50px 1px;
     }
 
     a {

@@ -3,12 +3,12 @@
         <!--导航条-->
         <swiper class="swipenavbg swipernav" :options="swiperOption">
             <swiper-slide v-for="v in tags" :key="v.id">
-                <h3 v-text="v.name"></h3>
+                <span style="font-size:17px;color:#fafafa;" v-text="v.name"></span>
             </swiper-slide>
         </swiper>
-        <mu-divider></mu-divider>
+
         <!--导航条结束-->
-        <mu-list textline="three-line">
+        <mu-list textline="two-line">
             <div v-for="v in sortarticle" :key="v.id">
                 <mu-list-item avatar :ripple="true" button>
                     <mu-list-item-action class="articleimg">
@@ -109,15 +109,14 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .articleimg {
-        width: 110px;
-        max-width: 110px;
-        min-width: 110px;
-        height: 80px;
+        width: 90px;
+        max-width: 90px;
+        min-width: 90px;
+        height: 60px;
     }
 
     .swipernav {
+        background-color: #ef5350;
         text-align: center;
     }
-
-
 </style>
