@@ -21,58 +21,65 @@
         </mu-row>
         <!--轮播图end-->
         <!--班车查询-->
-        <mu-flex class="flex-wrapper" justify-content="center"><h2>班车查询</h2></mu-flex>
-        <mu-divider></mu-divider>
-        <mu-row class="mymargin chaxun">
-            <mu-col span="7">
-                <mu-select color="red500" label="起点" filterable full-width v-model="filterable.start"
-                           icon="person_pin_circle" chips>
-                    <mu-option v-for="city,index in buses_start" :key="city" :label="city" :value="city"></mu-option>
-                </mu-select>
-                <br/>
-                <mu-select color="red500" label="终点" filterable full-width v-model="filterable.end" icon="pin_drop"
-                           chips>
-                    <mu-option v-for="city,index in buses_end" :key="city" :label="city" :value="city"></mu-option>
-                </mu-select>
-            </mu-col>
-            <!--查询按钮-->
-            <mu-col span="5"><br><br><br>
-                <mu-flex class="flex-wrapper" justify-content="center">
-                    <mu-flex class="flex-demo" justify-content="center">
-                        <mu-button fab large color="red500" @click.prevent="search()">
-                            <mu-icon value="search"></mu-icon>
-                        </mu-button>
+        <mu-tabs :value.sync="active" color="red500" indicator-color="yellow" full-width>
+            <mu-tab>班车查询</mu-tab>
+            <mu-tab>公交查询</mu-tab>
+        </mu-tabs>
+        <div class="demo-text" v-if="active === 0">
+            <mu-row class="mymargin chaxun">
+                <mu-col span="7">
+                    <mu-select color="red500" label="起点" filterable full-width v-model="filterable.start"
+                               icon="person_pin_circle" chips>
+                        <mu-option v-for="city,index in buses_start" :key="city" :label="city" :value="city"></mu-option>
+                    </mu-select>
+                    <br/>
+                    <mu-select color="red500" label="终点" filterable full-width v-model="filterable.end" icon="pin_drop"
+                               chips>
+                        <mu-option v-for="city,index in buses_end" :key="city" :label="city" :value="city"></mu-option>
+                    </mu-select>
+                </mu-col>
+                <!--查询按钮-->
+                <mu-col span="5"><br><br><br>
+                    <mu-flex class="flex-wrapper" justify-content="center">
+                        <mu-flex class="flex-demo" justify-content="center">
+                            <mu-button fab large color="red500" @click.prevent="search()">
+                                <mu-icon value="search"></mu-icon>
+                            </mu-button>
+                        </mu-flex>
                     </mu-flex>
-                </mu-flex>
-            </mu-col>
-            <!--查询按钮end-->
-            <!--弹出框-->
-            <mu-dialog width="360" transition="slide-bottom" scrollable fullscreen :open.sync="openFullscreen">
-                <mu-appbar color="red500" :title="filterable.start + '→' + filterable.end">
-                    <mu-button slot="left" icon @click="closeFullscreenDialog">
-                        <mu-icon value="close"></mu-icon>
-                    </mu-button>
-                </mu-appbar>
-                <div style="padding: 24px;">
-                    <mu-expansion-panel v-for="v in searchbuses" :key="v.id" :expand="true">
-                        <div slot="header"><h3>班线 : {{v.buses_start}}—{{v.buses_midway}}—{{v.buses_end}}</h3></div>
-                        <div slot="default" v-for="value in v.get_buses" :key="value.id">
-                            <mu-divider></mu-divider>
-                            <H4>车号:{{value.buses_name}}</H4>
-                            <span>
+                </mu-col>
+                <!--查询按钮end-->
+                <!--弹出框-->
+                <mu-dialog width="360" transition="slide-bottom" scrollable fullscreen :open.sync="openFullscreen">
+                    <mu-appbar color="red500" :title="filterable.start + '→' + filterable.end">
+                        <mu-button slot="left" icon @click="closeFullscreenDialog">
+                            <mu-icon value="close"></mu-icon>
+                        </mu-button>
+                    </mu-appbar>
+                    <div style="padding: 24px;">
+                        <mu-expansion-panel v-for="v in searchbuses" :key="v.id" :expand="true">
+                            <div slot="header"><h3>班线 : {{v.buses_start}}—{{v.buses_midway}}—{{v.buses_end}}</h3></div>
+                            <div slot="default" v-for="value in v.get_buses" :key="value.id">
+                                <mu-divider></mu-divider>
+                                <H4>车号:{{value.buses_name}}</H4>
+                                <span>
                                 发车时间:{{value.buses_start_date}}<br>
                                 返回时间:{{value.buses_end_date}}<br>
                                 联系电话:{{value.buses_phone}}
                             </span>
-                        </div>
-                        <br>
-                        <mu-divider color="red500"></mu-divider>
-                    </mu-expansion-panel>
-                </div>
-            </mu-dialog>
-            <!--弹出框end-->
-        </mu-row>
-        <!--班车查询-->
+                            </div>
+                            <br>
+                            <mu-divider color="red500"></mu-divider>
+                        </mu-expansion-panel>
+                    </div>
+                </mu-dialog>
+                <!--弹出框end-->
+            </mu-row>
+        </div>
+        <div class="demo-text" v-if="active === 1">
+            <p>公交线路</p>
+        </div>
+        <mu-flex class="flex-wrapper" justify-content="center"><span>班车查询</span></mu-flex>
         <mu-divider></mu-divider>
         <br/>
         <mu-row>
@@ -132,6 +139,7 @@
                         disableOnInteraction: false
                     },
                 },
+                active: 0,
                 //始点
                 buses_start: [],
                 //途经

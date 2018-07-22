@@ -41,6 +41,7 @@ import {
     Dialog,
     ExpansionPanel,
     Form,
+    Tabs,
 } from 'muse-ui';
 import theme from 'muse-ui/lib/theme';
 import 'muse-ui/lib/styles/theme.less';
@@ -67,6 +68,7 @@ Vue.use(Drawer);
 Vue.use(Dialog);
 Vue.use(ExpansionPanel);
 Vue.use(Form);
+Vue.use(Tabs);
 /*MuseUI end*/
 
 /*vue-awesome-swiper轮播插件*/
