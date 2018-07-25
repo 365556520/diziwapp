@@ -6,11 +6,9 @@
                 <div class="grid-cell">
                     <!-- swiper 轮播-->
                     <swiper :options="swiperOption">
-                        <swiper-slide v-for="v in slides" :key="v.id">
+                        <swiper-slide v-for="v in slides" :key="v.id" :style="{'background':'url('+v.preview+')','background-repeat':'no-repeat','background-size':'cover' }"
+                                      class="swiper-zoom-container">
                             <!--图片放在div中这样能自适应-->
-                            <div :style="{'background':'url('+v.preview+')','background-repeat':'no-repeat','background-size':'cover' }"
-                                 class="swiper-zoom-container">
-                            </div>
                         </swiper-slide>
                         <div class="swiper-scrollbar" slot="scrollbar">
                         </div>
@@ -20,30 +18,33 @@
             </mu-col>
         </mu-row>
         <!--轮播图end-->
-        <!--班车查询-->
-        <mu-tabs :value.sync="active" color="red500" indicator-color="yellow" full-width>
-            <mu-tab>班车查询</mu-tab>
+        <!--班车时刻查询  -->
+        <mu-tabs :value.sync="active" color="red500" inverse indicator-color="red500" full-width>
+            <mu-tab>班车时刻表查询</mu-tab>
             <mu-tab>公交查询</mu-tab>
         </mu-tabs>
         <div class="demo-text" v-if="active === 0">
             <mu-row class="mymargin chaxun">
-                <mu-col span="7">
-                    <mu-select color="red500" label="起点" filterable full-width v-model="filterable.start"
+                <mu-col span="5">
+                    <mu-select color="red500" label="起点"  filterable full-width v-model="filterable.start"
                                icon="person_pin_circle" chips>
                         <mu-option v-for="city,index in buses_start" :key="city" :label="city" :value="city"></mu-option>
                     </mu-select>
                     <br/>
+                </mu-col>
+                <mu-col span="2" ><br><mu-flex justify-content="center" align-items="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mu-icon size="36" value="swap_horiz"></mu-icon></mu-flex> </mu-col>
+                <mu-col span="5">
                     <mu-select color="red500" label="终点" filterable full-width v-model="filterable.end" icon="pin_drop"
                                chips>
                         <mu-option v-for="city,index in buses_end" :key="city" :label="city" :value="city"></mu-option>
                     </mu-select>
                 </mu-col>
                 <!--查询按钮-->
-                <mu-col span="5"><br><br><br>
+                <mu-col span="12">
                     <mu-flex class="flex-wrapper" justify-content="center">
                         <mu-flex class="flex-demo" justify-content="center">
-                            <mu-button fab large color="red500" @click.prevent="search()">
-                                <mu-icon value="search"></mu-icon>
+                            <mu-button large color="red500" @click.prevent="search()">
+                                <mu-icon value="search"></mu-icon>班车时刻查询
                             </mu-button>
                         </mu-flex>
                     </mu-flex>
@@ -79,7 +80,7 @@
         <div class="demo-text" v-if="active === 1">
             <p>公交线路</p>
         </div>
-        <mu-flex class="flex-wrapper" justify-content="center"><span>班车查询</span></mu-flex>
+
         <mu-divider></mu-divider>
         <br/>
         <mu-row>
