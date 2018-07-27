@@ -122,13 +122,13 @@
         background-color: #f44336;
         text-align: center;
         position: fixed;
-        top: 50px;
+        top: 49px;
         left: 0px;
     }
     .demo-list-wrap {
         width: 100%;
         max-width: 100%;
         overflow: hidden;
-        margin-top: 29px;
+        margin-top: 28px;
     }
 </style>
