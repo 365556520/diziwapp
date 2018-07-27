@@ -8,21 +8,20 @@
         </swiper>
 
         <!--导航条结束-->
-        <mu-list textline="two-line">
-            <div v-for="v in sortarticle" :key="v.id">
-                <mu-list-item avatar :ripple="true" button>
-                    <mu-list-item-action class="articleimg">
-                        <img class="articleimg" :src="v.articleimg">
-                    </mu-list-item-action>&nbsp;&nbsp;
-                    <mu-list-item-content>
-                        <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
-                        <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
-                        <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
-                    </mu-list-item-content>
-                </mu-list-item>
-                <mu-divider></mu-divider>
-            </div>
-        </mu-list>
+        <mu-paper class="demo-list-wrap">
+            <mu-list textline="two-line">
+                    <mu-list-item  v-for="v in sortarticle" :key="v.id" avatar :ripple="true" button>
+                        <mu-list-item-action class="articleimg">
+                            <img class="articleimg" :src="v.articleimg">
+                        </mu-list-item-action>&nbsp;&nbsp;
+                        <mu-list-item-content>
+                            <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
+                            <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
+                            <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
+                        </mu-list-item-content>
+                    </mu-list-item>
+            </mu-list>
+        </mu-paper>
     </div>
 </template>
 <script>
@@ -116,7 +115,20 @@
     }
 
     .swipernav {
-        background-color: #ef5350;
+        width: 100%;
+        min-width: 100%;
+        height: 28px;
+        min-height: 28px;
+        background-color: #f44336;
         text-align: center;
+        position: fixed;
+        top: 50px;
+        left: 0px;
+    }
+    .demo-list-wrap {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        margin-top: 29px;
     }
 </style>

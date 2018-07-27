@@ -3,7 +3,7 @@
         <!--顶部-->
         <mu-row>
             <mu-col span="12">
-                <mu-appbar class="navtop" color="red500">
+                <mu-appbar class="navtop" color="red500" z-depth="0" >
                     <!--导航左侧-->
                     <mu-button icon slot="left" @click="open = !open">
                         <mu-icon size="36" value="account_circle"></mu-icon>
@@ -14,7 +14,6 @@
                         Title
                     </mu-flex>
                     <!--导航中间标题end-->
-
                 </mu-appbar>
                 <!--抽屉导航-->
                 <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">
