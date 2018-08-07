@@ -9,8 +9,9 @@
                         <mu-icon size="36" value="account_circle"></mu-icon>
                     </mu-button>
                     <!--导航左侧 end-->
-                        {{title}}
+                    {{title}}
                 </mu-appbar>
+
                 <!--抽屉导航-->
                 <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">
                     <mu-list>
@@ -42,13 +43,15 @@
         },
         data () {
             return {
-                title:'',
                 docked: false,
                 open: false,
                 position: 'left'
             }
         },
         computed: {
+            title:function () {
+                return this.$route.meta.title;
+            },
             sortStudent: function () {
                 return sortByKey(this.students, 'age');
             }

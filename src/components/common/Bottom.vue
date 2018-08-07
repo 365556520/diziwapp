@@ -4,7 +4,7 @@
         <mu-row>
             <mu-col span="12">
                 <mu-container class="navbottom">
-                    <mu-bottom-nav :value.sync="shift" color="red500" shift>
+                    <mu-bottom-nav :value.sync="newshift" color="red500" shift>
                         <mu-bottom-nav-item value="Home" title="首页" icon="home" to="/Home"></mu-bottom-nav-item>
                         <mu-bottom-nav-item value="Hot" title="热门咨询" icon="comment" to="/Hot"></mu-bottom-nav-item>
                         <mu-bottom-nav-item value="Game" title="游戏" icon="videogame_asset"
@@ -23,10 +23,21 @@
     export default {
         data () {
             return {
+                //当前路由的
                 shift: ''
             }
         },
         computed: {
+            //当前路由属性计算
+            newshift:function(){
+                if (this.$route.name == "Nav") {
+                    this.$router.push({path: '/Home'});
+                    this.shift = 'Home';
+                } else {
+                    this.shift = this.$route.name;
+                }
+                return  this.shift;
+            },
             sortStudent: function () {
                 return sortByKey(this.students, 'age');
             }
