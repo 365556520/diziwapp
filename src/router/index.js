@@ -41,7 +41,7 @@ export default new Router({
                     /*个人资料*/
                     path: '/MyProfile',
                     name: 'MyProfile',
-                    meta: { title: '个人信息' },
+                    meta: { title: '我的' },
                     component: MyProfile
                 },
             ]

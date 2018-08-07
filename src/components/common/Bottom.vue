@@ -5,11 +5,11 @@
             <mu-col span="12">
                 <mu-container class="navbottom">
                     <mu-bottom-nav :value.sync="newshift" color="red500" shift>
-                        <mu-bottom-nav-item value="Home" title="首页" icon="home" to="/Home"></mu-bottom-nav-item>
-                        <mu-bottom-nav-item value="Hot" title="热门咨询" icon="comment" to="/Hot"></mu-bottom-nav-item>
-                        <mu-bottom-nav-item value="Game" title="游戏" icon="videogame_asset"
+                        <mu-bottom-nav-item value="Home" :title=this.$route.meta.title icon="home" to="/Home"></mu-bottom-nav-item>
+                        <mu-bottom-nav-item value="Hot" :title=this.$route.meta.title icon="comment" to="/Hot"></mu-bottom-nav-item>
+                        <mu-bottom-nav-item value="Game" :title=this.$route.meta.title icon="videogame_asset"
                                             to="/Game"></mu-bottom-nav-item>
-                        <mu-bottom-nav-item value="MyProfile" title="我的" icon="person"
+                        <mu-bottom-nav-item value="MyProfile" :title=this.$route.meta.title icon="person"
                                             to="/MyProfile"></mu-bottom-nav-item>
                     </mu-bottom-nav>
                 </mu-container>
