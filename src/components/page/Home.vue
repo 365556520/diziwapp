@@ -25,15 +25,14 @@
         </mu-tabs>
         <div class="demo-text" v-if="active === 0">
             <mu-row class="mymargin chaxun">
-                <mu-col span="5">
+                <mu-col span="10">
                     <mu-select color="red500" label="起点"  filterable full-width v-model="filterable.start"
                                icon="person_pin_circle" chips>
                         <mu-option v-for="city,index in buses_start" :key="city" :label="city" :value="city"></mu-option>
                     </mu-select>
                     <br/>
                 </mu-col>
-                <mu-col span="2" ><br><mu-flex justify-content="center" align-items="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mu-icon size="36" value="swap_horiz"></mu-icon></mu-flex> </mu-col>
-                <mu-col span="5">
+                <mu-col span="10">
                     <mu-select color="red500" label="终点" filterable full-width v-model="filterable.end" icon="pin_drop"
                                chips>
                         <mu-option v-for="city,index in buses_end" :key="city" :label="city" :value="city"></mu-option>
