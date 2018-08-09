@@ -1,7 +1,8 @@
 <template>
     <div class="bgimg">
         <!--顶部-->
-        <mu-row>
+        <Sticky top="0px" z-ndex="0">
+            <mu-row>
             <mu-col span="12">
                 <mu-appbar class="navtop" color="red500" z-depth="0" >
                     <!--导航左侧-->
@@ -11,28 +12,29 @@
                     <!--导航左侧 end-->
                     {{title}}
                 </mu-appbar>
-
-                <!--抽屉导航-->
-                <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">
-                    <mu-list>
-                        <mu-list-item button>
-                            <mu-list-item-title>Menu Item 1</mu-list-item-title>
-                        </mu-list-item>
-                        <mu-list-item button>
-                            <mu-list-item-title>Menu Item 2</mu-list-item-title>
-                        </mu-list-item>
-                        <mu-list-item button>
-                            <mu-list-item-title @click="open = false">Close</mu-list-item-title>
-                        </mu-list-item>
-                    </mu-list>
-                </mu-drawer>
-                <!--抽屉导航 end-->
             </mu-col>
         </mu-row>
+        </Sticky>
+        <!--抽屉导航-->
+        <mu-drawer :open.sync="open" width="50%" :docked="docked" s :right="position === 'right'">
+            <mu-list>
+                <mu-list-item button>
+                    <mu-list-item-title>Menu Item 1</mu-list-item-title>
+                </mu-list-item>
+                <mu-list-item button>
+                    <mu-list-item-title>Menu Item 2</mu-list-item-title>
+                </mu-list-item>
+                <mu-list-item button>
+                    <mu-list-item-title @click="open = false">Close</mu-list-item-title>
+                </mu-list-item>
+            </mu-list>
+        </mu-drawer>
+        <!--抽屉导航 end-->
         <!--顶部end-->
     </div>
 </template>
 <script>
+    import Sticky from 'vue-sticky-position' //vue-sticky-position粘性定位和固定顶部导航
     export default {
         created: function () {
             console.log(this.$route.meta.title);
@@ -67,6 +69,9 @@
                 console.log(this.shift);
             },
         },
+        components:{
+            Sticky
+        },
     }
 </script>
 
@@ -81,6 +86,7 @@
         /*设置顶部导航的位置和长宽*/
         width: 100%;
         height: 50px;
+        min-height: 50px;
         position: fixed;
         left: 0px;
     }

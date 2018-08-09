@@ -1,12 +1,13 @@
 <template>
     <div>
         <!--导航条-->
-        <swiper class="swipenavbg swipernav" :options="swiperOption">
-            <swiper-slide v-for="v in tags" :key="v.id">
-                <span style="font-size:17px;color:#fafafa;" v-text="v.name"></span>
-            </swiper-slide>
-        </swiper>
-
+        <Sticky top="0px" z-ndex="1">
+            <swiper class="swipenavbg swipernav" :options="swiperOption">
+                <swiper-slide v-for="v in tags" :key="v.id">
+                    <span style="font-size:17px;color:#fafafa;" v-text="v.name"></span>
+                </swiper-slide>
+            </swiper>
+        </Sticky>
         <!--导航条结束-->
         <mu-paper class="demo-list-wrap">
             <mu-list textline="two-line">
@@ -22,9 +23,11 @@
                     </mu-list-item>
             </mu-list>
         </mu-paper>
+
     </div>
 </template>
 <script>
+    import Sticky from 'vue-sticky-position' //vue-sticky-position粘性定位和固定顶部导航
     export default {
         name: 'Hot',
         data () {
@@ -64,7 +67,28 @@
                         articleTitle: '韩国大战日本5',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年12月4日'
-                    }
+                    },
+                    {
+                        id: 6,
+                        articleimg: 'static/images/avatar.jpg',
+                        articleTitle: '韩国大战日本4',
+                        subTitle: '最近韩国对日时间灭了半个日本',
+                        date: '2018年11月1日'
+                    },
+                    {
+                        id: 7,
+                        articleimg: 'static/images/avatar.jpg',
+                        articleTitle: '韩国大战日本4',
+                        subTitle: '最近韩国对日时间灭了半个日本',
+                        date: '2018年11月1日'
+                    },
+                    {
+                        id: 8,
+                        articleimg: 'static/images/avatar.jpg',
+                        articleTitle: '韩国大战日本4',
+                        subTitle: '最近韩国对日时间灭了半个日本',
+                        date: '2018年11月1日'
+                    },
                 ],
                 swiperOption: {
                     slidesPerView: 4,
@@ -100,6 +124,9 @@
                     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
                 });
             }
+        },
+        components: {
+            Sticky
         }
 
     }
@@ -111,24 +138,22 @@
         width: 90px;
         max-width: 90px;
         min-width: 90px;
-        height: 60px;
+        height: 67px;
     }
 
     .swipernav {
         width: 100%;
         min-width: 100%;
-        height: 28px;
-        min-height: 28px;
+        height: 50px;
+        min-height: 50px;
         background-color: #f44336;
         text-align: center;
-        position: fixed;
-        top: 49px;
-        left: 0px;
+        font-size:30px;
+
     }
     .demo-list-wrap {
         width: 100%;
         max-width: 100%;
         overflow: hidden;
-        margin-top: 28px;
     }
 </style>

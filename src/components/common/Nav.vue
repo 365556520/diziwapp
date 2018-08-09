@@ -56,7 +56,7 @@
         background-attachment: fixed;
     }
     .diziw-content {
-        margin: 50px 1px 50px 1px;
+        margin: 49px 0px 50px 0px;
     }
 
     a {
