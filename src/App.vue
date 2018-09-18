@@ -21,6 +21,7 @@
                 let usertoken =  {
                     headers:{
                         'Accept':'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }
                 console.log(usertoken)
