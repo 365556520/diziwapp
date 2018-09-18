@@ -119,10 +119,6 @@
                 let data = {
                     username:this.validateForm.username,
                     password:this.validateForm.password,
-                    //跨域响应头
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
                 }
                 this.axios.post('api/login',data).then((response) => {
                     if(response.status==200){

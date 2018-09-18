@@ -21,10 +21,8 @@
                 let usertoken =  {
                     headers:{
                         'Accept':'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }
-                console.log(usertoken)
                 this.axios.post('api/passport',usertoken).then((response) => {
                     this.setName(response.data.user.name);
                     console.log(response)
