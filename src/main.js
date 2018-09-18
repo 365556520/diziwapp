@@ -83,7 +83,7 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 //响应头
 axios.defaults.baseURL = 'http://diziw.cn/'; //跨域访问的url
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';  //问题这个请求头可能重复
+/*axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';  //问题这个请求头可能重复*/
 /*vue-axios end*/
 /*qs封装数据(跨域登录用到)*/
 import qs from 'qs'
