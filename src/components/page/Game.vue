@@ -15,6 +15,7 @@
             <button @click="reduce2">减少温度</button>
 
         </p>
+        {{userToken}}
     </div>
 </template>
 <script>
