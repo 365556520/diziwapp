@@ -142,8 +142,24 @@
             closeFullscreenDialog () {
                 this.openFullscreen = false;
             },
+            //退出用户
             quitUser(){
-                this.deleteUser();//删除用户
+                if(this.userToken!=""){
+                    this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' + this.userToken; //token认证响应头
+                    let usertoken =  {
+                        headers:{
+                            'Accept':'application/json',
+                        }
+                    }
+                    this.axios.post('api/logout',usertoken).then((response) => {
+                        console.log(response.data.message);
+                        this.deleteUser();//vuex删除用户数据
+                    }).catch((error) =>{
+                        alert(error);
+                    });
+                }else{
+                    console.log("请登录");
+                }
             }
         }
     }

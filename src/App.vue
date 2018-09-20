@@ -32,7 +32,7 @@
             },
         },
         watch:{
-            //监听token
+            //监听vuex中token值的变化
             userToken:function(token){
                if (token!=""){ //如果token存在就获取用户信息
                     this.getUser(token) //获取用户信息
