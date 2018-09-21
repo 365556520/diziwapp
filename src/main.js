@@ -60,7 +60,7 @@ Vue.use(Paper);
 Vue.use(Popover);
 Vue.use(Radio);
 Vue.use(Select);
-Vue.use(Switch)
+Vue.use(Switch);
 Vue.use(TextField);
 Vue.use(SubHeader);
 Vue.use(Helpers);
@@ -69,6 +69,11 @@ Vue.use(Dialog);
 Vue.use(ExpansionPanel);
 Vue.use(Form);
 Vue.use(Tabs);
+//MuseUI插件
+import Toast from 'muse-ui-toast';  //这个Toast有bug现在不能用
+Vue.use(Toast);
+import Message from 'muse-ui-message';
+Vue.use(Message);
 /*MuseUI end*/
 
 /*vue-awesome-swiper轮播插件*/
