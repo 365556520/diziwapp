@@ -116,18 +116,24 @@
                 }
             },
             submit () { //登录提交按钮
-                let data = {
-                    username:this.validateForm.username,
-                    password:this.validateForm.password,
-                }
-                this.axios.post('api/login',data).then((response) => {
-                    if(response.status==200){
-                        this.setToken(response.data.token);//把token保存到vuex里面
-                        this.closeFullscreenDialog();//关闭登录
-                        console.log(response);
+                this.$refs.form.validate().then((result) => {
+                    if(result){//验证成功
+                        let data = {
+                            username:this.validateForm.username,
+                            password:this.validateForm.password,
+                        }
+                        this.axios.post('api/login',data).then((response) => {
+                            if(response.status==200){
+                                this.setToken(response.data.token);//把token保存到vuex里面
+                                this.closeFullscreenDialog();//关闭登录
+                                this.$toast.success(response.data.message);
+                                console.log(response);
+                            }
+                        }).catch((error) =>{
+                            alert(error);
+                        });
+                    }else {
                     }
-                }).catch((error) =>{
-                    alert(error);
                 });
             },
             clear () {//重置
@@ -145,17 +151,24 @@
             //退出用户
             quitUser(){
                 if(this.userToken!=""){
-                    this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' + this.userToken; //token认证响应头
-                    let usertoken =  {
-                        headers:{
-                            'Accept':'application/json',
+                    this.$confirm('退出当前用户', '提示'
+                    ).then(({ result }) => {
+                        if (result) {//点击了确定
+                            this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' + this.userToken; //token认证响应头
+                            let usertoken =  {
+                                headers:{
+                                    'Accept':'application/json',
+                                }
+                            }
+                            this.axios.post('api/logout',usertoken).then((response) => {
+                                console.log(response.data.message);
+                                this.deleteUser();//vuex删除用户数据
+                                this.$toast.success(response.data.message);
+                            }).catch((error) =>{
+                                alert(error);
+                            });
+                        } else {//点击了取消
                         }
-                    }
-                    this.axios.post('api/logout',usertoken).then((response) => {
-                        console.log(response.data.message);
-                        this.deleteUser();//vuex删除用户数据
-                    }).catch((error) =>{
-                        alert(error);
                     });
                 }else{
                     console.log("请登录");

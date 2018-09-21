@@ -42,6 +42,7 @@ import {
     ExpansionPanel,
     Form,
     Tabs,
+    Snackbar
 } from 'muse-ui';
 import theme from 'muse-ui/lib/theme';
 import 'muse-ui/lib/styles/theme.less';
@@ -69,10 +70,11 @@ Vue.use(Dialog);
 Vue.use(ExpansionPanel);
 Vue.use(Form);
 Vue.use(Tabs);
+Vue.use(Snackbar);
 //MuseUI插件
-import Toast from 'muse-ui-toast';  //这个Toast有bug现在不能用
+import Toast from 'muse-ui-toast';  //这个Toast有依赖Snackbar所以必须先导入Snackbar
 Vue.use(Toast);
-import Message from 'muse-ui-message';
+import Message from 'muse-ui-message'; //Message 依赖 dialog所以必须倒入dialog
 Vue.use(Message);
 /*MuseUI end*/
 
