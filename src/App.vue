@@ -7,8 +7,21 @@
     import {mapState,mapMutations,mapGetters} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
     export default {
         name: 'App',
+        data () {
+            return {
+                toast:{ //弹出toast配置
+                    position: 'top',               // 弹出的位置
+                    time: 1000,                       // 显示的时长
+                    closeIcon: 'close',               // 关闭的图标
+                    close: true,                      // 是否显示关闭按钮
+                }
+            }
+        },
         computed:{//数据计算
             ...mapState(['count','userToken']),//配置vuex状态的值
+        },
+        mounted(){//创建完毕后执行
+            this.$toast.config(this.toast);//加载提示toast的配置
         },
         methods: {
             //用vuex存登录token和用户名字

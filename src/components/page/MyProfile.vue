@@ -97,7 +97,7 @@
                     username: '',
                     password: '',
                     isAgree: false,
-                }
+                },
             }
         },
         computed:{//数据计算
@@ -126,7 +126,7 @@
                             if(response.status==200){
                                 this.setToken(response.data.token);//把token保存到vuex里面
                                 this.closeFullscreenDialog();//关闭登录
-                                this.$toast.success(response.data.message);
+                                this.$toast.message(response.data.message);//toast消息
                                 console.log(response);
                             }
                         }).catch((error) =>{
@@ -163,7 +163,7 @@
                             this.axios.post('api/logout',usertoken).then((response) => {
                                 console.log(response.data.message);
                                 this.deleteUser();//vuex删除用户数据
-                                this.$toast.success(response.data.message);
+                                this.$toast.message(response.data.message);
                             }).catch((error) =>{
                                 alert(error);
                             });
