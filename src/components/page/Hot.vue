@@ -10,17 +10,39 @@
         </Sticky>
         <!--导航条结束-->
         <mu-paper class="demo-list-wrap">
-            <mu-list textline="two-line">
-                    <mu-list-item  v-for="v in sortarticle" :key="v.id" avatar :ripple="true" button>
-                        <mu-list-item-action class="articleimg">
+            <mu-list textline="two-line"  v-for="v in sortarticle" :key="v.id">
+                <mu-sub-header v-text="v.date"></mu-sub-header>
+                <mu-list-item  avatar :ripple="true" button>
+                    <mu-list-item-action class="articleimg">
+                        <img class="articleimg1" :src="v.articleimg">
+                    </mu-list-item-action>&nbsp;&nbsp;
+                    <mu-list-item-content>
+                        <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
+                        <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
+                        <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
+                    </mu-list-item-content>
+                    <mu-list-item-action >
+                        <mu-list-item-after-text>15 min</mu-list-item-after-text>
+                        <mu-checkbox color="yellow700"  value="value1" uncheck-icon="star_border" checked-icon="star"></mu-checkbox>
+                    </mu-list-item-action>
+                </mu-list-item>
+            </mu-list>
+            <mu-list textline="three-line">
+                <mu-sub-header>昨天</mu-sub-header>
+                <mu-list-item  v-for="v in sortarticle" :key="v.id" avatar :ripple="true" button>
+                    <mu-list-item-content>
+                        <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
+                        <mu-list-item-after-text >
                             <img class="articleimg" :src="v.articleimg">
-                        </mu-list-item-action>&nbsp;&nbsp;
-                        <mu-list-item-content>
-                            <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
-                            <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
-                            <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
-                        </mu-list-item-content>
-                    </mu-list-item>
+                            <img class="articleimg" :src="v.articleimg">
+                            <img class="articleimg" :src="v.articleimg">
+                        </mu-list-item-after-text>
+                    </mu-list-item-content>
+                    <mu-list-item-action >
+                        <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
+                        <mu-checkbox color="yellow700" value="value1" uncheck-icon="star_border" checked-icon="star"></mu-checkbox>
+                    </mu-list-item-action>
+                </mu-list-item>
             </mu-list>
         </mu-paper>
 
@@ -59,7 +81,7 @@
                         articleimg: 'static/images/avatar.jpg',
                         articleTitle: '韩国大战日本4',
                         subTitle: '最近韩国对日时间灭了半个日本',
-                        date: '2018年11月1日'
+                        date: '11月1日'
                     },
                     {
                         id: 5,
@@ -135,12 +157,17 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .articleimg {
-        width: 90px;
-        max-width: 90px;
-        min-width: 90px;
-        height: 67px;
+        width: 32%;
+        max-width: 32%;
+        min-width: 30%;
+        height: 60px;
     }
-
+    .articleimg1 {
+        width: 95%;
+        max-width: 95%;
+        min-width: 90%;
+        height: 95%;
+    }
     .swipernav {
         width: 100%;
         min-width: 100%;
