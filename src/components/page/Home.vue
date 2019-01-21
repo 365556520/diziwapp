@@ -27,17 +27,10 @@
             <div class="demo-text" v-if="active === 0">
                 <mu-row class="mymargin chaxun">
                     <mu-col span="10">
-                        <mu-select color="red500" label="起点"  filterable full-width v-model="filterable.start"
-                                   icon="person_pin_circle" chips>
-                            <mu-option v-for="city,index in buses_start" :key="city" :label="city" :value="city"></mu-option>
-                        </mu-select>
-                        <br/>
+                         <mu-auto-complete :data="buses_route_name" label="起点"  v-model="filterable.start" icon="person_pin_circle"></mu-auto-complete>
                     </mu-col>
                     <mu-col span="10">
-                        <mu-select color="red500" label="终点" filterable full-width v-model="filterable.end" icon="pin_drop"
-                                   chips>
-                            <mu-option v-for="city,index in buses_end" :key="city" :label="city" :value="city"></mu-option>
-                        </mu-select>
+                        <mu-auto-complete :data="buses_route_name" label="终点" v-model="filterable.end" icon="pin_drop"></mu-auto-complete>
                     </mu-col>
                     <!--查询按钮-->
                     <mu-col span="12">
@@ -114,6 +107,12 @@
                 this.buses_start = response.data.data.buses_start;
                 this.buses_midway = response.data.data.buses_midway;
                 this.buses_end = response.data.data.buses_end;
+                var name = response.data.data.buses_route_name;
+                //转换为数组
+                for (let i in name) {
+                    this.buses_route_name.push(name[i]); //属性
+                }
+                console.log(this.buses_route_name);
             })
         },
         data () {
@@ -147,9 +146,11 @@
                 buses_midway: [],
                 //终点
                 buses_end: [],
+                //地名名字
+                buses_route_name: [],
                 //绑定输入框值
                 filterable: {
-                    start: '西峡',
+                    start: '',
                     end: '',
                 },
                 searchbuses: ['asdas'],
@@ -160,22 +161,26 @@
         methods: {
             //点击查询
             search(){
-                this.openFullscreen = true;
-                this.axios.get('api/getBusesRouteId/', {
-                    params: {
-                        buses_start: this.filterable.start,
-                        buses_end: this.filterable.end,
-                    }
-                })
-                    .then((response) => {
-                        if (response.data.code == 200) {
-                            this.searchbuses = response.data.data;
-                            console.log(response.data.data);
+                if(this.filterable.start != ''){
+                    this.openFullscreen = true;
+                    this.axios.get('api/getBusesRouteId/', {
+                        params: {
+                            buses_start: this.filterable.start,
+                            buses_end: this.filterable.end,
                         }
                     })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                        .then((response) => {
+                            if (response.data.code == 200) {
+                                this.searchbuses = response.data.data;
+                                console.log(response.data.data);
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }else{
+                    this.$toast.message("出发地不能为空");
+                }
             },
             //弹出框关闭按钮
             closeFullscreenDialog () {
