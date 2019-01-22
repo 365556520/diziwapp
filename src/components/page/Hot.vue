@@ -8,13 +8,13 @@
                 </swiper-slide>
             </swiper>
         </Sticky>
-        <!--导航条结束-->
-        <mu-paper class="demo-list-wrap">
-            <mu-list textline="two-line"  v-for="v in sortarticle" :key="v.id">
+        <!--导航条结束 -->
+        <mu-paper class="demo-list-wrap" v-for="v in sortarticle" :key="v.id" >
+            <mu-list v-if="v.articleimg.length === 1" textline="two-line">
                 <mu-sub-header v-text="v.date"></mu-sub-header>
                 <mu-list-item  avatar :ripple="true" button>
-                    <mu-list-item-action class="articleimg">
-                        <img class="articleimg1" :src="v.articleimg">
+                    <mu-list-item-action>
+                        <img class="oneimg" :src="v.articleimg">
                     </mu-list-item-action>&nbsp;&nbsp;
                     <mu-list-item-content>
                         <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
@@ -22,20 +22,19 @@
                         <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
                     </mu-list-item-content>
                     <mu-list-item-action >
-                        <mu-list-item-after-text>15 min</mu-list-item-after-text>
+                        <mu-list-item-after-text>时间</mu-list-item-after-text>
                         <mu-checkbox color="yellow700"  value="value1" uncheck-icon="star_border" checked-icon="star"></mu-checkbox>
                     </mu-list-item-action>
                 </mu-list-item>
+
             </mu-list>
-            <mu-list textline="three-line">
-                <mu-sub-header>昨天</mu-sub-header>
-                <mu-list-item  v-for="v in sortarticle" :key="v.id" avatar :ripple="true" button>
+            <mu-list v-if="v.articleimg.length >1"  textline="three-line">
+                <mu-sub-header v-text="v.date"></mu-sub-header>
+                <mu-list-item    avatar :ripple="true" button>
                     <mu-list-item-content>
                         <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
                         <mu-list-item-after-text >
-                            <img class="articleimg" :src="v.articleimg">
-                            <img class="articleimg" :src="v.articleimg">
-                            <img class="articleimg" :src="v.articleimg">
+                            <img class="threeimg" v-for="value in v.articleimg"  :src="value">
                         </mu-list-item-after-text>
                     </mu-list-item-content>
                     <mu-list-item-action >
@@ -45,7 +44,6 @@
                 </mu-list-item>
             </mu-list>
         </mu-paper>
-
     </div>
 </template>
 <script>
@@ -57,56 +55,56 @@
                 article: [
                     {
                         id: 1,
-                        articleimg: 'static/images/avatar.jpg',
+                        articleimg: ['static/images/avatar.jpg'],
                         articleTitle: '韩国大战日本1',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年12月1日'
                     },
                     {
                         id: 2,
-                        articleimg: 'static/images/avatar.jpg',
+                        articleimg:['static/images/avatar.jpg','static/images/avatar.jpg','static/images/avatar.jpg'],
                         articleTitle: '韩国大战日本2',
                         subTitle: '最近韩国对日时间灭了半个日本最近韩国对日时间灭了半个日本最近韩国对日时间灭了半个日本',
                         date: '2018年12月2日'
                     },
                     {
                         id: 3,
-                        articleimg: 'static/images/avatar.jpg',
+                        articleimg:['static/images/avatar.jpg','static/images/avatar.jpg','static/images/avatar.jpg'],
                         articleTitle: '韩国大战日本3',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年11月2日'
                     },
                     {
                         id: 4,
-                        articleimg: 'static/images/avatar.jpg',
+                        articleimg:['static/images/avatar.jpg','static/images/avatar.jpg','static/images/avatar.jpg'],
                         articleTitle: '韩国大战日本4',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '11月1日'
                     },
                     {
                         id: 5,
-                        articleimg: 'static/images/avatar.jpg',
+                        articleimg: ['static/images/avatar.jpg'],
                         articleTitle: '韩国大战日本5',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年12月4日'
                     },
                     {
                         id: 6,
-                        articleimg: 'static/images/avatar.jpg',
+                        articleimg: ['static/images/avatar.jpg','static/images/avatar.jpg','static/images/avatar.jpg'],
                         articleTitle: '韩国大战日本4',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年11月1日'
                     },
                     {
                         id: 7,
-                        articleimg: 'static/images/avatar.jpg',
+                        articleimg: ['static/images/avatar.jpg'],
                         articleTitle: '韩国大战日本4',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年11月1日'
                     },
                     {
                         id: 8,
-                        articleimg: 'static/images/avatar.jpg',
+                        articleimg: ['static/images/avatar.jpg'],
                         articleTitle: '韩国大战日本4',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年11月1日'
@@ -156,17 +154,19 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .articleimg {
+    .threeimg {
         width: 32%;
         max-width: 32%;
         min-width: 30%;
         height: 60px;
+        margin: 1px;
     }
-    .articleimg1 {
-        width: 95%;
-        max-width: 95%;
-        min-width: 90%;
+    .oneimg {
+        width: 90px;
+        max-width: 90px;
+        min-width:  90px;
         height: 95%;
+        margin: 1px;
     }
     .swipernav {
         width: 100%;
