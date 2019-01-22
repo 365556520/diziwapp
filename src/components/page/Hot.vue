@@ -4,7 +4,7 @@
         <Sticky top="0px" z-ndex="1">
             <swiper class="swipenavbg swipernav" :options="swiperOption">
                 <swiper-slide v-for="v in tags" :key="v.id">
-                    <span style="font-size:17px;color:#fafafa;" v-text="v.name"></span>
+                    <span style="font-size:17px;color:#fafafa;" v-text="v.cate_name"></span>
                 </swiper-slide>
             </swiper>
         </Sticky>
@@ -50,6 +50,13 @@
     import Sticky from 'vue-sticky-position' //vue-sticky-position粘性定位和固定顶部导航
     export default {
         name: 'Hot',
+        mounted(){ //这个挂在第一次进入页面后运行一次
+            this.axios.get('api/getCategorys').then((response) => {
+                if(response.data.code == '200'){
+                    this.tags = response.data.data;
+                }
+            })
+        },
         data () {
             return {
                 article: [
@@ -119,14 +126,7 @@
                         clickable: true
                     }
                 },
-                tags: [
-                    {id: 1, name: '新闻'},
-                    {id: 2, name: '二手车'},
-                    {id: 3, name: '房介'},
-                    {id: 4, name: '八卦'},
-                    {id: 5, name: '姻缘'},
-                    {id: 6, name: '基金交易'},
-                ],
+                tags: [],
             }
         },
         computed: {
