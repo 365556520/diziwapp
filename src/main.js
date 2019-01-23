@@ -43,6 +43,7 @@ import {
     Tabs,
     Snackbar,
     AutoComplete,
+    LoadMore,
 } from 'muse-ui';
 import theme from 'muse-ui/lib/theme';
 import 'muse-ui/lib/styles/theme.less';
@@ -72,6 +73,7 @@ Vue.use(Form);
 Vue.use(Tabs);
 Vue.use(Snackbar);
 Vue.use(AutoComplete);
+Vue.use(LoadMore);
 //MuseUI插件
 import Toast from 'muse-ui-toast';  //这个Toast有依赖Snackbar所以必须先导入Snackbar
 Vue.use(Toast);

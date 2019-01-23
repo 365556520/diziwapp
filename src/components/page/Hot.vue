@@ -9,40 +9,54 @@
             </swiper>
         </Sticky>
         <!--导航条结束 -->
-        <mu-paper class="demo-list-wrap" v-for="v in sortarticle" :key="v.id" >
-            <mu-list v-if="v.articleimg.length === 1" textline="two-line">
-                <mu-sub-header v-text="v.date"></mu-sub-header>
-                <mu-list-item  avatar :ripple="true" button>
-                    <mu-list-item-action>
-                        <img class="oneimg" :src="v.articleimg">
-                    </mu-list-item-action>&nbsp;&nbsp;
-                    <mu-list-item-content>
-                        <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
-                        <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
-                        <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
-                    </mu-list-item-content>
-                    <mu-list-item-action >
-                        <mu-list-item-after-text>时间</mu-list-item-after-text>
-                        <mu-checkbox color="yellow700"  value="value1" uncheck-icon="star_border" checked-icon="star"></mu-checkbox>
-                    </mu-list-item-action>
-                </mu-list-item>
-
-            </mu-list>
-            <mu-list v-if="v.articleimg.length >1"  textline="three-line">
-                <mu-sub-header v-text="v.date"></mu-sub-header>
-                <mu-list-item    avatar :ripple="true" button>
-                    <mu-list-item-content>
-                        <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
-                        <mu-list-item-after-text >
-                            <img class="threeimg" v-for="value in v.articleimg"  :src="value">
-                        </mu-list-item-after-text>
-                    </mu-list-item-content>
-                    <mu-list-item-action >
-                        <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
-                        <mu-checkbox color="yellow700" value="value1" uncheck-icon="star_border" checked-icon="star"></mu-checkbox>
-                    </mu-list-item-action>
-                </mu-list-item>
-            </mu-list>
+        <mu-paper class="demo-list-wrap">
+            <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" loading-text="正在加载呢稍等后">
+                <div  v-for="v in sortarticle" :key="v.id" >
+                <mu-list v-if="v.articleimg.length === 1" textline="two-line">
+                    <mu-list-item  avatar :ripple="true" button>
+                        <mu-list-item-content >
+                            <mu-row>
+                                <mu-col span="3" sm="3" md="2" lg="2" xl="2">
+                                    <img class="oneimg" :src="v.articleimg">
+                                </mu-col>
+                                <mu-col span="9" sm="9" md="10" lg="10" xl="9">
+                                    <mu-list-item-title >{{v.articleTitle}}+{{num}}</mu-list-item-title>
+                                    <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
+                                    <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
+                                </mu-col>
+                            </mu-row>
+                        </mu-list-item-content>
+                    </mu-list-item>
+                </mu-list>
+                <mu-list v-else-if="v.articleimg.length >1"  textline="three-line">
+                    <mu-list-item    avatar :ripple="true" button>
+                        <mu-list-item-content>
+                            <mu-row>
+                                <mu-col span="12" sm="12" md="12" lg="12" xl="12">
+                                    <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
+                                </mu-col>
+                            </mu-row>
+                            <mu-row>
+                                <mu-col span="12" sm="12" md="12" lg="12" xl="12">
+                                    <mu-list-item-after-text >
+                                        <img class="threeimg" v-for="value in v.articleimg"  :src="value">
+                                    </mu-list-item-after-text>
+                                </mu-col>
+                            </mu-row>
+                        </mu-list-item-content>
+                    </mu-list-item>
+                </mu-list>
+                <mu-list v-else >
+                    <mu-list-item    avatar :ripple="true" button>
+                        <mu-list-item-content>
+                            <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
+                            <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
+                            <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
+                        </mu-list-item-content>
+                    </mu-list-item>
+                </mu-list>
+            </div>
+            </mu-load-more>
         </mu-paper>
     </div>
 </template>
@@ -62,9 +76,9 @@
                 article: [
                     {
                         id: 1,
-                        articleimg: ['static/images/avatar.jpg'],
+                        articleimg: [],
                         articleTitle: '韩国大战日本1',
-                        subTitle: '最近韩国对日时间灭了半个日本',
+                        subTitle: '最近韩国对日时间灭了半个日本asdasdssssssssssssssssssssss',
                         date: '2018年12月1日'
                     },
                     {
@@ -91,7 +105,7 @@
                     {
                         id: 5,
                         articleimg: ['static/images/avatar.jpg'],
-                        articleTitle: '韩国大战日本5',
+                        articleTitle: '韩国大战日本5sssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年12月4日'
                     },
@@ -111,7 +125,7 @@
                     },
                     {
                         id: 8,
-                        articleimg: ['static/images/avatar.jpg'],
+                        articleimg: [],
                         articleTitle: '韩国大战日本4',
                         subTitle: '最近韩国对日时间灭了半个日本',
                         date: '2018年11月1日'
@@ -127,6 +141,9 @@
                     }
                 },
                 tags: [],
+                refreshing: false,
+                loading: false,
+                num: 1,
             }
         },
         computed: {
@@ -143,6 +160,21 @@
                     var y = a[key];
                     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
                 });
+            },
+            refresh () {
+                this.refreshing = true;
+                this.$refs.container.scrollTop = 0;
+                setTimeout(() => {
+                    this.refreshing = false;
+                    this.num = 10;
+                }, 2000)
+            },
+            load () {
+                this.loading = true;
+                setTimeout(() => {
+                    this.loading = false;
+                    this.num += 10;
+                }, 2000)
             }
         },
         components: {
@@ -158,15 +190,13 @@
         width: 32%;
         max-width: 32%;
         min-width: 30%;
-        height: 60px;
-        margin: 1px;
+        height: 68px;
+        margin-right: 2px;
     }
     .oneimg {
-        width: 90px;
-        max-width: 90px;
-        min-width:  90px;
-        height: 95%;
-        margin: 1px;
+        width: 97%;
+        height: 66px;
+        margin-right: 2px;
     }
     .swipernav {
         width: 100%;
