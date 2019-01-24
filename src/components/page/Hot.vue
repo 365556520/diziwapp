@@ -11,7 +11,7 @@
         <!--导航条结束 -->
         <mu-paper class="demo-list-wrap">
             <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" loading-text="正在加载呢稍等后">
-                <div  v-for="v in sortarticle" :key="v.id" >
+                <div ref="container"   v-for="v in sortarticle" :key="v.id" >
                 <mu-list v-if="v.articleimg.length === 1" textline="two-line">
                     <mu-list-item  avatar :ripple="true" button>
                         <mu-list-item-content >
@@ -144,6 +144,16 @@
                 refreshing: false,
                 loading: false,
                 num: 1,
+                params:{
+                    limit:10, //每页10个数据
+                    page:1, //当前页数默认第一页
+                    reload:'null', //搜索内容
+                    ifs:'title', //搜索的列名
+                    category_id:"null",//分类id
+                    articles_ids:"null", //分类id数组
+                }
+
+
             }
         },
         computed: {
@@ -171,7 +181,23 @@
             },
             load () {
                 this.loading = true;
+                console.log(this.params);
                 setTimeout(() => {
+                    this.axios.get('api/getArticles',{
+                        params: {
+                            limit:this.params.limit, //每页10个数据
+                            page:this.params.page, //当前页数默认第一页
+                            reload:this.params.reload, //搜索内容
+                            ifs:this.params.ifs, //搜索的列名
+                            category_id:this.params.category_id,//分类id
+                            articles_ids:this.params.articles_ids, //分类id数组
+                        }
+                    }).then((response) => {
+                        console.log(response.data);
+                        this.$toast.message(response.data.message);
+                    }).catch((error) =>{
+                        alert(error);
+                    });
                     this.loading = false;
                     this.num += 10;
                 }, 2000)
