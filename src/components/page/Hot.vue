@@ -212,6 +212,7 @@
                             if(response.data.code == '200'){
                                 this.refreshing = false;
                                 this.article = response.data;
+                                console.log('下滑加载'+this.article);
                             }
                         }).catch((error) =>{
                             alert(error);
