@@ -10,36 +10,36 @@
         </Sticky>
         <!--导航条结束 -->
         <mu-paper class="demo-list-wrap">
-            <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" loading-text="正在加载呢稍等后">
-                <div ref="container"   v-for="v in sortarticle" :key="v.id" >
-                <mu-list v-if="v.articleimg.length === 1" textline="two-line">
+            <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" :loading-text="loadingtext">
+                <div ref="container"   v-for="v in article.data.data" :key="v.id" >
+                <mu-list v-if="v.thumb.length === 1" textline="two-line">
                     <mu-list-item  avatar :ripple="true" button>
                         <mu-list-item-content >
                             <mu-row>
                                 <mu-col span="3" sm="3" md="2" lg="2" xl="2">
-                                    <img class="oneimg" :src="v.articleimg">
+                                    <img class="oneimg" :src="v.thumb">
                                 </mu-col>
                                 <mu-col span="9" sm="9" md="10" lg="10" xl="9">
-                                    <mu-list-item-title >{{v.articleTitle}}+{{num}}</mu-list-item-title>
-                                    <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
-                                    <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
+                                    <mu-list-item-title v-text="v.title"></mu-list-item-title>
+                                    <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
+                                    <mu-list-item-after-text v-text="v.created_at"></mu-list-item-after-text>
                                 </mu-col>
                             </mu-row>
                         </mu-list-item-content>
                     </mu-list-item>
                 </mu-list>
-                <mu-list v-else-if="v.articleimg.length >1"  textline="three-line">
+                <mu-list v-else-if="v.thumb.length >1"  textline="three-line">
                     <mu-list-item    avatar :ripple="true" button>
                         <mu-list-item-content>
                             <mu-row>
                                 <mu-col span="12" sm="12" md="12" lg="12" xl="12">
-                                    <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
+                                    <mu-list-item-title v-text="v.title"></mu-list-item-title>
                                 </mu-col>
                             </mu-row>
                             <mu-row>
                                 <mu-col span="12" sm="12" md="12" lg="12" xl="12">
                                     <mu-list-item-after-text >
-                                        <img class="threeimg" v-for="value in v.articleimg"  :src="value">
+                                        <img class="threeimg" v-for="value in v.thumb"  :src="value">
                                     </mu-list-item-after-text>
                                 </mu-col>
                             </mu-row>
@@ -49,9 +49,9 @@
                 <mu-list v-else >
                     <mu-list-item    avatar :ripple="true" button>
                         <mu-list-item-content>
-                            <mu-list-item-title v-text="v.articleTitle"></mu-list-item-title>
-                            <mu-list-item-sub-title v-text="v.subTitle"></mu-list-item-sub-title>
-                            <mu-list-item-after-text v-text="v.date"></mu-list-item-after-text>
+                            <mu-list-item-title v-text="v.title"></mu-list-item-title>
+                            <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
+                            <mu-list-item-after-text v-text="v.created_at"></mu-list-item-after-text>
                         </mu-list-item-content>
                     </mu-list-item>
                 </mu-list>
@@ -65,11 +65,34 @@
     export default {
         name: 'Hot',
         mounted(){ //这个挂在第一次进入页面后运行一次
+            //获取文章分类
             this.axios.get('api/getCategorys').then((response) => {
                 if(response.data.code == '200'){
                     this.tags = response.data.data;
+                    //获取文章
+                    this.axios.get('api/getArticles',{
+                        params: {
+                            limit:this.params.limit, //每页10个数据
+                            page:this.params.page, //当前页数默认第一页
+                            reload:this.params.reload, //搜索内容
+                            ifs:this.params.ifs, //搜索的列名
+                            category_id:this.params.category_id,//分类id
+                            articles_ids:this.params.articles_ids, //分类id数组
+                        }
+                    }).then((response) => {
+                        if(response.data.code == '200'){
+                            this.article = response.data;
+                            this.params.pagecounts =  Math.ceil(response.data.data.count/this.params.limit);
+                            console.log('总页数'+this.params.pagecounts);
+                        }
+                        console.log( this.article);
+                    }).catch((error) =>{
+                        alert(error);
+                    });
                 }
-            })
+            }).catch((error) =>{
+                alert(error);
+            });
         },
         data () {
             return {
@@ -143,17 +166,16 @@
                 tags: [],
                 refreshing: false,
                 loading: false,
-                num: 1,
+                loadingtext:'正在加载中...',
                 params:{
-                    limit:10, //每页10个数据
+                    limit:10, //每页10个数据说
                     page:1, //当前页数默认第一页
-                    reload:'null', //搜索内容
+                    reload:'', //搜索内容
                     ifs:'title', //搜索的列名
-                    category_id:"null",//分类id
-                    articles_ids:"null", //分类id数组
+                    category_id:"",//分类id
+                    articles_ids:"", //分类id数组
+                    pagecounts:0,//文章总页数
                 }
-
-
             }
         },
         computed: {
@@ -175,31 +197,58 @@
                 this.refreshing = true;
                 this.$refs.container.scrollTop = 0;
                 setTimeout(() => {
-                    this.refreshing = false;
-                    this.num = 10;
+                    if(this.params.page > 1 ){
+                        this.params.page = this.params.page - 1;
+                        this.axios.get('api/getArticles',{
+                            params: {
+                                limit:this.params.limit, //每页10个数据
+                                page:this.params.page, //当前页数默认第一页
+                                reload:this.params.reload, //搜索内容
+                                ifs:this.params.ifs, //搜索的列名
+                                category_id:this.params.category_id,//分类id
+                                articles_ids:this.params.articles_ids, //分类id数组
+                            }
+                        }).then((response) => {
+                            if(response.data.code == '200'){
+                                this.refreshing = false;
+                                this.article = response.data;
+                            }
+                        }).catch((error) =>{
+                            alert(error);
+                        });
+                    }else{
+                        this.refreshing = false;
+                        this.loadingtext = '加载到顶了';
+                    }
                 }, 2000)
             },
             load () {
                 this.loading = true;
-                console.log(this.params);
                 setTimeout(() => {
-                    this.axios.get('api/getArticles',{
-                        params: {
-                            limit:this.params.limit, //每页10个数据
-                            page:this.params.page, //当前页数默认第一页
-                            reload:this.params.reload, //搜索内容
-                            ifs:this.params.ifs, //搜索的列名
-                            category_id:this.params.category_id,//分类id
-                            articles_ids:this.params.articles_ids, //分类id数组
-                        }
-                    }).then((response) => {
-                        console.log(response.data);
-                        this.$toast.message(response.data.message);
-                    }).catch((error) =>{
-                        alert(error);
-                    });
-                    this.loading = false;
-                    this.num += 10;
+                    if(this.params.pagecounts>this.params.page){
+                        this.params.page += 1;
+                        this.axios.get('api/getArticles',{
+                            params: {
+                                limit:this.params.limit, //每页10个数据
+                                page:this.params.page, //当前页数默认第一页
+                                reload:this.params.reload, //搜索内容
+                                ifs:this.params.ifs, //搜索的列名
+                                category_id:this.params.category_id,//分类id
+                                articles_ids:this.params.articles_ids, //分类id数组
+                            }
+                        }).then((response) => {
+                            if(response.data.code == '200'){
+                                this.loading = false;
+                                this.article = response.data;
+                            }
+                        }).catch((error) =>{
+                            alert(error);
+                        });
+                    }else{
+                        this.loading = false;
+                        this.loadingtext = '加载到底了';
+                    }
+
                 }, 2000)
             }
         },
