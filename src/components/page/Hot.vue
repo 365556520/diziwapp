@@ -68,6 +68,7 @@
             //获取文章分类
             this.axios.get('api/getCategorys').then((response) => {
                 if(response.data.code == '200'){
+                    //获取分类
                     this.tags = response.data.data;
                     //获取文章
                     this.axios.get('api/getArticles',{
