@@ -22,7 +22,7 @@
             <!--轮播图end-->
             <!--班车时刻查询  -->
             <mu-row>
-                <mu-tabs :value.sync="active" color="blue500" style="z-index: 0" inverse indicator-color="blue500" full-width>
+                <mu-tabs :value.sync="active"  style="z-index: 0"  full-width>
                     <mu-tab>班车时刻表查询</mu-tab>
                     <mu-tab>公交查询</mu-tab>
                 </mu-tabs>
