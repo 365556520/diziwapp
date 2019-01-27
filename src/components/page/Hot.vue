@@ -1,7 +1,51 @@
 <template>
     <div>
+        <!--导航左侧-->
+        <mu-appbar class="navtop" color="indigo500" z-depth="0" >
+            <mu-button icon slot="left" @click="open = !open">
+                <mu-icon size="36" value="account_circle"></mu-icon>
+            </mu-button>
+            <mu-menu slot="right">
+                <mu-container>
+                    <mu-row class="diziwtop">
+                        <mu-col span="9" sm="9" md="9" lg="9" xl="9">
+                            <mu-flex justify-content="start">
+                                <mu-flex  justify-content="center" >
+                                    <mu-text-field v-model="params.reload"  placeholder="搜索" full-width underline-color="indigo50" color="indigo50" ></mu-text-field>
+                                </mu-flex>
+                            </mu-flex>
+                        </mu-col>
+                        <mu-col span="3" sm="3" md="3" lg="3" xl="3">
+                            <mu-flex justify-content="end">
+                                <mu-flex  justify-content="center" >
+                                    <mu-button icon color="primary">
+                                        <mu-icon value="search"></mu-icon>
+                                    </mu-button>
+                                </mu-flex>
+                            </mu-flex>
+                        </mu-col>
+                    </mu-row>
+                </mu-container>
+
+            </mu-menu>
+        </mu-appbar>
+        <!--导航左侧 end-->
+        <!--抽屉导航-->
+        <mu-drawer :open.sync="open" width="50%" :docked="docked" s :right="position === 'right'">
+            <mu-list>
+                <mu-list-item button>
+                    <mu-list-item-title>Menu Item 1</mu-list-item-title>
+                </mu-list-item>
+                <mu-list-item button>
+                    <mu-list-item-title>Menu Item 2</mu-list-item-title>
+                </mu-list-item>
+                <mu-list-item button>
+                    <mu-list-item-title @click="open = false">Close</mu-list-item-title>
+                </mu-list-item>
+            </mu-list>
+        </mu-drawer>
         <!--导航条-->
-        <Sticky top="0px" z-ndex="1">
+        <Sticky top="0px" z-ndex="0">
             <swiper class="swipenavbg swipernav" :options="swiperOption">
                 <swiper-slide v-for="v in tags" :key="v.id">
                     <span style="font-size:17px;color:#fafafa;" v-text="v.cate_name"></span>
@@ -9,59 +53,62 @@
             </swiper>
         </Sticky>
         <!--导航条结束 -->
-        <mu-paper class="demo-list-wrap">
-            <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" :loading-text="loadingtext">
-                <div ref="container"   v-for="v in article.data.data" :key="v.id" >
-                <mu-list v-if="v.thumb.length === 2" textline="two-line">
-                    <mu-list-item  avatar :ripple="true" button>
-                        <mu-list-item-content >
-                            <mu-row>
-                                <mu-col span="3" sm="3" md="2" lg="2" xl="2">
-                                    <img class="oneimg" v-for="value in v.thumb" v-if="value != ''" :src="'http://diziw.cn/'+article.msg+value">
-                                </mu-col>
-                                <mu-col span="9" sm="9" md="10" lg="10" xl="9">
+        <!--内容-->
+       <mu-paper class="demo-list-wrap">
+                <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" :loading-text="loadingtext">
+                    <div ref="container"   v-for="v in article.data.data" :key="v.id" >
+                        <mu-list v-if="v.thumb.length === 2" textline="two-line">
+                            <mu-list-item  avatar :ripple="true" button>
+                                <mu-list-item-content >
+                                    <mu-row>
+                                        <mu-col span="3" sm="3" md="2" lg="2" xl="2">
+                                            <img class="oneimg" v-for="value in v.thumb" v-if="value != ''" :src="imgurl+value">
+                                        </mu-col>
+                                        <mu-col span="9" sm="9" md="10" lg="10" xl="9">
+                                            <mu-list-item-title v-text="v.title"></mu-list-item-title>
+                                            <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
+                                            <mu-list-item-after-text v-text="v.created_at"></mu-list-item-after-text>
+                                        </mu-col>
+                                    </mu-row>
+                                </mu-list-item-content>
+                            </mu-list-item>
+                        </mu-list>
+                        <mu-list v-else-if="v.thumb.length >2"  textline="three-line">
+                            <mu-list-item  avatar :ripple="true" button>
+                                <mu-list-item-content>
+                                    <mu-row>
+                                        <mu-col span="12" sm="12" md="12" lg="12" xl="12">
+                                            <mu-list-item-title v-text="v.title"></mu-list-item-title>
+                                        </mu-col>
+                                    </mu-row>
+                                    <mu-row>
+                                        <mu-col span="12" sm="12" md="12" lg="12" xl="12">
+                                            <mu-list-item-after-text >
+                                                <img class="threeimg"  v-for="value in v.thumb" v-if="value != ''" :src="imgurl+value">
+                                            </mu-list-item-after-text>
+                                        </mu-col>
+                                    </mu-row>
+                                </mu-list-item-content>
+                            </mu-list-item>
+                        </mu-list>
+                        <mu-list v-else >
+                            <mu-list-item avatar :ripple="true" button>
+                                <mu-list-item-content>
                                     <mu-list-item-title v-text="v.title"></mu-list-item-title>
                                     <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
                                     <mu-list-item-after-text v-text="v.created_at"></mu-list-item-after-text>
-                                </mu-col>
-                            </mu-row>
-                        </mu-list-item-content>
-                    </mu-list-item>
-                </mu-list>
-                <mu-list v-else-if="v.thumb.length >2"  textline="three-line">
-                    <mu-list-item  avatar :ripple="true" button>
-                        <mu-list-item-content>
-                            <mu-row>
-                                <mu-col span="12" sm="12" md="12" lg="12" xl="12">
-                                    <mu-list-item-title v-text="v.title"></mu-list-item-title>
-                                </mu-col>
-                            </mu-row>
-                            <mu-row>
-                                <mu-col span="12" sm="12" md="12" lg="12" xl="12">
-                                    <mu-list-item-after-text >
-                                            <img class="threeimg"  v-for="value in v.thumb" v-if="value != ''" :src="'http://diziw.cn/'+article.msg+value">
-                                    </mu-list-item-after-text>
-                                </mu-col>
-                            </mu-row>
-                        </mu-list-item-content>
-                    </mu-list-item>
-                </mu-list>
-                <mu-list v-else >
-                    <mu-list-item avatar :ripple="true" button>
-                        <mu-list-item-content>
-                            <mu-list-item-title v-text="v.title"></mu-list-item-title>
-                            <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
-                            <mu-list-item-after-text v-text="v.created_at"></mu-list-item-after-text>
-                        </mu-list-item-content>
-                    </mu-list-item>
-                </mu-list>
-            </div>
-            </mu-load-more>
-        </mu-paper>
+                                </mu-list-item-content>
+                            </mu-list-item>
+                        </mu-list>
+                    </div>
+                </mu-load-more>
+            </mu-paper>
     </div>
 </template>
 <script>
     import Sticky from 'vue-sticky-position' //vue-sticky-position粘性定位和固定顶部导航
+    import vHeader from '../common/Header.vue';
+    import MuRow from "muse-ui/es5/Grid/Row";  //顶部导航组件
     export default {
         name: 'Hot',
         mounted(){ //这个挂在第一次进入页面后运行一次
@@ -83,8 +130,10 @@
                     }).then((response) => {
                         if(response.data.code == '200'){
                             this.article = response.data;
+                            //总页数
                             this.params.pagecounts =  Math.ceil(response.data.data.count/this.params.limit);
-                            console.log('总页数'+this.params.pagecounts);
+                            //图片地址
+                            this.imgurl = this.GLOBAL.serverSrc+this.article.msg;
                         }
                         console.log(this.article);
                     }).catch((error) =>{
@@ -97,7 +146,16 @@
         },
         data () {
             return {
-                article: [],//文章数据
+                //左边抽屉导航
+                docked: false,
+                open: false,
+                position: 'left',  //左边抽屉导航end
+                article: {
+                    code:'',
+                    data:{},
+                    msg:''
+                },//文章数据
+                imgurl:'',
                 swiperOption: {
                     slidesPerView: 4,
                     spaceBetween: 10,
@@ -107,7 +165,7 @@
                         clickable: true
                     }
                 },
-                tags: [],//导航
+                tags: {},//导航
                 refreshing: false,
                 loading: false,
                 loadingtext:'稍等后加载中...',
@@ -119,13 +177,13 @@
                     category_id:"",//分类id
                     articles_ids:"", //分类id数组
                     pagecounts:0,//文章总页数
-                }
+                },
             }
         },
         computed: {
             //根据日期进行排序
             sortarticle: function () {
-                return this.sortByKey(this.article.data.data,'date');
+
             }
         },
         methods: {
@@ -163,7 +221,6 @@
                         });
                     }else{
                         this.refreshing = false;
-                        this.loadingtext = '加载到顶了';
                     }
                 }, 2000)
             },
@@ -194,12 +251,12 @@
                         this.loading = false;
                         this.loadingtext = '加载到底了';
                     }
-
                 }, 2000)
             }
         },
         components: {
-            Sticky
+            MuRow,
+            Sticky,vHeader
         }
 
     }
@@ -224,7 +281,7 @@
         min-width: 100%;
         height: 50px;
         min-height: 50px;
-        background-color: #f44336;
+        background-color: #3f51b5;
         text-align: center;
         font-size:30px;
 
@@ -233,5 +290,8 @@
         width: 100%;
         max-width: 100%;
         overflow: hidden;
+    }
+    .diziwtop {
+        margin-top: 8px;
     }
 </style>

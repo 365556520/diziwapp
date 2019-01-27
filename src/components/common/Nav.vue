@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="bgimg">
-        <!--顶部--><v-header></v-header><!--顶部end-->
+
         <!--内容区域-->
         <mu-row class="diziw-content">
             <transition name="fade">
@@ -56,7 +56,7 @@
         background-attachment: fixed;
     }
     .diziw-content {
-        margin: 49px 0px 50px 0px;
+        margin: 0px 0px 50px 0px;
     }
 
     a {

@@ -4,7 +4,7 @@
         <Sticky top="0px" z-ndex="0">
             <mu-row>
                 <mu-col span="12">
-                    <mu-appbar class="navtop" color="red500" z-depth="0" >
+                    <mu-appbar class="navtop" color="indigo500" z-depth="0" >
                         <!--导航左侧-->
                         <mu-button icon slot="left" @click="open = !open">
                             <mu-icon size="36" value="account_circle"></mu-icon>

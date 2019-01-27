@@ -1,105 +1,109 @@
 <template>
     <div>
-        <!--轮播图-->
-        <mu-row>
-            <mu-col span="12">
-                <div class="grid-cell">
-                    <!-- swiper 轮播-->
-                    <swiper :options="swiperOption">
-                        <swiper-slide v-for="v in slides" :key="v.id" :style="{'background':'url('+v.preview+')','background-repeat':'no-repeat','background-size':'cover' }"
-                                      class="swiper-zoom-container">
-                            <!--图片放在div中这样能自适应-->
-                        </swiper-slide>
-                        <div class="swiper-scrollbar" slot="scrollbar">
-                        </div>
-                    </swiper>
-                    <!-- swiper end-->
-                </div>
-            </mu-col>
-        </mu-row>
-        <!--轮播图end-->
-        <!--班车时刻查询  -->
-        <mu-row>
-            <mu-tabs :value.sync="active" color="red500" style="z-index: 0" inverse indicator-color="red500" full-width>
-                <mu-tab>班车时刻表查询</mu-tab>
-                <mu-tab>公交查询</mu-tab>
-            </mu-tabs>
-            <div class="demo-text" v-if="active === 0">
-                <mu-row class="mymargin chaxun">
-                    <mu-col span="10">
-                         <mu-auto-complete :data="buses_route_name" label="起点"  v-model="filterable.start" icon="person_pin_circle"></mu-auto-complete>
-                    </mu-col>
-                    <mu-col span="10">
-                        <mu-auto-complete :data="buses_route_name" label="终点" v-model="filterable.end" icon="pin_drop"></mu-auto-complete>
-                    </mu-col>
-                    <!--查询按钮-->
-                    <mu-col span="12">
-                        <mu-flex class="flex-wrapper" justify-content="center">
-                            <mu-flex class="flex-demo" justify-content="center">
-                                <mu-button large color="red500" @click.prevent="search()">
-                                    <mu-icon value="search"></mu-icon>班车时刻查询
-                                </mu-button>
+        <!--顶部--><v-header></v-header><!--顶部end-->
+        <div class="content">
+            <!--轮播图-->
+            <mu-row>
+                <mu-col span="12">
+                    <div class="grid-cell">
+                        <!-- swiper 轮播-->
+                        <swiper :options="swiperOption">
+                            <swiper-slide v-for="v in slides" :key="v.id" :style="{'background':'url('+v.preview+')','background-repeat':'no-repeat','background-size':'cover' }"
+                                          class="swiper-zoom-container">
+                                <!--图片放在div中这样能自适应-->
+                            </swiper-slide>
+                            <div class="swiper-scrollbar" slot="scrollbar">
+                            </div>
+                        </swiper>
+                        <!-- swiper end-->
+                    </div>
+                </mu-col>
+            </mu-row>
+            <!--轮播图end-->
+            <!--班车时刻查询  -->
+            <mu-row>
+                <mu-tabs :value.sync="active" color="red500" style="z-index: 0" inverse indicator-color="red500" full-width>
+                    <mu-tab>班车时刻表查询</mu-tab>
+                    <mu-tab>公交查询</mu-tab>
+                </mu-tabs>
+                <div class="demo-text" v-if="active === 0">
+                    <mu-row class="mymargin chaxun">
+                        <mu-col span="10">
+                            <mu-auto-complete :data="buses_route_name" label="起点"  v-model="filterable.start" icon="person_pin_circle"></mu-auto-complete>
+                        </mu-col>
+                        <mu-col span="10">
+                            <mu-auto-complete :data="buses_route_name" label="终点" v-model="filterable.end" icon="pin_drop"></mu-auto-complete>
+                        </mu-col>
+                        <!--查询按钮-->
+                        <mu-col span="12">
+                            <mu-flex class="flex-wrapper" justify-content="center">
+                                <mu-flex class="flex-demo" justify-content="center">
+                                    <mu-button large color="red500" @click.prevent="search()">
+                                        <mu-icon value="search"></mu-icon>班车时刻查询
+                                    </mu-button>
+                                </mu-flex>
                             </mu-flex>
-                        </mu-flex>
-                    </mu-col>
-                    <!--查询按钮end-->
-                    <!--弹出框-->
-                    <mu-dialog width="360" transition="slide-bottom" scrollable fullscreen :open.sync="openFullscreen">
-                        <mu-appbar color="red500" :title="filterable.start + '→' + filterable.end">
-                            <mu-button slot="left" icon @click="closeFullscreenDialog">
-                                <mu-icon value="close"></mu-icon>
-                            </mu-button>
-                        </mu-appbar>
-                        <div style="padding: 24px;">
-                            <mu-expansion-panel v-for="v in searchbuses" :key="v.id" :expand="true">
-                                <div slot="header"><h3>班线 : {{v.buses_start}}—{{v.buses_midway}}—{{v.buses_end}}</h3></div>
-                                <div slot="default" v-for="value in v.get_buses" :key="value.id">
-                                    <mu-divider></mu-divider>
-                                    <H4>车号:{{value.buses_name}}</H4>
-                                    <span>
+                        </mu-col>
+                        <!--查询按钮end-->
+                        <!--弹出框-->
+                        <mu-dialog width="360" transition="slide-bottom" scrollable fullscreen :open.sync="openFullscreen">
+                            <mu-appbar color="red500" :title="filterable.start + '→' + filterable.end">
+                                <mu-button slot="left" icon @click="closeFullscreenDialog">
+                                    <mu-icon value="close"></mu-icon>
+                                </mu-button>
+                            </mu-appbar>
+                            <div style="padding: 24px;">
+                                <mu-expansion-panel v-for="v in searchbuses" :key="v.id" :expand="true">
+                                    <div slot="header"><h3>班线 : {{v.buses_start}}—{{v.buses_midway}}—{{v.buses_end}}</h3></div>
+                                    <div slot="default" v-for="value in v.get_buses" :key="value.id">
+                                        <mu-divider></mu-divider>
+                                        <H4>车号:{{value.buses_name}}</H4>
+                                        <span>
                                     发车时间:{{value.buses_start_date}}<br>
                                     返回时间:{{value.buses_end_date}}<br>
                                     联系电话:{{value.buses_phone}}
                                 </span>
-                                </div>
-                                <br>
-                                <mu-divider color="red500"></mu-divider>
-                            </mu-expansion-panel>
-                        </div>
-                    </mu-dialog>
-                    <!--弹出框end-->
-                </mu-row>
-            </div>
-            <div class="demo-text" v-if="active === 1">
-                <p>公交线路</p>
-            </div>
-            <mu-divider></mu-divider>
-            <br/>
-        </mu-row>
-        <mu-row>
-            <mu-col span="4" class="demo-paper">
-                <mu-button color="red500" class="btsize">按钮1</mu-button>
-            </mu-col>
-            <mu-col span="4" class="demo-paper">
-                <mu-button color="red500" class="btsize">按钮1</mu-button>
-            </mu-col>
-            <mu-col span="4" class="demo-paper">
-                <mu-button color="red500" class="btsize">按钮1</mu-button>
-            </mu-col>
-            <mu-col span="4" class="demo-paper">
-                <mu-button color="red500" class="btsize">按钮1</mu-button>
-            </mu-col>
-            <mu-col span="4" class="demo-paper">
-                <mu-button color="red500" class="btsize">按钮1</mu-button>
-            </mu-col>
-            <mu-col span="4" class="demo-paper">
-                <mu-button color="red500" class="btsize">按钮1</mu-button>
-            </mu-col>
-        </mu-row>
+                                    </div>
+                                    <br>
+                                    <mu-divider color="red500"></mu-divider>
+                                </mu-expansion-panel>
+                            </div>
+                        </mu-dialog>
+                        <!--弹出框end-->
+                    </mu-row>
+                </div>
+                <div class="demo-text" v-if="active === 1">
+                    <p>公交线路</p>
+                </div>
+                <mu-divider></mu-divider>
+                <br/>
+            </mu-row>
+            <mu-row>
+                <mu-col span="4" class="demo-paper">
+                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                </mu-col>
+                <mu-col span="4" class="demo-paper">
+                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                </mu-col>
+                <mu-col span="4" class="demo-paper">
+                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                </mu-col>
+                <mu-col span="4" class="demo-paper">
+                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                </mu-col>
+                <mu-col span="4" class="demo-paper">
+                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                </mu-col>
+                <mu-col span="4" class="demo-paper">
+                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                </mu-col>
+            </mu-row>
+        </div>
     </div>
 </template>
 
 <script>
+    import vHeader from '../common/Header.vue';  //顶部导航组件
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
@@ -186,6 +190,9 @@
             closeFullscreenDialog () {
                 this.openFullscreen = false;
             }
+        },
+        components: {
+            vHeader
         }
     }
 </script>
@@ -212,5 +219,8 @@
         max-width: 100%;
         width: 100%;
         height: 200px;
+    }
+    .content {
+        margin: 49px 0px 50px 0px;
     }
 </style>

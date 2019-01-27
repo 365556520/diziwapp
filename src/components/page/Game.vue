@@ -1,25 +1,29 @@
 <template>
     <div >
-        <p>{{count}}</p>
-        <button @click="add(10)">+</button>
-        <button @click="reduce">-</button>
+        <!--顶部--><v-header></v-header><!--顶部end-->
+        <div class="content">
+            <p>{{count}}</p>
+            <button @click="add(10)">+</button>
+            <button @click="reduce">-</button>
             <component v-bind:is="who"></component>
             <button @click="changeComponent">changeComponent</button>
-        <p v-for="v in newPrice" >
-        {{v.title}}-----{{v.date}}
-        </p>
-        <p>今日温度：{{temperature}}°C</p>
-        <p>穿衣建议:{{this.suggestion}}</p>
-        <p>
-            <button @click="add2">添加温度</button>
-            <button @click="reduce2">减少温度</button>
+            <p v-for="v in newPrice" >
+                {{v.title}}-----{{v.date}}
+            </p>
+            <p>今日温度：{{temperature}}°C</p>
+            <p>穿衣建议:{{this.suggestion}}</p>
+            <p>
+                <button @click="add2">添加温度</button>
+                <button @click="reduce2">减少温度</button>
 
-        </p>
-        {{userToken}}
+            </p>
+            {{userToken}}
+        </div>
     </div>
 </template>
 <script>
     import {mapState,mapMutations,mapGetters} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
+    import vHeader from '../common/Header.vue';  //顶部导航组件
     var componentA={
         template:`<div style="color:red;">I'm componentA</div>`
     }
@@ -57,6 +61,7 @@
             "componentA":componentA,
             "componentB":componentB,
             "componentC":componentC,
+            vHeader
         },
         methods:{
             ...mapMutations([
@@ -90,11 +95,13 @@
                     this.suggestion=suggestion[2];
                 }
             }
-        }
+        },
     }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+    .content {
+        margin: 49px 0px 50px 0px;
+    }
 </style>

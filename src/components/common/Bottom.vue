@@ -4,7 +4,7 @@
         <mu-row>
             <mu-col span="12">
                 <mu-container class="navbottom">
-                    <mu-bottom-nav :value.sync="newshift" color="red500" shift>
+                    <mu-bottom-nav :value.sync="newshift" color="indigo500" shift>
                         <mu-bottom-nav-item value="Home" :title=this.$route.meta.title icon="home" to="/Home"></mu-bottom-nav-item>
                         <mu-bottom-nav-item value="Hot" :title=this.$route.meta.title icon="comment" to="/Hot"></mu-bottom-nav-item>
                         <mu-bottom-nav-item value="Game" :title=this.$route.meta.title icon="videogame_asset"
