@@ -22,7 +22,7 @@
             <!--轮播图end-->
             <!--班车时刻查询  -->
             <mu-row>
-                <mu-tabs :value.sync="active" color="red500" style="z-index: 0" inverse indicator-color="red500" full-width>
+                <mu-tabs :value.sync="active" color="blue500" style="z-index: 0" inverse indicator-color="blue500" full-width>
                     <mu-tab>班车时刻表查询</mu-tab>
                     <mu-tab>公交查询</mu-tab>
                 </mu-tabs>
@@ -38,7 +38,7 @@
                         <mu-col span="12">
                             <mu-flex class="flex-wrapper" justify-content="center">
                                 <mu-flex class="flex-demo" justify-content="center">
-                                    <mu-button large color="red500" @click.prevent="search()">
+                                    <mu-button large color="blue500" @click.prevent="search()">
                                         <mu-icon value="search"></mu-icon>班车时刻查询
                                     </mu-button>
                                 </mu-flex>
@@ -47,7 +47,7 @@
                         <!--查询按钮end-->
                         <!--弹出框-->
                         <mu-dialog width="360" transition="slide-bottom" scrollable fullscreen :open.sync="openFullscreen">
-                            <mu-appbar color="red500" :title="filterable.start + '→' + filterable.end">
+                            <mu-appbar color="blue500" :title="filterable.start + '→' + filterable.end">
                                 <mu-button slot="left" icon @click="closeFullscreenDialog">
                                     <mu-icon value="close"></mu-icon>
                                 </mu-button>
@@ -65,7 +65,7 @@
                                 </span>
                                     </div>
                                     <br>
-                                    <mu-divider color="red500"></mu-divider>
+                                    <mu-divider color="blue500"></mu-divider>
                                 </mu-expansion-panel>
                             </div>
                         </mu-dialog>
@@ -80,22 +80,22 @@
             </mu-row>
             <mu-row>
                 <mu-col span="4" class="demo-paper">
-                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
                 </mu-col>
                 <mu-col span="4" class="demo-paper">
-                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
                 </mu-col>
                 <mu-col span="4" class="demo-paper">
-                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
                 </mu-col>
                 <mu-col span="4" class="demo-paper">
-                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
                 </mu-col>
                 <mu-col span="4" class="demo-paper">
-                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
                 </mu-col>
                 <mu-col span="4" class="demo-paper">
-                    <mu-button color="red500" class="btsize">按钮1</mu-button>
+                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
                 </mu-col>
             </mu-row>
         </div>

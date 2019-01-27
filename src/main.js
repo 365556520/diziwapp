@@ -45,7 +45,6 @@ import {
     AutoComplete,
     LoadMore,
 } from 'muse-ui';
-import theme from 'muse-ui/lib/theme';
 import 'muse-ui/lib/styles/theme.less';
 import 'typeface-roboto'
 Vue.use(AppBar);
@@ -79,6 +78,15 @@ import Toast from 'muse-ui-toast';  //这个Toast有依赖Snackbar所以必须�
 Vue.use(Toast);
 import Message from 'muse-ui-message'; //Message 依赖 dialog所以必须倒入dialog
 Vue.use(Message);
+import theme from 'muse-ui/lib/theme'; //主题
+theme.add('teal', {
+    background: {
+        paper: '#e0e0e0',
+        chip: '#e0e0e0',
+        default: '#e0e0e0'
+    }
+}, 'light');
+theme.use('teal');
 /*MuseUI end*/
 
 /*vue-awesome-swiper轮播插件*/

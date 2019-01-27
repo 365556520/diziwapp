@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--导航左侧-->
-        <mu-appbar class="navtop" color="indigo500" z-depth="0" >
+        <mu-appbar class="navtop" color="blue500" z-depth="0" >
             <mu-button icon slot="left" @click="open = !open">
                 <mu-icon size="36" value="account_circle"></mu-icon>
             </mu-button>
@@ -281,7 +281,7 @@
         min-width: 100%;
         height: 50px;
         min-height: 50px;
-        background-color: #3f51b5;
+        background-color: #2196f3;
         text-align: center;
         font-size:30px;
 
