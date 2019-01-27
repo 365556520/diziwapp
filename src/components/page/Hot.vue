@@ -12,12 +12,12 @@
         <mu-paper class="demo-list-wrap">
             <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" :loading-text="loadingtext">
                 <div ref="container"   v-for="v in article.data.data" :key="v.id" >
-                <mu-list v-if="v.thumb.length === 1" textline="two-line">
+                <mu-list v-if="v.thumb.length === 2" textline="two-line">
                     <mu-list-item  avatar :ripple="true" button>
                         <mu-list-item-content >
                             <mu-row>
                                 <mu-col span="3" sm="3" md="2" lg="2" xl="2">
-                                    <img class="oneimg" :src="v.thumb">
+                                    <img class="oneimg" v-for="value in v.thumb" v-if="value != ''" :src="'http://diziw.cn/'+article.msg+value">
                                 </mu-col>
                                 <mu-col span="9" sm="9" md="10" lg="10" xl="9">
                                     <mu-list-item-title v-text="v.title"></mu-list-item-title>
@@ -28,8 +28,8 @@
                         </mu-list-item-content>
                     </mu-list-item>
                 </mu-list>
-                <mu-list v-else-if="v.thumb.length >1"  textline="three-line">
-                    <mu-list-item    avatar :ripple="true" button>
+                <mu-list v-else-if="v.thumb.length >2"  textline="three-line">
+                    <mu-list-item  avatar :ripple="true" button>
                         <mu-list-item-content>
                             <mu-row>
                                 <mu-col span="12" sm="12" md="12" lg="12" xl="12">
@@ -39,7 +39,7 @@
                             <mu-row>
                                 <mu-col span="12" sm="12" md="12" lg="12" xl="12">
                                     <mu-list-item-after-text >
-                                        <img class="threeimg" v-for="value in v.thumb"  :src="value">
+                                            <img class="threeimg"  v-for="value in v.thumb" v-if="value != ''" :src="'http://diziw.cn/'+article.msg+value">
                                     </mu-list-item-after-text>
                                 </mu-col>
                             </mu-row>
@@ -47,7 +47,7 @@
                     </mu-list-item>
                 </mu-list>
                 <mu-list v-else >
-                    <mu-list-item    avatar :ripple="true" button>
+                    <mu-list-item avatar :ripple="true" button>
                         <mu-list-item-content>
                             <mu-list-item-title v-text="v.title"></mu-list-item-title>
                             <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
@@ -86,7 +86,7 @@
                             this.params.pagecounts =  Math.ceil(response.data.data.count/this.params.limit);
                             console.log('总页数'+this.params.pagecounts);
                         }
-                        console.log( this.article);
+                        console.log(this.article);
                     }).catch((error) =>{
                         alert(error);
                     });
@@ -97,64 +97,7 @@
         },
         data () {
             return {
-                article: [
-                    {
-                        id: 1,
-                        articleimg: [],
-                        articleTitle: '韩国大战日本1',
-                        subTitle: '最近韩国对日时间灭了半个日本asdasdssssssssssssssssssssss',
-                        date: '2018年12月1日'
-                    },
-                    {
-                        id: 2,
-                        articleimg:['static/images/avatar.jpg','static/images/avatar.jpg','static/images/avatar.jpg'],
-                        articleTitle: '韩国大战日本2',
-                        subTitle: '最近韩国对日时间灭了半个日本最近韩国对日时间灭了半个日本最近韩国对日时间灭了半个日本',
-                        date: '2018年12月2日'
-                    },
-                    {
-                        id: 3,
-                        articleimg:['static/images/avatar.jpg','static/images/avatar.jpg','static/images/avatar.jpg'],
-                        articleTitle: '韩国大战日本3',
-                        subTitle: '最近韩国对日时间灭了半个日本',
-                        date: '2018年11月2日'
-                    },
-                    {
-                        id: 4,
-                        articleimg:['static/images/avatar.jpg','static/images/avatar.jpg','static/images/avatar.jpg'],
-                        articleTitle: '韩国大战日本4',
-                        subTitle: '最近韩国对日时间灭了半个日本',
-                        date: '11月1日'
-                    },
-                    {
-                        id: 5,
-                        articleimg: ['static/images/avatar.jpg'],
-                        articleTitle: '韩国大战日本5sssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas',
-                        subTitle: '最近韩国对日时间灭了半个日本',
-                        date: '2018年12月4日'
-                    },
-                    {
-                        id: 6,
-                        articleimg: ['static/images/avatar.jpg','static/images/avatar.jpg','static/images/avatar.jpg'],
-                        articleTitle: '韩国大战日本4',
-                        subTitle: '最近韩国对日时间灭了半个日本',
-                        date: '2018年11月1日'
-                    },
-                    {
-                        id: 7,
-                        articleimg: ['static/images/avatar.jpg'],
-                        articleTitle: '韩国大战日本4',
-                        subTitle: '最近韩国对日时间灭了半个日本',
-                        date: '2018年11月1日'
-                    },
-                    {
-                        id: 8,
-                        articleimg: [],
-                        articleTitle: '韩国大战日本4',
-                        subTitle: '最近韩国对日时间灭了半个日本',
-                        date: '2018年11月1日'
-                    },
-                ],
+                article: [],//文章数据
                 swiperOption: {
                     slidesPerView: 4,
                     spaceBetween: 10,
@@ -164,10 +107,10 @@
                         clickable: true
                     }
                 },
-                tags: [],
+                tags: [],//导航
                 refreshing: false,
                 loading: false,
-                loadingtext:'正在加载中...',
+                loadingtext:'稍等后加载中...',
                 params:{
                     limit:10, //每页10个数据说
                     page:1, //当前页数默认第一页
@@ -182,7 +125,7 @@
         computed: {
             //根据日期进行排序
             sortarticle: function () {
-                return this.sortByKey(this.article,'date');
+                return this.sortByKey(this.article.data.data,'date');
             }
         },
         methods: {
@@ -213,7 +156,7 @@
                             if(response.data.code == '200'){
                                 this.refreshing = false;
                                 this.article = response.data;
-                                console.log('下滑加载'+this.article);
+                                console.log('上滑加载'+this.article);
                             }
                         }).catch((error) =>{
                             alert(error);
@@ -243,6 +186,7 @@
                                 this.loading = false;
                                 this.article = response.data;
                             }
+                            console.log(response.data);
                         }).catch((error) =>{
                             alert(error);
                         });
