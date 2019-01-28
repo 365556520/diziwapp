@@ -11,7 +11,7 @@
                         <mu-col span="12" sm="12" md="12" lg="12" xl="12">
                             <mu-flex justify-content="end">
                                 <mu-flex  justify-content="center">
-                                    <mu-text-field class="inputs" v-model="params.reload" full-width underline-color="red50" color="red50"action-icon="search" :action-click="reloadclick">
+                                    <mu-text-field class="inputs" v-model="params.reload" full-width underline-color="red50" color="red50"  action-icon="search"  :action-click="reloadclick">
                                     </mu-text-field>
                                 </mu-flex>
                             </mu-flex>
@@ -248,7 +248,26 @@
             },
             //点击搜索
             reloadclick(){
-                alert(this.params.reload);
+                //获取文章
+                this.axios.get('api/getArticles',{
+                    params: {
+                        limit:this.params.limit, //每页10个数据
+                        page:1, //当前页数默认第一页
+                        reload:this.params.reload, //搜索内容
+                        ifs:this.params.ifs, //搜索的列名
+                        category_id:'',//分类id
+                        articles_ids:'', //分类id数组
+                    }
+                }).then((response) => {
+                    if(response.data.code == '200'){
+                        this.article = response.data;
+                        //总页数
+                        this.params.pagecounts =  Math.ceil(response.data.data.count/this.params.limit);
+                    }
+                    console.log(this.article);
+                }).catch((error) =>{
+                    alert(error);
+                });
             }
         },
         components: {
