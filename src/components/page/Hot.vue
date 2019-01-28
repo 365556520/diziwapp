@@ -8,25 +8,16 @@
             <mu-menu slot="right">
                 <mu-container>
                     <mu-row class="diziwtop">
-                        <mu-col span="9" sm="9" md="9" lg="9" xl="9">
-                            <mu-flex justify-content="start">
-                                <mu-flex  justify-content="center" >
-                                    <mu-text-field v-model="params.reload"  placeholder="搜索" full-width underline-color="indigo50" color="indigo50" ></mu-text-field>
-                                </mu-flex>
-                            </mu-flex>
-                        </mu-col>
-                        <mu-col span="3" sm="3" md="3" lg="3" xl="3">
+                        <mu-col span="12" sm="12" md="12" lg="12" xl="12">
                             <mu-flex justify-content="end">
-                                <mu-flex  justify-content="center" >
-                                    <mu-button icon color="primary">
-                                        <mu-icon value="search"></mu-icon>
-                                    </mu-button>
+                                <mu-flex  justify-content="center">
+                                    <mu-text-field class="inputs" v-model="params.reload" full-width underline-color="red50" color="red50"action-icon="search" :action-click="reloadclick">
+                                    </mu-text-field>
                                 </mu-flex>
                             </mu-flex>
                         </mu-col>
                     </mu-row>
                 </mu-container>
-
             </mu-menu>
         </mu-appbar>
         <!--导航左侧 end-->
@@ -195,6 +186,7 @@
                     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
                 });
             },
+            //向上滑动
             refresh () {
                 this.refreshing = true;
                 this.$refs.container.scrollTop = 0;
@@ -224,6 +216,7 @@
                     }
                 }, 2000)
             },
+            //向下滑动
             load () {
                 this.loading = true;
                 setTimeout(() => {
@@ -252,6 +245,10 @@
                         this.loadingtext = '加载到底了';
                     }
                 }, 2000)
+            },
+            //点击搜索
+            reloadclick(){
+                alert(this.params.reload);
             }
         },
         components: {
@@ -293,5 +290,8 @@
     }
     .diziwtop {
         margin-top: 8px;
+    }
+    .inputs {
+        color: rgba(247, 242, 242, 0.87);
     }
 </style>
