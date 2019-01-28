@@ -106,7 +106,7 @@
                    <div style="padding: 23px;">
                         <h3><span v-text="onearticle.title"></span></h3>
                         <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
-                        <span class="OVERLINE" v-text="'作者:'+onearticle.user_id"></span><br>
+                        <span class="OVERLINE" v-text="'作者:'+onearticle.get_user.name"></span><br>
                         <span class="body1" v-html="onearticle.content"></span>
                    </div>
                </mu-dialog>
@@ -161,11 +161,14 @@
                 position: 'left',  //左边抽屉导航end
                 openFullscreen: false, //弹出对话框
                 onearticle:{
-                    thumb:{}
+                    thumb:{},
+                    get_user:{}
                 },
                 article: {
                     code:'',
-                    data:{},
+                    data:{
+                        get_user:{}
+                    },
                     msg:''
                 },//文章数据
                 imgurl:'',
