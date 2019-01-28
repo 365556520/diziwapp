@@ -16,7 +16,7 @@
             </mu-row>
         </Sticky>
         <!--抽屉导航-->
-        <mu-drawer :open.sync="open" width="50%" :docked="docked" s :right="position === 'right'">
+        <mu-drawer :open.sync="open" width="50%" :docked="docked" :right="position === 'right'">
             <mu-list>
                 <mu-list-item button>
                     <mu-list-item-title>Menu Item 1</mu-list-item-title>
@@ -24,8 +24,8 @@
                 <mu-list-item button>
                     <mu-list-item-title>Menu Item 2</mu-list-item-title>
                 </mu-list-item>
-                <mu-list-item button>
-                    <mu-list-item-title @click="open = false">Close</mu-list-item-title>
+                <mu-list-item button @click="open = false">
+                    <mu-list-item-title >Close</mu-list-item-title>
                 </mu-list-item>
             </mu-list>
         </mu-drawer>
@@ -67,7 +67,7 @@
                     this.shift = this.$route.name;
                 }
                 console.log(this.shift);
-            },
+            }
         },
         components:{
             Sticky

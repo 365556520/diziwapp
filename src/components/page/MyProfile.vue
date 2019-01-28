@@ -18,7 +18,7 @@
                 </mu-list-item>
             </mu-list>
             <!--弹出框-->
-            <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
+            <mu-dialog width="100%" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
                 <mu-appbar color="blue500" title="用户登录">
                     <mu-button slot="left" icon @click="closeFullscreenDialog">
                         <mu-icon value="close"></mu-icon>

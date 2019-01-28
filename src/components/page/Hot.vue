@@ -30,16 +30,16 @@
                 <mu-list-item button>
                     <mu-list-item-title>Menu Item 2</mu-list-item-title>
                 </mu-list-item>
-                <mu-list-item button>
+                <mu-list-item @click="open = false" button>
                     <mu-list-item-title @click="open = false">Close</mu-list-item-title>
                 </mu-list-item>
             </mu-list>
         </mu-drawer>
-        <!--导航条-->
+        <!--滚动导航条-->
         <Sticky top="0px" z-ndex="0">
             <swiper class="swipenavbg swipernav" :options="swiperOption">
                 <swiper-slide v-for="v in tags" :key="v.id">
-                    <span style="font-size:17px;color:#fafafa;" v-text="v.cate_name"></span>
+                    <span style="font-size:17px;color:#fafafa;" v-text="v.cate_name" v-on:click="getcategory(v.id)"></span>
                 </swiper-slide>
             </swiper>
         </Sticky>
@@ -49,7 +49,7 @@
                 <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" :loading-text="loadingtext">
                     <div ref="container"   v-for="v in article.data.data" :key="v.id" >
                         <mu-list v-if="v.thumb.length === 2" textline="two-line">
-                            <mu-list-item  avatar :ripple="true" button>
+                            <mu-list-item @click="openFullscreenDialog(v)" avatar :ripple="true" button>
                                 <mu-list-item-content >
                                     <mu-row>
                                         <mu-col span="3" sm="3" md="2" lg="2" xl="2">
@@ -65,7 +65,7 @@
                             </mu-list-item>
                         </mu-list>
                         <mu-list v-else-if="v.thumb.length >2"  textline="three-line">
-                            <mu-list-item  avatar :ripple="true" button>
+                            <mu-list-item @click="openFullscreenDialog(v)" avatar :ripple="true" button>
                                 <mu-list-item-content>
                                     <mu-row>
                                         <mu-col span="12" sm="12" md="12" lg="12" xl="12">
@@ -83,7 +83,7 @@
                             </mu-list-item>
                         </mu-list>
                         <mu-list v-else >
-                            <mu-list-item avatar :ripple="true" button>
+                            <mu-list-item @click="openFullscreenDialog(v)" avatar :ripple="true" button>
                                 <mu-list-item-content>
                                     <mu-list-item-title v-text="v.title"></mu-list-item-title>
                                     <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
@@ -93,7 +93,25 @@
                         </mu-list>
                     </div>
                 </mu-load-more>
-            </mu-paper>
+               <!--弹出窗口-->
+               <mu-dialog width="100%" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
+                   <mu-appbar color="primary" :title="onearticle.title">
+                       <mu-button slot="left" icon @click="closeFullscreenDialog">
+                           <mu-icon value="close"></mu-icon>
+                       </mu-button>
+                       <mu-button slot="right" flat  @click="closeFullscreenDialog">
+                           关闭
+                       </mu-button>
+                   </mu-appbar>
+                   <div style="padding: 23px;">
+                        <h3><span v-text="onearticle.title"></span></h3>
+                        <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
+                        <span class="OVERLINE" v-text="'作者:'+onearticle.user_id"></span><br>
+                        <span class="body1" v-html="onearticle.content"></span>
+                   </div>
+               </mu-dialog>
+               <!--弹出窗口end-->
+       </mu-paper>
     </div>
 </template>
 <script>
@@ -141,6 +159,10 @@
                 docked: false,
                 open: false,
                 position: 'left',  //左边抽屉导航end
+                openFullscreen: false, //弹出对话框
+                onearticle:{
+                    thumb:{}
+                },
                 article: {
                     code:'',
                     data:{},
@@ -268,6 +290,39 @@
                 }).catch((error) =>{
                     alert(error);
                 });
+            },
+            //点击分类获取分类文章
+            getcategory(id){
+                this.params.category_id = id;
+                //获取文章
+                this.axios.get('api/getArticles',{
+                    params: {
+                        limit:this.params.limit, //每页10个数据
+                        page:1, //当前页数默认第一页
+                        reload:this.params.reload, //搜索内容
+                        ifs:this.params.ifs, //搜索的列名
+                        category_id:this.params.category_id,//分类id
+                        articles_ids:'', //分类id数组
+                    }
+                }).then((response) => {
+                    if(response.data.code == '200'){
+                        this.article = response.data;
+                        //总页数
+                        this.params.pagecounts =  Math.ceil(response.data.data.count/this.params.limit);
+                    }
+                    console.log(this.article);
+                }).catch((error) =>{
+                    alert(error);
+                });
+            },
+            //开启弹出窗口
+            openFullscreenDialog (onearticle) {
+                this.onearticle = onearticle;
+                this.openFullscreen = true;
+            },
+            //关闭弹出窗口
+            closeFullscreenDialog () {
+                this.openFullscreen = false;
             }
         },
         components: {
@@ -312,5 +367,11 @@
     }
     .inputs {
         color: rgba(247, 242, 242, 0.87);
+    }
+    .OVERLINE{
+        font-size: 10px; font-weight: 400;
+    }
+    .body1{
+        font-size: 16px; font-weight: 400;
     }
 </style>
