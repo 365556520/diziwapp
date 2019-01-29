@@ -96,7 +96,7 @@
                 </mu-load-more>
        </mu-paper>
         <!--弹出窗口-->
-        <mu-dialog  width="100%" transition="slide-bottom" scrollable  fullscreen :open.sync="openFullscreen">
+        <mu-dialog  width="100%" padding="2" transition="slide-bottom" scrollable  fullscreen :open.sync="openFullscreen">
                 <Sticky top="0px" z-ndex="0">
                     <mu-appbar color="primary" :title="onearticle.title">
                         <mu-button slot="left" icon @click="closeFullscreenDialog">
