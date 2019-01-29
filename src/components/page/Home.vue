@@ -46,12 +46,14 @@
                         </mu-col>
                         <!--查询按钮end-->
                         <!--弹出框-->
-                        <mu-dialog width="360" transition="slide-bottom" scrollable fullscreen :open.sync="openFullscreen">
-                            <mu-appbar color="blue500" :title="filterable.start + '→' + filterable.end">
-                                <mu-button slot="left" icon @click="closeFullscreenDialog">
-                                    <mu-icon value="close"></mu-icon>
-                                </mu-button>
-                            </mu-appbar>
+                        <mu-dialog width="100%" :padding='dialogpidding' transition="scale" scrollable fullscreen :open.sync="openFullscreen">
+                            <Sticky top="0px" z-ndex="0"><!--//固定顶部-->
+                                <mu-appbar color="blue500" :title="filterable.start + '→' + filterable.end">
+                                    <mu-button slot="left" icon @click="closeFullscreenDialog">
+                                        <mu-icon size="39" value="keyboard_arrow_left"></mu-icon>
+                                    </mu-button>
+                                </mu-appbar>
+                            </Sticky>
                             <div style="padding: 24px;">
                                 <mu-expansion-panel v-for="v in searchbuses" :key="v.id" :expand="true">
                                     <div slot="header"><h3>班线 : {{v.buses_start}}—{{v.buses_midway}}—{{v.buses_end}}</h3></div>
@@ -104,6 +106,7 @@
 
 <script>
     import vHeader from '../common/Header.vue';  //顶部导航组件
+    import Sticky from 'vue-sticky-position' //vue-sticky-position粘性定位和固定顶部导航
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
@@ -160,6 +163,8 @@
                 searchbuses: ['asdas'],
                 //查询按钮弹出页面开关
                 openFullscreen: false,
+                //弹出框pidding
+                dialogpidding:5,
             }
         },
         methods: {
@@ -192,7 +197,7 @@
             }
         },
         components: {
-            vHeader
+            vHeader,Sticky
         }
     }
 </script>

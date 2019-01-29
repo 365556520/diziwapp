@@ -96,14 +96,11 @@
                 </mu-load-more>
        </mu-paper>
         <!--弹出窗口-->
-        <mu-dialog  width="100%" padding="2" transition="slide-bottom" scrollable  fullscreen :open.sync="openFullscreen">
+        <mu-dialog  width="100%"  transition="slide-left" scrollable  fullscreen   :open.sync="openFullscreen" :padding='dialogpidding'>
                 <Sticky top="0px" z-ndex="0">
                     <mu-appbar color="primary" :title="onearticle.title">
                         <mu-button slot="left" icon @click="closeFullscreenDialog">
-                            <mu-icon value="close"></mu-icon>
-                        </mu-button>
-                        <mu-button slot="right" flat  @click="closeFullscreenDialog">
-                            关闭
+                            <mu-icon size="39" value="keyboard_arrow_left"></mu-icon>
                         </mu-button>
                     </mu-appbar>
                 </Sticky>
@@ -164,6 +161,7 @@
                 open: false,
                 position: 'left',  //左边抽屉导航end
                 openFullscreen: false, //弹出对话框
+                dialogpidding:5,
                 onearticle:{
                     thumb:{},
                     get_user:{}
@@ -217,63 +215,71 @@
             },
             //向上滑动
             refresh () {
-                this.refreshing = true;
-                this.$refs.container.scrollTop = 0;
-                setTimeout(() => {
-                    if(this.params.page > 1 ){
-                        this.params.page = this.params.page - 1;
-                        this.axios.get('api/getArticles',{
-                            params: {
-                                limit:this.params.limit, //每页10个数据
-                                page:this.params.page, //当前页数默认第一页
-                                reload:this.params.reload, //搜索内容
-                                ifs:this.params.ifs, //搜索的列名
-                                category_id:this.params.category_id,//分类id
-                                articles_ids:this.params.articles_ids, //分类id数组
-                            }
-                        }).then((response) => {
-                            if(response.data.code == '200'){
-                                this.refreshing = false;
-                                this.article = response.data;
-                                console.log('上滑加载'+this.article);
-                            }
-                        }).catch((error) =>{
-                            alert(error);
-                        });
-                    }else{
-                        this.refreshing = false;
-                    }
-                }, 2000)
+                if(!this.refreshing){
+                    this.refreshing = true;
+                    this.$refs.container.scrollTop = 0;
+                    setTimeout(() => {
+                        if(this.params.page > 1 ){
+                            this.params.page = this.params.page - 1;
+                            this.axios.get('api/getArticles',{
+                                params: {
+                                    limit:this.params.limit, //每页10个数据
+                                    page:this.params.page, //当前页数默认第一页
+                                    reload:this.params.reload, //搜索内容
+                                    ifs:this.params.ifs, //搜索的列名
+                                    category_id:this.params.category_id,//分类id
+                                    articles_ids:this.params.articles_ids, //分类id数组
+                                }
+                            }).then((response) => {
+                                if(response.data.code == '200'){
+                                    this.refreshing = false;
+                                    this.article = response.data;
+                                    console.log('上滑加载'+this.article);
+                                }
+                            }).catch((error) =>{
+                                alert(error);
+                            });
+                        }else{
+                            this.refreshing = false;
+                        }
+                    }, 2000)
+                }else{
+
+                }
             },
             //向下滑动
             load () {
-                this.loading = true;
-                setTimeout(() => {
-                    if(this.params.pagecounts>this.params.page){
-                        this.params.page += 1;
-                        this.axios.get('api/getArticles',{
-                            params: {
-                                limit:this.params.limit, //每页10个数据
-                                page:this.params.page, //当前页数默认第一页
-                                reload:this.params.reload, //搜索内容
-                                ifs:this.params.ifs, //搜索的列名
-                                category_id:this.params.category_id,//分类id
-                                articles_ids:this.params.articles_ids, //分类id数组
-                            }
-                        }).then((response) => {
-                            if(response.data.code == '200'){
-                                this.loading = false;
-                                this.article = response.data;
-                            }
-                            console.log(response.data);
-                        }).catch((error) =>{
-                            alert(error);
-                        });
-                    }else{
-                        this.loading = false;
-                        this.loadingtext = '加载到底了';
-                    }
-                }, 2000)
+                if(!this.loading){
+                    this.loading = true;
+                    setTimeout(() => {
+                        if(this.params.pagecounts>this.params.page){
+                            this.params.page += 1;
+                            this.axios.get('api/getArticles',{
+                                params: {
+                                    limit:this.params.limit, //每页10个数据
+                                    page:this.params.page, //当前页数默认第一页
+                                    reload:this.params.reload, //搜索内容
+                                    ifs:this.params.ifs, //搜索的列名
+                                    category_id:this.params.category_id,//分类id
+                                    articles_ids:this.params.articles_ids, //分类id数组
+                                }
+                            }).then((response) => {
+                                if(response.data.code == '200'){
+                                    this.loading = false;
+                                    this.article = response.data;
+                                }
+                                console.log(response.data);
+                            }).catch((error) =>{
+                                alert(error);
+                            });
+                        }else{
+                            this.loading = false;
+                            this.loadingtext = '加载到底了';
+                        }
+                    }, 2000)
+                }else{
+                    this.$toast.message("正在加载中稍等后");
+                }
             },
             //点击搜索
             reloadclick(){
