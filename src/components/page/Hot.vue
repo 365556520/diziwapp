@@ -94,26 +94,28 @@
                         </mu-list>
                     </div>
                 </mu-load-more>
-               <!--弹出窗口-->
-               <mu-dialog  width="100%" style="height: 100%;" transition="slide-bottom" scrollable  fullscreen :open.sync="openFullscreen">
-                   <mu-appbar color="primary" :title="onearticle.title">
-                       <mu-button slot="left" icon @click="closeFullscreenDialog">
-                           <mu-icon value="close"></mu-icon>
-                       </mu-button>
-                       <mu-button slot="right" flat  @click="closeFullscreenDialog">
-                           关闭
-                       </mu-button>
-                   </mu-appbar>
-                   <div style="padding: 5px;">
-                       <h3><span v-text="onearticle.title"></span></h3>
-                       <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
-                       <span class="OVERLINE" v-text="'作者:'+onearticle.user_id"></span><br>
-                       <span class="body1" v-html="onearticle.content"></span>
-                   </div>
-                   <mu-button slot="actions" flat color="primary" @click="closeScrollDialog">评论</mu-button><br>
-               </mu-dialog>
-               <!--弹出窗口end-->
        </mu-paper>
+        <!--弹出窗口-->
+        <mu-dialog  width="100%" transition="slide-bottom" scrollable  fullscreen :open.sync="openFullscreen">
+                <Sticky top="0px" z-ndex="0">
+                    <mu-appbar color="primary" :title="onearticle.title">
+                        <mu-button slot="left" icon @click="closeFullscreenDialog">
+                            <mu-icon value="close"></mu-icon>
+                        </mu-button>
+                        <mu-button slot="right" flat  @click="closeFullscreenDialog">
+                            关闭
+                        </mu-button>
+                    </mu-appbar>
+                </Sticky>
+                <div style="padding: 5px;" >
+                    <h3><span v-text="onearticle.title"></span></h3>
+                    <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
+                    <span class="OVERLINE" v-text="'作者:'+onearticle.user_id"></span><br>
+                    <span class="body1" v-html="onearticle.content"></span>
+                </div>
+            <mu-button slot="actions" flat color="primary" @click="">评论</mu-button><br>
+        </mu-dialog>
+        <!--弹出窗口end-->
     </div>
 </template>
 <script>
