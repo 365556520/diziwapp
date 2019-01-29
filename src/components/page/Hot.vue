@@ -56,9 +56,10 @@
                                             <img class="oneimg" v-for="value in v.thumb" v-if="value != ''" :src="imgurl+value">
                                         </mu-col>
                                         <mu-col span="9" sm="9" md="10" lg="10" xl="9">
-                                            <mu-list-item-title v-text="v.title"></mu-list-item-title>
-                                            <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
-                                            <mu-list-item-after-text v-text="v.created_at"></mu-list-item-after-text>
+                                            <h3><span v-text="onearticle.title"></span></h3>
+                                            <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
+                                            <span class="OVERLINE" v-text="'作者:'+onearticle.get_user.name"></span><br>
+                                            <span class="body1" v-html="onearticle.content"></span>
                                         </mu-col>
                                     </mu-row>
                                 </mu-list-item-content>
@@ -94,7 +95,7 @@
                     </div>
                 </mu-load-more>
                <!--弹出窗口-->
-               <mu-dialog width="100%" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
+               <mu-dialog  width="100%" style="height: 100%;" transition="slide-bottom" scrollable  fullscreen :open.sync="openFullscreen">
                    <mu-appbar color="primary" :title="onearticle.title">
                        <mu-button slot="left" icon @click="closeFullscreenDialog">
                            <mu-icon value="close"></mu-icon>
@@ -103,17 +104,13 @@
                            关闭
                        </mu-button>
                    </mu-appbar>
-                   <mu-container>
-                           <mu-card style="width: 100%; max-width: 96%; margin: 0 auto;">
-
-                               <mu-card-title :title="onearticle.title" :sub-title="'作者:'+onearticle.get_user.name+'更新时间:'+onearticle.created_at"></mu-card-title>
-                               <mu-card-text>
-                                   <span class="body1" v-html="onearticle.content"></span>
-                               </mu-card-text>
-
-                           </mu-card>
-
-                   </mu-container>
+                   <div style="padding: 5px;">
+                       <h3><span v-text="onearticle.title"></span></h3>
+                       <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
+                       <span class="OVERLINE" v-text="'作者:'+onearticle.user_id"></span><br>
+                       <span class="body1" v-html="onearticle.content"></span>
+                   </div>
+                   <mu-button slot="actions" flat color="primary" @click="closeScrollDialog">评论</mu-button><br>
                </mu-dialog>
                <!--弹出窗口end-->
        </mu-paper>
