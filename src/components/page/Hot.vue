@@ -103,12 +103,17 @@
                            关闭
                        </mu-button>
                    </mu-appbar>
-                   <div style="padding: 23px;">
-                        <h3><span v-text="onearticle.title"></span></h3>
-                        <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
-                        <span class="OVERLINE" v-text="'作者:'+onearticle.get_user.name"></span><br>
-                        <span class="body1" v-html="onearticle.content"></span>
-                   </div>
+                   <mu-container>
+                           <mu-card style="width: 100%; max-width: 96%; margin: 0 auto;">
+
+                               <mu-card-title :title="onearticle.title" :sub-title="'作者:'+onearticle.get_user.name+'更新时间:'+onearticle.created_at"></mu-card-title>
+                               <mu-card-text>
+                                   <span class="body1" v-html="onearticle.content"></span>
+                               </mu-card-text>
+
+                           </mu-card>
+
+                   </mu-container>
                </mu-dialog>
                <!--弹出窗口end-->
        </mu-paper>
