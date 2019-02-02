@@ -39,7 +39,9 @@
         <Sticky top="0px" z-ndex="0">
             <swiper class="swipenavbg swipernav" :options="swiperOption">
                 <swiper-slide v-for="v in tags" :key="v.id">
-                    <span style="font-size:17px;color:#fafafa;" v-text="v.cate_name" v-on:click="getcategory(v.id)"></span>
+                    <mu-ripple class="mu-ripple-demo" v-on:click="getcategory(v.id)" color="yellow" :opacity="0.3">
+                        <span style="font-size:17px;color:#fafafa;" v-text="v.cate_name" ></span>
+                    </mu-ripple>
                 </swiper-slide>
             </swiper>
         </Sticky>

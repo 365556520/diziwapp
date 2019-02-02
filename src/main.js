@@ -47,7 +47,7 @@ import {
     Card,
 } from 'muse-ui';
 import 'muse-ui/lib/styles/theme.less';
-import 'typeface-roboto'
+import 'typeface-roboto';
 Vue.use(AppBar);
 Vue.use(Avatar);
 Vue.use(BottomNav);
