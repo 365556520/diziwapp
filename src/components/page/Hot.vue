@@ -104,10 +104,10 @@
                         </mu-button>
                     </mu-appbar>
                 </Sticky>
-                <div style="padding: 5px;" >
+                <div style="padding: 3px 15px 3px 15px;" >
                     <h3><span v-text="onearticle.title"></span></h3>
-                    <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
                     <span class="OVERLINE" v-text="'作者:'+onearticle.user_id"></span><br>
+                    <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
                     <span class="body1" v-html="onearticle.content"></span>
                 </div>
             <mu-button slot="actions" flat color="primary" @click="">评论</mu-button><br>
@@ -242,7 +242,7 @@
                         }else{
                             this.refreshing = false;
                         }
-                    }, 2000)
+                    }, 1000)
                 }else{
 
                 }
@@ -276,7 +276,7 @@
                             this.loading = false;
                             this.loadingtext = '加载到底了';
                         }
-                    }, 2000)
+                    }, 1000)
                 }else{
                     this.$toast.message("正在加载中稍等后");
                 }
@@ -335,6 +335,11 @@
             },
             //关闭弹出窗口
             closeFullscreenDialog () {
+                //清空数据
+                this.onearticle = {
+                    thumb:{},
+                    get_user:{}
+                };
                 this.openFullscreen = false;
             }
         },
@@ -385,6 +390,6 @@
         font-size: 10px; font-weight: 400;
     }
     .body1{
-        font-size: 16px; font-weight: 400;
+        font-size: 18px; font-weight: 400;
     }
 </style>
