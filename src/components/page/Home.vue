@@ -75,7 +75,8 @@
                     </mu-row>
                 </div>
                 <div class="demo-text" v-if="active === 1">
-                    <p>公交线路</p>
+                    <baidu-map class="bm-view" center="北京">
+                    </baidu-map>
                 </div>
                 <mu-divider></mu-divider>
                 <br/>
@@ -106,7 +107,8 @@
 
 <script>
     import vHeader from '../common/Header.vue';  //顶部导航组件
-    import Sticky from 'vue-sticky-position' //vue-sticky-position粘性定位和固定顶部导航
+    import Sticky from 'vue-sticky-position'; //vue-sticky-position粘性定位和固定顶部导航
+    import BaiduMap from 'vue-baidu-map/components/map/Map.vue'; //百度地图
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
@@ -197,7 +199,7 @@
             }
         },
         components: {
-            vHeader,Sticky
+            vHeader,Sticky,BaiduMap
         }
     }
 </script>
@@ -227,5 +229,9 @@
     }
     .content {
         margin: 49px 0px 50px 0px;
+    }
+    .bm-view {
+        width: 100%;
+        height: 300px;
     }
 </style>
