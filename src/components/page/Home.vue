@@ -23,10 +23,11 @@
             <!--班车时刻查询  -->
             <mu-row>
                 <mu-tabs :value.sync="active"  style="z-index: 0"  full-width>
-                    <mu-tab>班车时刻表查询</mu-tab>
+                    <mu-tab>班线查询</mu-tab>
                     <mu-tab>公交查询</mu-tab>
                 </mu-tabs>
-                <div class="demo-text" v-if="active === 0">
+                <div class="tabscon" v-if="active === 0">
+                    <!--班线查询-->
                     <mu-row class="mymargin chaxun">
                         <mu-col span="10">
                             <mu-auto-complete :data="buses_route_name" label="起点"  v-model="filterable.start" icon="person_pin_circle"></mu-auto-complete>
@@ -39,7 +40,7 @@
                             <mu-flex class="flex-wrapper" justify-content="center">
                                 <mu-flex class="flex-demo" justify-content="center">
                                     <mu-button large color="blue500" @click.prevent="search()">
-                                        <mu-icon value="search"></mu-icon>班车时刻查询
+                                        <mu-icon value="search"></mu-icon>班车线路
                                     </mu-button>
                                 </mu-flex>
                             </mu-flex>
@@ -73,34 +74,67 @@
                         </mu-dialog>
                         <!--弹出框end-->
                     </mu-row>
+                    <mu-divider></mu-divider>
+                    <br/>
+                    <mu-row>
+                        <mu-col span="4" class="demo-paper">
+                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                        </mu-col>
+                        <mu-col span="4" class="demo-paper">
+                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                        </mu-col>
+                        <mu-col span="4" class="demo-paper">
+                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                        </mu-col>
+                        <mu-col span="4" class="demo-paper">
+                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                        </mu-col>
+                        <mu-col span="4" class="demo-paper">
+                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                        </mu-col>
+                        <mu-col span="4" class="demo-paper">
+                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                        </mu-col>
+                    </mu-row>
                 </div>
-                <div class="demo-text" v-if="active === 1">
-                    <baidu-map class="bm-view" center="北京">
-                    </baidu-map>
+                <div class="tabscon" v-if="active === 1">
+
+                        <mu-row style="padding:2px;">
+                            <mu-col span="12" >
+                                <!--地图-->
+                                <baidu-map   ak="LQjsPOAqD3uooTTVrIUePWUm" :center="baidumap.center" :zoom="baidumap.zoom" :scroll-wheel-zoom="true">
+                                    <!--比例尺-->
+                                    <bm-scale anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-scale>
+                                    <!--缩放-->
+                                    <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
+                                    <bm-view class="bm-view" > </bm-view>
+                                    <!--地图中的内容-->
+                                    <bm-control style="padding: 3px">
+                                        <mu-row>
+                                            <mu-col span="4" >
+                                                <mu-select label="公交线路" v-model="baidumap.keyword" full-width>
+                                                    <mu-option v-for="option,index in baidumap.keywords" :key="option" :label="option" :value="option"></mu-option>
+                                                </mu-select>
+                                            </mu-col>
+                                        </mu-row>
+                                        <mu-row >
+                                            <mu-col span="4">
+                                                <mu-text-field v-model="baidumap.bmtransit.start" placeholder="起点"   full-width action-icon="person_pin_circle"></mu-text-field>
+                                                <mu-text-field v-model="baidumap.bmtransit.end" placeholder="终点"  full-width action-icon="pin_drop"></mu-text-field>
+                                            </mu-col>
+                                        </mu-row>
+                                    </bm-control>
+                                    <!--线路检索-->
+                                    <bm-bus :keyword="baidumap.keyword" :auto-viewport="true" :selectFirstResult="true"  location="西峡县"></bm-bus>
+                                    <!--乘线路规划-->
+                                    <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end" :auto-viewport="true" location="西峡县"></bm-transit>
+
+                                </baidu-map>
+                            </mu-col>
+                        </mu-row>
                 </div>
-                <mu-divider></mu-divider>
-                <br/>
             </mu-row>
-            <mu-row>
-                <mu-col span="4" class="demo-paper">
-                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                </mu-col>
-                <mu-col span="4" class="demo-paper">
-                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                </mu-col>
-                <mu-col span="4" class="demo-paper">
-                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                </mu-col>
-                <mu-col span="4" class="demo-paper">
-                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                </mu-col>
-                <mu-col span="4" class="demo-paper">
-                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                </mu-col>
-                <mu-col span="4" class="demo-paper">
-                    <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                </mu-col>
-            </mu-row>
+
         </div>
     </div>
 </template>
@@ -109,6 +143,8 @@
     import vHeader from '../common/Header.vue';  //顶部导航组件
     import Sticky from 'vue-sticky-position'; //vue-sticky-position粘性定位和固定顶部导航
     import BaiduMap from 'vue-baidu-map/components/map/Map.vue'; //百度地图
+    import {BmScale,BmNavigation,BmTransit,BmControl,BmView,BmBus} from 'vue-baidu-map';
+    import MuRow from "muse-ui/es5/Grid/Row"; //百度地图组件
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
@@ -126,6 +162,21 @@
         },
         data () {
             return {
+                //百度地图
+                baidumap:{
+                    center: '河南省南阳市西峡县',
+                    zoom: 15,
+                    keyword: '',//公交线路结果值
+                    keywords: [
+                        '西峡1路',
+                        '西峡2路',
+                        '西峡3路',
+                    ], //公交线路数据
+                    bmtransit:{
+                        start:'',
+                        end:'',
+                    }
+                },
                 //轮播图
                 slides: [
                     {id: 1, preview: "static/images/1.jpg"},
@@ -196,10 +247,11 @@
             //弹出框关闭按钮
             closeFullscreenDialog () {
                 this.openFullscreen = false;
-            }
+            },
         },
         components: {
-            vHeader,Sticky,BaiduMap
+            MuRow,
+            vHeader,Sticky,BaiduMap,BmScale,BmControl,BmNavigation,BmTransit,BmView,BmBus
         }
     }
 </script>
@@ -221,17 +273,20 @@
     .mymargin {
         margin: 2px 2px 0px 0px;
     }
-
+    .tabscon{
+        width: 100%;
+        height:100%;
+    }
     .swiper-zoom-container {
         max-width: 100%;
         width: 100%;
-        height: 200px;
+        height: 160px;
     }
     .content {
         margin: 49px 0px 50px 0px;
     }
     .bm-view {
         width: 100%;
-        height: 300px;
+        height: 400px;
     }
 </style>

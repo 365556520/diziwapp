@@ -109,8 +109,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 import qs from 'qs'
 Vue.use(qs)
 /*qs封装数据end*/
-
-
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
