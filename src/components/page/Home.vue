@@ -27,66 +27,21 @@
                     <mu-tab>公交查询</mu-tab>
                 </mu-tabs>
                 <div class="tabscon" v-if="active === 0">
-                    <!--班线查询-->
-                    <mu-row class="mymargin chaxun">
-                        <mu-col span="10">
-                            <mu-auto-complete :data="buses_route_name" label="起点"  v-model="filterable.start" icon="person_pin_circle"></mu-auto-complete>
-                        </mu-col>
-                        <mu-col span="10">
-                            <mu-auto-complete :data="buses_route_name" label="终点" v-model="filterable.end" icon="pin_drop"></mu-auto-complete>
-                        </mu-col>
-                        <!--查询按钮-->
-                        <mu-col span="12">
-                            <mu-flex class="flex-wrapper" justify-content="center">
-                                <mu-flex class="flex-demo" justify-content="center">
-                                    <mu-button large color="blue500" @click.prevent="search">
-                                        <mu-icon value="search"></mu-icon>班车线路
-                                    </mu-button>
-                                </mu-flex>
-                            </mu-flex>
-                        </mu-col>
-                        <!--查询按钮end-->
-                        <!--弹出框-->
-                        <mu-dialog width="100%" :padding='dialogpidding' transition="scale" scrollable fullscreen :open.sync="openFullscreen">
-                            <Sticky top="0px" z-ndex="0"><!--//固定顶部-->
-                                <mu-appbar color="blue500" :title="filterable.start + '→' + filterable.end">
-                                    <mu-button slot="left" icon @click="closeFullscreenDialog">
-                                        <mu-icon size="39" value="keyboard_arrow_left"></mu-icon>
-                                    </mu-button>
-                                </mu-appbar>
-                            </Sticky>
-                            <div style="padding: 24px;">
-                                <mu-expansion-panel v-for="v in searchbuses" :key="v.id" :expand="true">
-                                    <div slot="header"><h3>班线 : {{v.buses_start}}—{{v.buses_midway}}—{{v.buses_end}}</h3></div>
-                                    <div slot="default" v-for="value in v.get_buses" :key="value.id">
-                                        <mu-divider></mu-divider>
-                                        <H4>车号:{{value.buses_name}}</H4>
-                                        <span>
-                                    发车时间:{{value.buses_start_date}}<br>
-                                    返回时间:{{value.buses_end_date}}<br>
-                                    联系电话:{{value.buses_phone}}
-                                </span>
-                                    </div>
-                                    <br>
-                                    <mu-divider color="blue500"></mu-divider>
-                                </mu-expansion-panel>
-                            </div>
-                        </mu-dialog>
-                        <!--弹出框end-->
-                    </mu-row>
                     <mu-divider></mu-divider>
                     <br/>
                     <mu-row>
                         <mu-col span="3" class="demo-paper" v-for="v in btns" :key="v.id">
                             <mu-paper class="btsize" :z-depth="1">
-                                <mu-ripple @click.prevent="btck(v.name)">
-                                    <mu-flex  justify-content="center" align-items="center" >
-                                        <mu-icon size="36" :value="v.icon" color="blue500"></mu-icon><br>
-                                    </mu-flex>
-                                    <mu-flex  justify-content="center"  align-items="center">
-                                        <Caption>{{v.name}}</Caption>
-                                    </mu-flex>
-                                </mu-ripple>
+                                <router-link :to="v.router">
+                                    <mu-ripple>
+                                        <mu-flex  justify-content="center" align-items="center" >
+                                            <mu-icon size="36" :value="v.icon" color="blue500"></mu-icon><br>
+                                        </mu-flex>
+                                        <mu-flex  justify-content="center"  align-items="center">
+                                            <Caption>{{v.name}}</Caption>
+                                        </mu-flex>
+                                    </mu-ripple>
+                                </router-link>
                             </mu-paper>
                         </mu-col>
                     </mu-row>
@@ -142,30 +97,19 @@
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
-            this.axios.get('api/getBusesRouteall').then((response) => {
-                this.buses_start = response.data.data.buses_start;
-                this.buses_midway = response.data.data.buses_midway;
-                this.buses_end = response.data.data.buses_end;
-                var name = response.data.data.buses_route_name;
-                //转换为数组
-                for (let i in name) {
-                    this.buses_route_name.push(name[i]); //属性
-                }
-                console.log(this.buses_route_name);
-            })
         },
         data () {
             return {
                 //按钮组
                 btns:[
-                    {id: 1,icon:'search', name:'班线查询'},
-                    {id: 2,icon:'directions_bus', name:'公交线路'},
-                    {id: 3,icon:'swap_calls', name:'乘公交路线'},
-                    {id: 4,icon:'directions_run', name:'开发中'},
-                    {id: 5,icon:'directions_run', name:'开发中'},
-                    {id: 6,icon:'directions_run', name:'开发中'},
-                    {id: 7,icon:'directions_run', name:'开发中'},
-                    {id: 8,icon:'directions_run', name:'开发中'},
+                    {id: 1,icon:'search', name:'班线查询',router:"/RegularBus"},
+                    {id: 2,icon:'directions_bus', name:'公交线路',router:"/Hot"},
+                    {id: 3,icon:'swap_calls', name:'乘公交路线',router:"/*"},
+                    {id: 4,icon:'directions_run', name:'开发中',router:"/*"},
+                    {id: 5,icon:'directions_run', name:'开发中',router:"/Hot"},
+                    {id: 6,icon:'directions_run', name:'开发中',router:"/Hot"},
+                    {id: 7,icon:'directions_run', name:'开发中',router:"/Hot"},
+                    {id: 8,icon:'directions_run', name:'开发中',router:"/Hot"},
                 ],
                 //百度地图
                 baidumap:{
@@ -205,31 +149,10 @@
                     },
                 },
                 active: 0,
-                //始点
-                buses_start: [],
-                //途经
-                buses_midway: [],
-                //终点
-                buses_end: [],
-                //地名名字
-                buses_route_name: [],
-                //绑定输入框值
-                filterable: {
-                    start: '',
-                    end: '',
-                },
-                searchbuses: ['asdas'],
-                //查询按钮弹出页面开关
-                openFullscreen: false,
-                //弹出框pidding
-                dialogpidding:5,
             }
         },
         methods: {
-            //分类组事件
-            btck(name) {
-                this.$toast.message(name);
-            },
+
             //点击查询
             search(){
                 if(this.filterable.start != ''){
@@ -275,13 +198,6 @@
     .demo-paper {
         padding: 2px;
         width: 98%;
-    }
-    .chaxun {
-        padding: 5px;
-    }
-
-    .mymargin {
-        margin: 2px 2px 0px 0px;
     }
     .tabscon{
         width: 100%;

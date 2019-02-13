@@ -6,6 +6,7 @@ import MyProfile from '@/components/page/MyProfile'
 import Game from '@/components/page/Game'
 import Nav from '@/components/common/Nav'
 import Error404 from '@/components/Error404'
+import RegularBus from '@/components/page/pageCommon/RegularBus'
 
 Vue.use(Router)
 
@@ -45,6 +46,13 @@ export default new Router({
                     component: MyProfile
                 },
             ]
+        },
+        {
+            /*班线查询*/
+            path: '/RegularBus',
+            name: 'RegularBus',
+            component: RegularBus,
+            meta: { title: '班线查询' },
         },
         {
             path: '*',
