@@ -190,7 +190,7 @@
                 loading: false,
                 loadingtext:'稍等后加载中...',
                 params:{
-                    limit:10, //每页10个数据说
+                    limit:20, //每页10个数据说
                     page:1, //当前页数默认第一页
                     reload:'', //搜索内容
                     ifs:'title', //搜索的列名
@@ -225,7 +225,7 @@
                             this.params.page = this.params.page - 1;
                             this.axios.get('api/getArticles',{
                                 params: {
-                                    limit:this.params.limit, //每页10个数据
+                                    limit:this.params.limit, //每页20个数据
                                     page:this.params.page, //当前页数默认第一页
                                     reload:this.params.reload, //搜索内容
                                     ifs:this.params.ifs, //搜索的列名

@@ -39,7 +39,7 @@
                         <mu-col span="12">
                             <mu-flex class="flex-wrapper" justify-content="center">
                                 <mu-flex class="flex-demo" justify-content="center">
-                                    <mu-button large color="blue500" @click.prevent="search()">
+                                    <mu-button large color="blue500" @click.prevent="search">
                                         <mu-icon value="search"></mu-icon>班车线路
                                     </mu-button>
                                 </mu-flex>
@@ -77,23 +77,17 @@
                     <mu-divider></mu-divider>
                     <br/>
                     <mu-row>
-                        <mu-col span="4" class="demo-paper">
-                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                        </mu-col>
-                        <mu-col span="4" class="demo-paper">
-                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                        </mu-col>
-                        <mu-col span="4" class="demo-paper">
-                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                        </mu-col>
-                        <mu-col span="4" class="demo-paper">
-                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                        </mu-col>
-                        <mu-col span="4" class="demo-paper">
-                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
-                        </mu-col>
-                        <mu-col span="4" class="demo-paper">
-                            <mu-button color="blue500" class="btsize">按钮1</mu-button>
+                        <mu-col span="3" class="demo-paper" v-for="v in btns" :key="v.id">
+                            <mu-paper class="btsize" :z-depth="1">
+                                <mu-ripple @click.prevent="btck(v.name)">
+                                    <mu-flex  justify-content="center" align-items="center" >
+                                        <mu-icon size="36" :value="v.icon" color="blue500"></mu-icon><br>
+                                    </mu-flex>
+                                    <mu-flex  justify-content="center"  align-items="center">
+                                        <Caption>{{v.name}}</Caption>
+                                    </mu-flex>
+                                </mu-ripple>
+                            </mu-paper>
                         </mu-col>
                     </mu-row>
                 </div>
@@ -162,6 +156,17 @@
         },
         data () {
             return {
+                //按钮组
+                btns:[
+                    {id: 1,icon:'search', name:'班线查询'},
+                    {id: 2,icon:'directions_bus', name:'公交线路'},
+                    {id: 3,icon:'swap_calls', name:'乘公交路线'},
+                    {id: 4,icon:'directions_run', name:'开发中'},
+                    {id: 5,icon:'directions_run', name:'开发中'},
+                    {id: 6,icon:'directions_run', name:'开发中'},
+                    {id: 7,icon:'directions_run', name:'开发中'},
+                    {id: 8,icon:'directions_run', name:'开发中'},
+                ],
                 //百度地图
                 baidumap:{
                     center: '河南省南阳市西峡县',
@@ -221,6 +226,10 @@
             }
         },
         methods: {
+            //分类组事件
+            btck(name) {
+                this.$toast.message(name);
+            },
             //点击查询
             search(){
                 if(this.filterable.start != ''){
@@ -260,11 +269,12 @@
 <style scoped>
     .btsize {
         width: 100%;
-        height: 120px;
+        height: 85px;
+        padding: 12px 2px 12px 2px;
     }
     .demo-paper {
         padding: 2px;
-        width: 100%;
+        width: 98%;
     }
     .chaxun {
         padding: 5px;
