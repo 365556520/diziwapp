@@ -40,12 +40,7 @@
                         <bm-view class="bm-view" > </bm-view>
                         <!--地图中的内容-->
                         <bm-control style="padding: 3px">
-                            <bm-auto-complete v-model="baidumap.ipnutbmtransit.keyword" :sugStyle="{zIndex: 1}">
-                                <mu-text-field  placeholder="起点"  v-model="baidumap.ipnutbmtransit.start"  full-width action-icon="person_pin_circle"></mu-text-field>
-                            </bm-auto-complete>
                         </bm-control>
-                        <!--区域查找-->
-                        <bm-local-search :keyword="baidumap.ipnutbmtransit.keyword" :auto-viewport="true" ></bm-local-search>
                         <!--线路检索-->
                         <bm-bus :keyword="baidumap.keyword" :auto-viewport="true" :selectFirstResult="true"  location="西峡县"></bm-bus>
                         <!--乘线路规划-->
@@ -87,7 +82,6 @@
                     ipnutbmtransit:{
                         start:'',
                         end:'',
-                        keyword:'',
                     },
                 },
             }
