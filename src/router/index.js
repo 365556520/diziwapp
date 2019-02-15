@@ -7,6 +7,7 @@ import Game from '@/components/page/Game'
 import Nav from '@/components/common/Nav'
 import Error404 from '@/components/Error404'
 import RegularBus from '@/components/page/pageCommon/RegularBus'
+import BusRoute from '@/components/page/pageCommon/BusRoute'
 
 Vue.use(Router)
 
@@ -53,6 +54,13 @@ export default new Router({
             name: 'RegularBus',
             component: RegularBus,
             meta: { title: '班线查询' },
+        },
+        {
+            /*公交线路查询*/
+            path: '/BusRoute',
+            name: 'BusRoute',
+            component: BusRoute,
+            meta: { title: '公交线路' },
         },
         {
             path: '*',
