@@ -37,6 +37,7 @@
                         <bm-scale anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-scale>
                         <!--缩放-->
                         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
+
                         <bm-view class="bm-view" > </bm-view>
                         <!--地图中的内容-->
                         <bm-control style="padding: 3px">
@@ -44,7 +45,9 @@
                         <!--线路检索-->
                         <bm-bus :keyword="baidumap.keyword" :auto-viewport="true" :selectFirstResult="true"  location="西峡县"></bm-bus>
                         <!--乘线路规划-->
-                        <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end" :auto-viewport="true" location="西峡县"></bm-transit>
+                        <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end"  :auto-viewport="true" location="西峡县"></bm-transit>
+                        <!--定位-->
+                        <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" @locationSuccess="locationSuccess" @locationError="locationError" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
                     </baidu-map>
                 </mu-col>
             </mu-row>
@@ -54,7 +57,7 @@
 <script>
     import pHeader from '../../common/PageHeader.vue';  //分页顶部导航组件
     import BaiduMap from 'vue-baidu-map/components/map/Map.vue'; //百度地图
-    import {BmScale,BmNavigation,BmTransit,BmControl,BmView,BmBus,BmAutoComplete,BmLocalSearch} from 'vue-baidu-map';
+    import {BmScale,BmNavigation,BmTransit,BmControl,BmView,BmBus,BmAutoComplete,BmGeolocation} from 'vue-baidu-map';
     import MuRow from "muse-ui/es5/Grid/Row"; //百度地图组件
     export default {
         name: 'RegularBus',
@@ -93,10 +96,19 @@
             busSearch(){
                 this.baidumap.bmtransit.start = this.baidumap.ipnutbmtransit.start;
                 this.baidumap.bmtransit.end = this.baidumap.ipnutbmtransit.end;
-            }
+            },
+            /*定位成功*/
+            locationError(e){
+                console.log(e);
+            },
+            /*定位失败*/
+            locationSuccess(e){
+                console.log(e);
+            },
+
         },
         components: {
-            pHeader,MuRow,BaiduMap,BmScale,BmControl,BmNavigation,BmTransit,BmView,BmBus,BmAutoComplete,BmLocalSearch
+            pHeader,MuRow,BaiduMap,BmScale,BmControl,BmNavigation,BmTransit,BmView,BmBus,BmAutoComplete,BmGeolocation
         }
     }
 </script>
