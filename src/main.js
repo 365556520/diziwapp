@@ -83,9 +83,9 @@ Vue.use(Message);
 import theme from 'muse-ui/lib/theme'; //主题
 theme.add('teal', {
     background: {
-        paper: '#e0e0e0',
-        chip: '#e0e0e0',
-        default: '#e0e0e0'
+        paper: '#ffffff',
+        chip: '#ffffff',
+        default: '#ffffff'
     }
 }, 'light');
 theme.use('teal');
