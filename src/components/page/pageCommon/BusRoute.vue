@@ -113,15 +113,17 @@
                 this.baidumap.bmtransit.start = this.baidumap.ipnutbmtransit.start;
                 this.baidumap.bmtransit.end = this.baidumap.ipnutbmtransit.end;
             },
-            /*定位成功*/
-            locationError(data){
-                this.baidumap.bmtransit.start =data.AddressComponent;
-                console.log(data.AddressComponent);
-            },
             /*定位失败*/
-            locationSuccess(data){
+            locationError(data){
                 this.$toast.message("定位失败！");
-                console.log(data.AddressComponent);
+                this.baidumap.bmtransit.start =data;
+                console.log(data);
+            },
+            /*定位成功*/
+            locationSuccess(data){
+                this.$toast.message("定位成功！");
+                this.baidumap.ipnutbmtransit.start =data.addressComponent.province+data.addressComponent.city+data.addressComponent.district+data.addressComponent.street+data.addressComponent.streetNumber;
+                console.log(data.addressComponent);
             },
             /*显示线路*/
             cbusshow(){
