@@ -12,11 +12,16 @@
                     <mu-ripple class="mu-ripple-demo" @click.prevent="cbustransitshow">乘公交</mu-ripple>
                 </mu-col>
                 <mu-divider></mu-divider>
-                <mu-col span="12"  v-show="busshow">
-                    <mu-select label="公交线路" v-model="baidumap.keyword" full-width>
-                        <mu-option v-for="option,index in baidumap.keywords" :key="option" :label="option" :value="option"></mu-option>
-                    </mu-select>
-                </mu-col>
+                <mu-row>
+                    <mu-col span="9"  v-show="busshow">
+                        <mu-select label="公交线路" v-model="baidumap.keyword" full-width>
+                            <mu-option v-for="option,index in baidumap.keywords" :key="option" :label="option" :value="option"></mu-option>
+                        </mu-select>
+                    </mu-col>
+                    <mu-col  span="3"  v-show="busshow" style="padding:30px 2px 1px 3px;">
+                        <mu-checkbox v-model="baidumap.mapshowbt" uncheck-icon="visibility_off" checked-icon="visibility" label="地图"></mu-checkbox>
+                    </mu-col>
+                </mu-row>
                 <mu-col span="12" v-show="bustransitshow">
                     <mu-row>
                         <mu-col span="5">
@@ -44,13 +49,12 @@
                         <bm-scale anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-scale>
                         <!--缩放-->
                         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
-
-                        <bm-view class="bm-view" v-show="mapshow"> </bm-view>
+                        <bm-view class="bm-view" v-show="baidumap.mapshow"> </bm-view>
                         <!--地图中的内容-->
                         <bm-control style="padding: 3px">
                         </bm-control>
                         <!--线路检索-->
-                        <bm-bus :keyword="baidumap.keyword" :auto-viewport="true" :selectFirstResult="true"  location="西峡县"></bm-bus>
+                        <bm-bus :keyword="baidumap.keyword" @getbuslistcomplete="bmbusdata" :auto-viewport="true"  :selectFirstResult="true"  location="西峡县"></bm-bus>
                         <!--乘线路规划-->
                         <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end"  :auto-viewport="true" location="西峡县"></bm-transit>
                         <!--定位-->
@@ -75,6 +79,7 @@
             return {
                 //百度地图
                 baidumap:{
+                    mapshowbt:false,//显示地图开关
                     mapshow:false,//开始不显示地图
                     center: '河南省南阳市西峡县',
                     zoom: 15,
@@ -96,7 +101,7 @@
                     },
                 },
 
-                busshow:false, //公交线路显示
+                busshow:true, //公交线路显示
                 bustransitshow:false, //规划乘公交线路显示
             }
         },
@@ -109,12 +114,14 @@
                 this.baidumap.bmtransit.end = this.baidumap.ipnutbmtransit.end;
             },
             /*定位成功*/
-            locationError(e){
-                console.log(e);
+            locationError(data){
+                this.baidumap.bmtransit.start =data.AddressComponent;
+                console.log(data.AddressComponent);
             },
             /*定位失败*/
-            locationSuccess(e){
-                console.log(e);
+            locationSuccess(data){
+                this.$toast.message("定位失败！");
+                console.log(data.AddressComponent);
             },
             /*显示线路*/
             cbusshow(){
@@ -123,6 +130,8 @@
                 //清除乘公交线路
                 this.baidumap.bmtransit.start='';
                 this.baidumap.bmtransit.end='';
+                //关闭地图显示
+                this.baidumap.mapshow=false;
             },
             /*乘公交线路*/
             cbustransitshow(){
@@ -130,12 +139,20 @@
                 this.bustransitshow=true;
                 //清除公交线路值
                 this.baidumap.keyword='';
-            }
-
+                this.baidumap.mapshow=true;
+            },
+            //公交线路列表查询后回调函数
+            bmbusdata(data){
+                if(data.keyword){
+                    this.baidumap.mapshow=this.baidumap.mapshowbt;
+                }
+                console.log(data);
+            },
         },
         components: {
             pHeader,MuRow,BaiduMap,BmScale,BmControl,BmNavigation,BmTransit,BmView,BmBus,BmAutoComplete,BmGeolocation
-        }
+        },
+
     }
 </script>
 
@@ -146,7 +163,7 @@
     }
     .bm-view {
         width: 100%;
-        height: 400px;
+        height: 350px;
     }
     .mu-ripple-demo {
         position: relative;
