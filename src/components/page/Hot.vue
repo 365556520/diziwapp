@@ -218,10 +218,10 @@
             //向上滑动
             refresh () {
                 if(!this.refreshing){
-                    this.refreshing = true;
+                    this.refreshing = false;
                     this.$refs.container.scrollTop = 0;
                     setTimeout(() => {
-                        if(this.params.page > 1 ){
+                       /* if(this.params.page > 1 ){
                             this.params.page = this.params.page - 1;
                             this.axios.get('api/getArticles',{
                                 params: {
@@ -243,7 +243,7 @@
                             });
                         }else{
                             this.refreshing = false;
-                        }
+                        }*/
                     }, 1000)
                 }else{
 
@@ -255,7 +255,7 @@
                     this.loading = true;
                     setTimeout(() => {
                         if(this.params.pagecounts>this.params.page){
-                            this.params.page += 1;
+                            this.params.limit += this.params.limit;
                             this.axios.get('api/getArticles',{
                                 params: {
                                     limit:this.params.limit, //每页10个数据

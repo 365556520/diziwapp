@@ -22,33 +22,37 @@
                         <mu-checkbox v-model="baidumap.mapshowbt" uncheck-icon="visibility_off" checked-icon="visibility" label="地图"></mu-checkbox>
                     </mu-col>
                 </mu-row>
-                <mu-col span="12" v-show="bustransitshow">
-                    <mu-row>
-                        <mu-col span="5">
-                                <mu-text-field  label="起点"  label-float  v-model="baidumap.ipnutbmtransit.start"  full-width action-icon="person_pin_circle"></mu-text-field>
-                        </mu-col>
-                        <mu-col span="2"></mu-col>
-                        <mu-col span="5"> <mu-text-field label="终点"  label-float v-model="baidumap.ipnutbmtransit.end" full-width action-icon="pin_drop"></mu-text-field></mu-col>
-                        <mu-col span="12">
-                            <mu-flex class="flex-wrapper" justify-content="center">
-                                <mu-flex class="flex-demo" justify-content="center">
-                                    <mu-button large color="blue500" @click.prevent="busSearch">
-                                        <mu-icon value="search"></mu-icon>查询
-                                    </mu-button>
-                                </mu-flex>
-                            </mu-flex>
-                        </mu-col>
-                    </mu-row>
-                </mu-col>
             </mu-row>
-            <mu-row style="padding:2px;">
+            <mu-row style="padding:8px;">
                 <mu-col span="12" >
                     <!--地图-->
                     <baidu-map   ak="LQjsPOAqD3uooTTVrIUePWUm" :center="baidumap.center" :zoom="baidumap.zoom" :scroll-wheel-zoom="true">
+                        <div span="12" v-show="bustransitshow">
+                            <mu-row>
+                                <mu-col span="8">
+                                    <bm-auto-complete v-model="baidumap.ipnutbmtransit.start" :sugStyle="{zIndex: 1}">
+                                        <mu-text-field  placeholder="起点"   v-model="baidumap.ipnutbmtransit.start"  full-width action-icon="person_pin_circle"></mu-text-field>
+                                    </bm-auto-complete><br>
+                                    <bm-auto-complete v-model="baidumap.ipnutbmtransit.end" :sugStyle="{zIndex: 1}">
+                                        <mu-text-field placeholder="终点"  v-model="baidumap.ipnutbmtransit.end" full-width action-icon="pin_drop"></mu-text-field>
+                                    </bm-auto-complete>
+                                </mu-col>
+                                <mu-col span="4">
+                                   <br><br>
+                                    <mu-flex class="flex-wrapper" justify-content="center">
+                                        <mu-flex class="flex-demo" justify-content="center">
+                                            &nbsp;<mu-button style="width: 10px;" color="blue500"   @click.prevent="busSearch"><mu-icon value="search"></mu-icon>查询</mu-button>
+                                        </mu-flex>
+                                    </mu-flex>
+                                </mu-col>
+                            </mu-row>
+                            <mu-checkbox  v-model="baidumap.mapshow" uncheck-icon="visibility_off" checked-icon="visibility" label="地图" label-left></mu-checkbox>
+                        </div>
                         <!--比例尺-->
-                        <bm-scale anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-scale>
+                        <bm-scale anchor="BMAP_ANCHOR_BOTTOM_RIGHT"></bm-scale>
                         <!--缩放-->
                         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
+                        <!--地图视图-->
                         <bm-view class="bm-view" v-show="baidumap.mapshow"> </bm-view>
                         <!--地图中的内容-->
                         <bm-control style="padding: 3px">
@@ -56,7 +60,7 @@
                         <!--线路检索-->
                         <bm-bus :keyword="baidumap.keyword" @getbuslistcomplete="bmbusdata" :auto-viewport="true"  :selectFirstResult="true"  location="西峡县"></bm-bus>
                         <!--乘线路规划-->
-                        <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end"  :auto-viewport="true" location="西峡县"></bm-transit>
+                        <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end" @markersset="bmtransitview" :auto-viewport="true" location="西峡县"></bm-transit>
                         <!--定位-->
                         <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" @locationSuccess="locationSuccess" @locationError="locationError" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
                     </baidu-map>
@@ -68,7 +72,7 @@
 <script>
     import pHeader from '../../common/PageHeader.vue';  //分页顶部导航组件
     import BaiduMap from 'vue-baidu-map/components/map/Map.vue'; //百度地图
-    import {BmScale,BmNavigation,BmTransit,BmControl,BmView,BmBus,BmAutoComplete,BmGeolocation} from 'vue-baidu-map';
+    import {BmScale,BmNavigation,BmTransit,BmControl,BmView,BmBus,BmAutoComplete,BmGeolocation,BmLocalSearch} from 'vue-baidu-map';
     import MuRow from "muse-ui/es5/Grid/Row"; //百度地图组件
     export default {
         name: 'RegularBus',
@@ -116,18 +120,20 @@
             /*定位失败*/
             locationError(data){
                 this.$toast.message("定位失败！");
-                this.baidumap.bmtransit.start =data;
                 console.log(data);
             },
             /*定位成功*/
             locationSuccess(data){
                 this.$toast.message("定位成功！");
+                //把地名添加到输入框里
                 this.baidumap.ipnutbmtransit.start =data.addressComponent.province+data.addressComponent.city+data.addressComponent.district+data.addressComponent.street+data.addressComponent.streetNumber;
                 console.log(data.addressComponent);
             },
             /*显示线路*/
             cbusshow(){
+                //显示线路
                 this.busshow = true;
+                //查询线路规划
                 this.bustransitshow=false;
                 //清除乘公交线路
                 this.baidumap.bmtransit.start='';
@@ -137,10 +143,13 @@
             },
             /*乘公交线路*/
             cbustransitshow(){
+                //显示线路
                 this.busshow = false;
+                //查询线路规划
                 this.bustransitshow=true;
                 //清除公交线路值
                 this.baidumap.keyword='';
+                //关闭地图显示
                 this.baidumap.mapshow=true;
             },
             //公交线路列表查询后回调函数
@@ -152,7 +161,7 @@
             },
         },
         components: {
-            pHeader,MuRow,BaiduMap,BmScale,BmControl,BmNavigation,BmTransit,BmView,BmBus,BmAutoComplete,BmGeolocation
+            pHeader,MuRow,BaiduMap,BmScale,BmControl,BmNavigation,BmTransit,BmView,BmBus,BmAutoComplete,BmGeolocation,BmLocalSearch
         },
 
     }

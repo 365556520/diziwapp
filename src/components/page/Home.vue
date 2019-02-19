@@ -39,8 +39,6 @@
                     </mu-paper>
                 </mu-col>
             </mu-row>
-
-
         </div>
     </div>
 </template>
