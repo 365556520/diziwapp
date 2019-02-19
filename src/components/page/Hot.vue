@@ -244,7 +244,7 @@
                         }else{
                             this.refreshing = false;
                         }
-                    }, 1000)
+                    }, 500)
                 }else{
 
                 }
@@ -278,7 +278,7 @@
                             this.loading = false;
                             this.loadingtext = '加载到底了';
                         }
-                    }, 1000)
+                    }, 500)
                 }else{
                     this.$toast.message("正在加载中稍等后");
                 }
