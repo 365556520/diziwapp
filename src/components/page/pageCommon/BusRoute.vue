@@ -6,10 +6,10 @@
         <div class="content">
             <mu-row  style="padding:8px;">
                 <mu-col span="6" >
-                        <mu-ripple class="mu-ripple-demo" @click.prevent="cbusshow">线路查询</mu-ripple>
+                        <mu-ripple class="mu-ripple-demo" @click.prevent="cbusshow">公交路线</mu-ripple>
                 </mu-col>
                 <mu-col span="6" >
-                    <mu-ripple class="mu-ripple-demo" @click.prevent="cbustransitshow">乘公交</mu-ripple>
+                    <mu-ripple class="mu-ripple-demo" @click.prevent="cbustransitshow">乘公交路线规划</mu-ripple>
                 </mu-col>
                 <mu-divider></mu-divider>
                 <mu-row>
@@ -60,7 +60,7 @@
                         <!--线路检索-->
                         <bm-bus :keyword="baidumap.keyword" @getbuslistcomplete="bmbusdata" :auto-viewport="true"  :selectFirstResult="true"  location="西峡县"></bm-bus>
                         <!--乘线路规划-->
-                        <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end" @markersset="bmtransitview" :auto-viewport="true" location="西峡县"></bm-transit>
+                        <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end"  :auto-viewport="true" location="西峡县"></bm-transit>
                         <!--定位-->
                         <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" @locationSuccess="locationSuccess" @locationError="locationError" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
                     </baidu-map>
