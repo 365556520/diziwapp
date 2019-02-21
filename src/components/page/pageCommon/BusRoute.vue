@@ -19,7 +19,7 @@
                         </mu-select>
                     </mu-col>
                     <mu-col  span="3"  v-show="busshow" style="padding:30px 2px 1px 3px;">
-                        <mu-checkbox v-model="baidumap.mapshowbt" uncheck-icon="visibility_off" checked-icon="visibility" label="地图"></mu-checkbox>
+                        <mu-checkbox v-model="baidumap.mapshow" uncheck-icon="visibility_off" checked-icon="visibility" label="地图"></mu-checkbox>
                     </mu-col>
                 </mu-row>
             </mu-row>
@@ -83,7 +83,6 @@
             return {
                 //百度地图
                 baidumap:{
-                    mapshowbt:false,//显示地图开关
                     mapshow:false,//开始不显示地图
                     center: '河南省南阳市西峡县',
                     zoom: 15,
@@ -152,14 +151,11 @@
                 this.bustransitshow=true;
                 //清除公交线路值
                 this.baidumap.keyword='';
-                //关闭地图显示
+                //打开地图显示
                 this.baidumap.mapshow=true;
             },
             //公交线路列表查询后回调函数
             bmbusdata(data){
-                if(data.keyword){
-                    this.baidumap.mapshow=this.baidumap.mapshowbt;
-                }
                 console.log(data);
             },
         },

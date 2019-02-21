@@ -20,12 +20,11 @@
                 </mu-col>
             </mu-row>
             <!--轮播图end-->
-            <br>
             <mu-divider></mu-divider>
-            <br>
+            <!--导航区域-->
             <mu-row>
                 <mu-col span="3" class="demo-paper" v-for="v in btns" :key="v.id">
-                    <mu-paper class="btsize" :z-depth="1">
+                    <div class="btsize" :z-depth="1">
                         <router-link :to="v.router">
                             <mu-ripple>
                                 <mu-flex  justify-content="center" align-items="center" >
@@ -36,9 +35,11 @@
                                 </mu-flex>
                             </mu-ripple>
                         </router-link>
-                    </mu-paper>
+                    </div>
                 </mu-col>
             </mu-row>
+            <!--导航区域end-->
+            <mu-divider></mu-divider>
         </div>
     </div>
 </template>
@@ -56,12 +57,8 @@
                 btns:[
                     {id: 1,icon:'search', name:'班线查询',router:"/RegularBus"},
                     {id: 2,icon:'directions_bus', name:'公交线路',router:"/BusRoute"},
-                    {id: 3,icon:'swap_calls', name:'乘公交路线',router:"/*"},
+                    {id: 3,icon:'directions_run', name:'开发中',router:"/*"},
                     {id: 4,icon:'directions_run', name:'开发中',router:"/*"},
-                    {id: 5,icon:'directions_run', name:'开发中',router:"/Hot"},
-                    {id: 6,icon:'directions_run', name:'开发中',router:"/Hot"},
-                    {id: 7,icon:'directions_run', name:'开发中',router:"/Hot"},
-                    {id: 8,icon:'directions_run', name:'开发中',router:"/Hot"},
                 ],
 
                 //轮播图
