@@ -20,6 +20,25 @@
                 </mu-col>
             </mu-row>
             <!--轮播图end-->
+
+            <div v-for="v in weatherForecast">
+                <h3 v-text="v.currentCity"></h3>
+                <h3 v-text="v.pm25"></h3>
+                <div v-for="vi in v.index">
+                    <h5 v-text="vi.des"></h5>
+                    <h5 v-text="vi.tipt"></h5>
+                    <h5 v-text="vi.title"></h5>
+                    <h5 v-text="vi.zs"></h5>
+                </div>
+                <div v-for="wd in v.weather_data">
+                    <h5 v-text="wd.date"></h5>
+                    <h5 v-text="wd.temperature"></h5>
+                    <h5 v-text="wd.weather"></h5>
+                    <h5 v-text="wd.wind"></h5>
+                    <img :src="wd.dayPictureUrl">
+                    <img :src="wd.nightPictureUrl">
+                </div>
+            </div>
             <mu-divider></mu-divider>
             <!--导航区域-->
             <mu-row>
@@ -40,6 +59,7 @@
             </mu-row>
             <!--导航区域end-->
             <mu-divider></mu-divider>
+
         </div>
     </div>
 </template>
@@ -50,6 +70,16 @@
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
+            //获取文章分类
+            this.axios.get('/wfbaiduapi/telematics/v3/weather?location=河南省南阳市西峡县&output=json&ak=LQjsPOAqD3uooTTVrIUePWUm&').then((response) => {
+                if(response.status===200){
+                    this.weatherForecast = response.data.results;
+                }
+                console.log(response.data.results);
+            }).catch((error) =>{
+                alert(error);
+            });
+
         },
         data () {
             return {
@@ -84,6 +114,8 @@
                     },
                 },
                 active: 0,
+                //天气预报信息
+                weatherForecast:'',
             }
         },
         methods: {

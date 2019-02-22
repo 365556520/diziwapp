@@ -36,7 +36,7 @@
                         'Accept':'application/json',
                     }
                 }
-                this.axios.post('api/passport',usertoken).then((response) => {
+                this.axios.post('/diziw/api/passport',usertoken).then((response) => {
                     this.setName(response.data.user.name);
                     console.log(response)
                 }).catch((error) =>{

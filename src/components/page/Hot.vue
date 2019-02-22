@@ -125,12 +125,12 @@
         name: 'Hot',
         mounted(){ //这个挂在第一次进入页面后运行一次
             //获取文章分类
-            this.axios.get('api/getCategorys').then((response) => {
+            this.axios.get('/diziw/api/getCategorys').then((response) => {
                 if(response.data.code == '200'){
                     //获取分类
                     this.tags = response.data.data;
                     //获取文章
-                    this.axios.get('api/getArticles',{
+                    this.axios.get('/diziw/api/getArticles',{
                         params: {
                             limit:this.params.limit, //每页10个数据
                             page:this.params.page, //当前页数默认第一页
@@ -223,7 +223,7 @@
                     setTimeout(() => {
                         if(this.params.page > 1 ){
                             this.params.page = this.params.page - 1;
-                            this.axios.get('api/getArticles',{
+                            this.axios.get('/diziw/api/getArticles',{
                                 params: {
                                     limit:this.params.limit, //每页20个数据
                                     page:this.params.page, //当前页数默认第一页
@@ -256,7 +256,7 @@
                     setTimeout(() => {
                         if(this.params.pagecounts>this.params.page){
                             this.params.page += 1;
-                            this.axios.get('api/getArticles',{
+                            this.axios.get('/diziw/api/getArticles',{
                                 params: {
                                     limit:this.params.limit, //每页10个数据
                                     page:this.params.page, //当前页数默认第一页
@@ -286,7 +286,7 @@
             //点击搜索
             reloadclick(){
                 //获取文章
-                this.axios.get('api/getArticles',{
+                this.axios.get('/diziw/api/getArticles',{
                     params: {
                         limit:this.params.limit, //每页10个数据
                         page:1, //当前页数默认第一页
@@ -310,7 +310,7 @@
             getcategory(id){
                 this.params.category_id = id;
                 //获取文章
-                this.axios.get('api/getArticles',{
+                this.axios.get('/diziw/api/getArticles',{
                     params: {
                         limit:this.params.limit, //每页10个数据
                         page:1, //当前页数默认第一页

@@ -48,6 +48,8 @@
                             </mu-row>
                             <mu-checkbox  v-model="baidumap.mapshow" uncheck-icon="visibility_off" checked-icon="visibility" label="地图" label-left></mu-checkbox>
                         </div>
+                        <!--定位-->
+                        <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" @locationSuccess="locationSuccess" @locationError="locationError" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
                         <!--比例尺-->
                         <bm-scale anchor="BMAP_ANCHOR_BOTTOM_RIGHT"></bm-scale>
                         <!--缩放-->
@@ -61,8 +63,7 @@
                         <bm-bus :keyword="baidumap.keyword" @getbuslistcomplete="bmbusdata" :auto-viewport="true"  :selectFirstResult="true"  location="西峡县"></bm-bus>
                         <!--乘线路规划-->
                         <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end"  :auto-viewport="true" location="西峡县"></bm-transit>
-                        <!--定位-->
-                        <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" @locationSuccess="locationSuccess" @locationError="locationError" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
+
                     </baidu-map>
                 </mu-col>
             </mu-row>
