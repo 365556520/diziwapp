@@ -139,7 +139,7 @@
                     var street = data.address.street?data.address.street:'';
                     var streetNumber = data.address.streetNumber?data.address.streetNumber:'';
                     var name = province+city+district+street+streetNumber;
-                    _this.$store.commit('setMapCenterName',name);//设置经纬度
+                    _this.$store.commit('setMapCenterName',name);//设置定位后的名字
                     _this.baidumap.center=_this.userbaidumap.centername;
                     console.log(_this.baidumap.center);
                     //获天气预报

@@ -65,7 +65,7 @@
                         <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end"  :auto-viewport="true" location="西峡县"></bm-transit>
 
 
-                        <bm-marker :position="baidumap.autoLocationPoint"
+                        <bm-marker :position="userbaidumap.center"
                                    :icon="{url: 'http://developer.baidu.com/map/jsdemo/img/fox.gif', size: {width: 300, height: 157}}" v-if="baidumap.initLocation">
                         </bm-marker>
 
@@ -163,6 +163,8 @@
                 this.baidumap.keyword='';
                 //打开地图显示
                 this.baidumap.mapshow=true;
+                //打开自己的位置
+                this.baidumap.initLocation=true;
             },
             //公交线路列表查询后回调函数
             bmbusdata(data){
@@ -171,13 +173,7 @@
             handler ({BMap, map}) {
                 let _this = this;   // 设置一个临时变量指向vue实例，因为在百度地图回调里使用this，指向的不是vue实例；
                 var geolocation = new BMap.Geolocation();
-                geolocation.getCurrentPosition(function (data) {
-                    console.log(data);
-                    _this.baidumap.center = data.address.province+data.address.city+data.address.district+data.address.street+data.address.streetNumber;     // 设置center属性值
-                    _this.baidumap.autoLocationPoint = {lng: data.longitude, lat: data.latitude};      // 自定义覆盖物
-                    _this.baidumap.initLocation = true;
-                    console.log('center:', _this.baidumap.center)    // 如果这里直接使用this是不行的
-                }, {enableHighAccuracy: true})
+
             }
         },
         components: {
