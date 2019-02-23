@@ -2,7 +2,7 @@
     <div >
         <!--顶部--><v-header></v-header><!--顶部end-->
         <div class="content">
-            <p>{{count}}</p>
+            <p>这里是vuex数据{{count}}</p>
             <button @click="add(10)">+</button>
             <button @click="reduce">-</button>
             <component v-bind:is="who"></component>

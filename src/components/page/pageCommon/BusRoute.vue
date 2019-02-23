@@ -26,7 +26,7 @@
             <mu-row style="padding:8px;">
                 <mu-col span="12" >
                     <!--地图-->
-                    <baidu-map   ak="LQjsPOAqD3uooTTVrIUePWUm" :center="baidumap.center" :zoom="baidumap.zoom" :scroll-wheel-zoom="true">
+                    <baidu-map   :ak="userbaidumap.ak" :center="baidumap.center" :zoom="baidumap.zoom" @ready="handler" :scroll-wheel-zoom="true">
                         <div span="12" v-show="bustransitshow">
                             <mu-row>
                                 <mu-col span="8">
@@ -64,6 +64,11 @@
                         <!--乘线路规划-->
                         <bm-transit :start="baidumap.bmtransit.start" :end="baidumap.bmtransit.end"  :auto-viewport="true" location="西峡县"></bm-transit>
 
+
+                        <bm-marker :position="baidumap.autoLocationPoint"
+                                   :icon="{url: 'http://developer.baidu.com/map/jsdemo/img/fox.gif', size: {width: 300, height: 157}}" v-if="baidumap.initLocation">
+                        </bm-marker>
+
                     </baidu-map>
                 </mu-col>
             </mu-row>
@@ -73,8 +78,9 @@
 <script>
     import pHeader from '../../common/PageHeader.vue';  //分页顶部导航组件
     import BaiduMap from 'vue-baidu-map/components/map/Map.vue'; //百度地图
-    import {BmScale,BmNavigation,BmTransit,BmControl,BmView,BmBus,BmAutoComplete,BmGeolocation,BmLocalSearch} from 'vue-baidu-map';
+    import {BmScale,BmNavigation,BmTransit,BmControl,BmView,BmBus,BmAutoComplete,BmGeolocation,BmLocalSearch,BmMarker} from 'vue-baidu-map';
     import MuRow from "muse-ui/es5/Grid/Row"; //百度地图组件
+    import {mapState} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
     export default {
         name: 'RegularBus',
         mounted(){ //这个挂在第一次进入页面后运行一次
@@ -84,6 +90,8 @@
             return {
                 //百度地图
                 baidumap:{
+                    autoLocationPoint: {lng: 0, lat: 0},// 自定义覆盖物位置
+                    initLocation: false,// 自定义覆盖物
                     mapshow:false,//开始不显示地图
                     center: '河南省南阳市西峡县',
                     zoom: 15,
@@ -112,7 +120,8 @@
                 bustransitshow:false, //规划乘公交线路显示
             }
         },
-        computed: {
+        computed:{//数据计算
+            ...mapState(['userbaidumap']),
         },
         methods: {
             //提交起始点和结束点
@@ -159,9 +168,20 @@
             bmbusdata(data){
                 console.log(data);
             },
+            handler ({BMap, map}) {
+                let _this = this;   // 设置一个临时变量指向vue实例，因为在百度地图回调里使用this，指向的不是vue实例；
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function (data) {
+                    console.log(data);
+                    _this.baidumap.center = data.address.province+data.address.city+data.address.district+data.address.street+data.address.streetNumber;     // 设置center属性值
+                    _this.baidumap.autoLocationPoint = {lng: data.longitude, lat: data.latitude};      // 自定义覆盖物
+                    _this.baidumap.initLocation = true;
+                    console.log('center:', _this.baidumap.center)    // 如果这里直接使用this是不行的
+                }, {enableHighAccuracy: true})
+            }
         },
         components: {
-            pHeader,MuRow,BaiduMap,BmScale,BmControl,BmNavigation,BmTransit,BmView,BmBus,BmAutoComplete,BmGeolocation,BmLocalSearch
+            pHeader,MuRow,BaiduMap,BmScale,BmControl,BmNavigation,BmTransit,BmView,BmBus,BmAutoComplete,BmGeolocation,BmLocalSearch,BmMarker
         },
 
     }

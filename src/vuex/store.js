@@ -10,6 +10,11 @@ const state={
         userName:'',//用户名字
         hasEnter:'',//用户登录状态
     },
+    userbaidumap:{
+        ak:'LQjsPOAqD3uooTTVrIUePWUm',//百度地图秘钥
+        center:{lng: 0, lat: 0},//经纬度
+        centername:'',//定位的地名
+    }
 }
 //状态数据修改
 const mutations={
@@ -24,6 +29,14 @@ const mutations={
     //设置用户登录状态
     setHasEntere(state,hasEnter){
         state.userdata.hasEnter = hasEnter;
+    },
+    //设置当前位置的经纬度
+    setMapCenter(state,center){
+        state.userbaidumap.center=center;
+    },
+    //设置当前位置的地名
+    setMapCenterName(state,centername){
+        state.userbaidumap.centername=centername;
     },
     //获取token方法
     getToken(state){

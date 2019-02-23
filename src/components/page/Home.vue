@@ -59,30 +59,28 @@
             </mu-row>
             <!--导航区域end-->
             <mu-divider></mu-divider>
-
+            <!--用百度地图定位获取位置-->
+            <baidu-map   :ak="userbaidumap.ak" :center="baidumap.center" :zoom="baidumap.zoom" @ready="handler" :scroll-wheel-zoom="true"></baidu-map>
+            <!--用百度地图定位获取位置end-->
         </div>
     </div>
 </template>
-
 <script>
     import vHeader from '../common/Header.vue';  //顶部导航组件
     import Sticky from 'vue-sticky-position'; //vue-sticky-position粘性定位和固定顶部导航
+    import BaiduMap from 'vue-baidu-map/components/map/Map.vue'; //百度地图
+    import {mapState,mapMutations} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
-            //获取文章分类
-            this.axios.get('/wfbaiduapi/telematics/v3/weather?location=河南省南阳市西峡县&output=json&ak=LQjsPOAqD3uooTTVrIUePWUm&').then((response) => {
-                if(response.status===200){
-                    this.weatherForecast = response.data.results;
-                }
-                console.log(response.data.results);
-            }).catch((error) =>{
-                alert(error);
-            });
-
         },
         data () {
             return {
+                //百度地图
+                baidumap:{
+                    center: '河南省南阳市西峡县',
+                    zoom: 11,
+                },
                 //按钮组
                 btns:[
                     {id: 1,icon:'search', name:'班线查询',router:"/RegularBus"},
@@ -90,7 +88,6 @@
                     {id: 3,icon:'directions_run', name:'开发中',router:"/*"},
                     {id: 4,icon:'directions_run', name:'开发中',router:"/*"},
                 ],
-
                 //轮播图
                 slides: [
                     {id: 1, preview: "static/images/1.jpg"},
@@ -118,14 +115,54 @@
                 weatherForecast:'',
             }
         },
+        computed:{//数据计算
+            ...mapState(['userbaidumap']),
+        },
         methods: {
+            ...mapMutations([
+                'setMapCenter','setMapCenterName' //加载vuex中的方法
+            ]),
             //弹出框关闭按钮
             closeFullscreenDialog () {
                 this.openFullscreen = false;
             },
+            handler ({BMap, map}) {
+                let _this = this;   // 设置一个临时变量指向vue实例，因为在百度地图回调里使用this，指向的不是vue实例；
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function (data) {
+                    //注意:调用mutaions中回调函数, 只能使用store.commit(type, payload)
+                    _this.$store.commit('setMapCenter', {lng: data.longitude, lat: data.latitude});//设置经纬
+                    //地方
+                    var province = data.address.province?data.address.province:'';
+                    var city = data.address.city?data.address.city:'';
+                    var district = data.address.district?data.address.district:'';
+                    var street = data.address.street?data.address.street:'';
+                    var streetNumber = data.address.streetNumber?data.address.streetNumber:'';
+                    var name = province+city+district+street+streetNumber;
+                    _this.$store.commit('setMapCenterName',name);//设置经纬度
+                    _this.baidumap.center=_this.userbaidumap.centername;
+                    console.log(_this.baidumap.center);
+                    //获天气预报
+                    _this.axios.get('/wfbaiduapi/telematics/v3/weather',{
+                        params: {
+                            location: _this.baidumap.center,
+                            output:'json',
+                            ak:_this.userbaidumap.ak,
+                        }
+                    }).then((response) => {
+                        if(response.status===200){
+                            _this.weatherForecast = response.data.results;
+                        }
+                        console.log(response.data.results);
+                        console.log(_this.baidumap.center);
+                    }).catch((error) =>{
+                        alert(error);
+                    });
+                }, {enableHighAccuracy: true})
+            },
         },
         components: {
-            vHeader,Sticky
+            vHeader,Sticky,BaiduMap
         }
     }
 </script>
