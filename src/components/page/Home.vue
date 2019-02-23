@@ -143,7 +143,7 @@
                     _this.baidumap.center=_this.userbaidumap.centername;
                     console.log(_this.baidumap.center);
                     //获天气预报
-                    _this.axios.get('/wfbaiduapi/telematics/v3/weather',{
+                    _this.axios.get('http://api.map.baidu.com/telematics/v3/weather',{
                         params: {
                             location: _this.baidumap.center,
                             output:'json',

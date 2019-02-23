@@ -125,7 +125,7 @@
                             username:this.validateForm.username,
                             password:this.validateForm.password,
                         }
-                        this.axios.post('/diziw/api/login',data).then((response) => {
+                        this.axios.post('api/login',data).then((response) => {
                             if(response.status==200){
                                 this.setToken(response.data.token);//把token保存到vuex里面
                                 this.closeFullscreenDialog();//关闭登录
@@ -163,7 +163,7 @@
                                     'Accept':'application/json',
                                 }
                             }
-                            this.axios.post('/diziw/api/logout',usertoken).then((response) => {
+                            this.axios.post('api/logout',usertoken).then((response) => {
                                 console.log(response.data.message);
                                 this.deleteUser();//vuex删除用户数据
                                 this.$toast.message(response.data.message);

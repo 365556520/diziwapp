@@ -11,9 +11,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      //跨域api设置
+      //跨域api设置 这个设置在测试用dev的时候能用 上线的的时候就不能用了
         // 百度天气预报
-        "/wfbaiduapi": {//以/proxy/为开头的适合这个规则
+      /*  "/wfbaiduapi": {//以/proxy/为开头的适合这个规则
             target: "http://api.map.baidu.com",//目标地址
             "secure": false,//false为http访问，true为https访问
             "changeOrigin": true,//跨域访问设置，true代表跨域
@@ -22,18 +22,7 @@ module.exports = {
                 //下面这种也行
                 //  "^/api":"/list"//以/api/为开头的改写为'/list'
             },
-        },
-        //自己网站
-        "/diziw": {//以/proxy/为开头的适合这个规则
-            target: "http://diziw.cn",//目标地址
-            "secure": false,//false为http访问，true为https访问
-            "changeOrigin": true,//跨域访问设置，true代表跨域
-            "pathRewrite": {//路径改写规则
-                "^/diziw/": ""//以/proxy/为开头的改写为''
-                //下面这种也行
-                //  "^/api":"/list"//以/api/为开头的改写为'/list'
-            },
-        },
+        },*/
     },
 
     // Various Dev Server settings
