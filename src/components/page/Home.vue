@@ -158,24 +158,19 @@
                     }).catch((error) =>{
                         alert(error);
                     });*/
-                    var isurl = "http://api.map.baidu.com/telematics/v3/weather?location=" + _this.baidumap.center + "&output:json&ak="+_this.userbaidumap.ak;
-                    $.getJSON(isurl,
-                        function (data) {
-                            console.log(data)
-                     });
-
-                 /*   $.ajax({
+                    var isurl = "http://api.map.baidu.com/telematics/v3/weather?location=" + _this.baidumap.center + "&output=json&ak="+_this.userbaidumap.ak;
+                    $.ajax({
                         type:"get",
                         url :isurl,
                         dataType:"jsonp",
                         jsonp:"callback",//传递给请求服务器处理程序或页面的，用以获得JSONP回调函数名
                         success:function(data){
-                            alert(data);
+                            console.log(data);
                         },
                         error:function(data){
-                            alert(data);
+                            console.log('接收失败'+data);
                         }
-                    });*/
+                    });
 
                 }, {enableHighAccuracy: true})
             },
