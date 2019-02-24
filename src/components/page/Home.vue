@@ -143,7 +143,7 @@
                     _this.baidumap.center=_this.userbaidumap.centername;
                     console.log(_this.baidumap.center);
                     //获天气预报
-                    _this.axios.get('http://api.map.baidu.com/telematics/v3/weather',{
+/*                    _this.axios.get('http://api.map.baidu.com/telematics/v3/weather',{
                         params: {
                             location: _this.baidumap.center,
                             output:'json',
@@ -157,7 +157,26 @@
                         console.log(_this.baidumap.center);
                     }).catch((error) =>{
                         alert(error);
-                    });
+                    });*/
+                    var isurl = "http://api.map.baidu.com/telematics/v3/weather?location=" + _this.baidumap.center + "&output:json&ak="+_this.userbaidumap.ak;
+                    $.getJSON(isurl,
+                        function (data) {
+                            console.log(data)
+                     });
+
+                 /*   $.ajax({
+                        type:"get",
+                        url :isurl,
+                        dataType:"jsonp",
+                        jsonp:"callback",//传递给请求服务器处理程序或页面的，用以获得JSONP回调函数名
+                        success:function(data){
+                            alert(data);
+                        },
+                        error:function(data){
+                            alert(data);
+                        }
+                    });*/
+
                 }, {enableHighAccuracy: true})
             },
         },

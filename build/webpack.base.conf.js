@@ -1,9 +1,10 @@
+
 'use strict'
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
+var webpack=require('webpack')//引入jq
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -11,7 +12,7 @@ function resolve (dir) {
 
 
 module.exports = {
-  context: path.resolve(__dirname, '../'),
+    context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
   },
@@ -29,6 +30,15 @@ module.exports = {
       '@': resolve('src'),
     }
   },
+    //引入jq所用的
+    plugins: [
+        new webpack.ProvidePlugin({
+            $:"jquery",
+            jQuery:"jquery",
+            "windows.jQuery":"jquery"
+        })
+    ],
+    //引入jq所用的end
   module: {
     rules: [
       {

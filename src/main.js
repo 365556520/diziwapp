@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 Vue.config.productionTip = false
 
-
+/*引入jq*/
+import $ from 'jquery'
+/*引入jqend*/
 /*vuex全局应用*/
 import store from './vuex/store'
 //状态数据
@@ -109,6 +111,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 import qs from 'qs'
 Vue.use(qs)
 /*qs封装数据end*/
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
