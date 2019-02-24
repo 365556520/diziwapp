@@ -20,23 +20,17 @@
                 </mu-col>
             </mu-row>
             <!--轮播图end-->
-            <h3 v-text="weatherForecast.date"> </h3>
+
             <div v-for="v in weatherForecast.results">
-                <h3 v-text="v.currentCity"></h3>
-                <h3 v-text="v.pm25"></h3>
-                <div v-for="vi in v.index">
-                    <h5 v-text="vi.des"></h5>
-                    <h5 v-text="vi.tipt"></h5>
-                    <h5 v-text="vi.title"></h5>
-                    <h5 v-text="vi.zs"></h5>
-                </div>
+                <h2 v-text="v.currentCity"></h2>  <h4 v-text="weatherForecast.date"></h4>
+                空气:<span v-text="v.pm25"></span>
                 <div v-for="wd in v.weather_data">
                     <h5 v-text="wd.date"></h5>
+                    <img :src="wd.dayPictureUrl">
+                    <img :src="wd.nightPictureUrl">
                     <h5 v-text="wd.temperature"></h5>
                     <h5 v-text="wd.weather"></h5>
                     <h5 v-text="wd.wind"></h5>
-                    <img :src="wd.dayPictureUrl">
-                    <img :src="wd.nightPictureUrl">
                 </div>
             </div>
             <mu-divider></mu-divider>
@@ -59,29 +53,21 @@
             </mu-row>
             <!--导航区域end-->
             <mu-divider></mu-divider>
-            <!--用百度地图定位获取位置-->
-            <baidu-map v-if="baidumap.mapshow"  :ak="userbaidumap.ak" :center="baidumap.center" :zoom="baidumap.zoom" @ready="handler" :scroll-wheel-zoom="true"></baidu-map>
-            <!--用百度地图定位获取位置end-->
+
         </div>
     </div>
 </template>
 <script>
     import vHeader from '../common/Header.vue';  //顶部导航组件
     import Sticky from 'vue-sticky-position'; //vue-sticky-position粘性定位和固定顶部导航
-    import BaiduMap from 'vue-baidu-map/components/map/Map.vue'; //百度地图
-    import {mapState,mapMutations} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
+    import {mapState} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
     export default {
         name: 'Home',
         mounted(){ //这个挂在第一次进入页面后运行一次
+            this.getWeatherForecast();
         },
         data () {
             return {
-                //百度地图
-                baidumap:{
-                    mapshow:false,
-                    center: '河南省南阳市西峡县',
-                    zoom: 11,
-                },
                 //按钮组
                 btns:[
                     {id: 1,icon:'search', name:'班线查询',router:"/RegularBus"},
@@ -114,8 +100,9 @@
                 active: 0,
                 //天气预报信息
                 weatherForecast:{
-                    date:'',
-                    results:''
+                    location:'',//位置
+                    date:'', //时间
+                    results:'' //获得的信息
                 },
             }
         },
@@ -123,54 +110,35 @@
             ...mapState(['userbaidumap']),
         },
         methods: {
-            ...mapMutations([
-                'setMapCenter','setMapCenterName' //加载vuex中的方法
-            ]),
             //弹出框关闭按钮
             closeFullscreenDialog () {
                 this.openFullscreen = false;
             },
-            handler ({BMap, map}) {
-                let _this = this;   // 设置一个临时变量指向vue实例，因为在百度地图回调里使用this，指向的不是vue实例；
-                var geolocation = new BMap.Geolocation();
-                geolocation.getCurrentPosition(function (data) {
-                    //注意:调用mutaions中回调函数, 只能使用store.commit(type, payload)
-                    _this.$store.commit('setMapCenter', {lng: data.longitude, lat: data.latitude});//设置经纬
-                    //获取地方全名
-                    var province = data.address.province?data.address.province:'';
-                    var city = data.address.city?data.address.city:'';
-                    var district = data.address.district?data.address.district:'';
-                    var street = data.address.street?data.address.street:'';
-                    var streetNumber = data.address.streetNumber?data.address.streetNumber:'';
-                    var name = province+city+district+street+streetNumber; //所在地名
-                    _this.$store.commit('setMapCenterName',name);//设置定位后的名字
-
-                    _this.baidumap.center=_this.userbaidumap.centername;
-                    console.log(_this.baidumap.center);
-                    //获天气预报
-                    var isurl = "http://api.map.baidu.com/telematics/v3/weather?location=" + _this.baidumap.center + "&output=json&ak="+_this.userbaidumap.ak;
-                    $.ajax({
-                        type:"get",
-                        url :isurl,
-                        dataType:"jsonp",
-                        jsonp:"callback",//传递给请求服务器处理程序或页面的，用以获得JSONP回调函数名
-                        success:function(response){
-                            if(response.status==="success"){
-                                _this.weatherForecast.date = response.date;//获取时间
-                                _this.weatherForecast.results = response.results;//获取信息
-                            }
-                            console.log(response.date);
-                        },
-                        error:function(data){
-                            console.log('接收失败'+data);
+            //获天气预报
+            getWeatherForecast(){
+                this.weatherForecast.location = this.userbaidumap.centername; //把从vuex的值赋给本地
+                var isurl = "http://api.map.baidu.com/telematics/v3/weather?location=" + this.weatherForecast.location + "&output=json&ak="+ this.userbaidumap.ak;
+                var _this = this; /*设置一个临时变量指向vue实例，因为在回调里使用this，指向的不是vue实例*/
+                $.ajax({
+                    type:"get",
+                    url :isurl,
+                    dataType:"jsonp",
+                    jsonp:"callback",//传递给请求服务器处理程序或页面的，用以获得JSONP回调函数名
+                    success:function(response){
+                        if(response.status==="success"){
+                            _this.weatherForecast.date = response.date;//获取时间
+                            _this.weatherForecast.results = response.results;//获取信息
                         }
-                    });
-
-                }, {enableHighAccuracy: true})
-            },
+                        console.log(response.results);
+                    },
+                    error:function(data){
+                        console.log('接收失败'+data);
+                    }
+                });
+            }
         },
         components: {
-            vHeader,Sticky,BaiduMap
+            vHeader,Sticky
         }
     }
 </script>
