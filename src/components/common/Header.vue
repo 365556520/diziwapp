@@ -35,6 +35,7 @@
 </template>
 <script>
     import Sticky from 'vue-sticky-position' //vue-sticky-position粘性定位和固定顶部导航
+    import {mapState} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
     export default {
         created: function () {
             console.log(this.$route.meta.title);
@@ -51,8 +52,9 @@
             }
         },
         computed: {
+            ...mapState(['userbaidumap']),
             title:function () {
-                return this.$route.meta.title;
+                return this.$route.meta.title!='首页'?this.$route.meta.title:this.userbaidumap.centername;
             },
             sortStudent: function () {
                 return sortByKey(this.students, 'age');

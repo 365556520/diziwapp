@@ -3,55 +3,68 @@
         <!--顶部-->
         <v-header></v-header><!--顶部end-->
         <div class="content">
-            <div class="weatherbody" v-for="v in weatherForecast.results">
-                <h2 v-text="v.currentCity"></h2>
-                <mu-row>
-                    <mu-col span="6">
-                        <h5 v-text="v.weather_data[0].date"></h5>
-                        <img v-show="weatherForecast.isday" :src="v.weather_data[0].dayPictureUrl">
-                        <img v-show="weatherForecast.isevenimg" :src="v.weather_data[0].nightPictureUrl">
-                        <h5 v-text="v.weather_data[0].temperature"></h5>
-                        <h5 v-text="v.weather_data[0].weather"></h5>
-                        <h5 v-text="v.weather_data[0].wind"></h5>
-                        空气:<span v-text="v.pm25"></span>
-                    </mu-col>
-                    <mu-col span="2" v-for="(wd,key) in v.weather_data" :key="key" v-show="key!==0">
-                        <mu-ripple class="weather">
-                            <h5 v-text="wd.date"></h5>
-                            <img :src="wd.dayPictureUrl">
-                            <h5 v-text="wd.temperature"></h5>
-                            <h5 v-text="wd.weather"></h5>
-                            <span style="font-size:70%;" v-text="wd.wind"></span>
-                        </mu-ripple>
-                    </mu-col>
-                </mu-row>
-            </div><br>
+                <div class="weatherbody" v-for="v in weatherForecast.results">
+                    <div class="weathercontent">
+                        <div></div>
+                        <mu-row>
+                            <mu-col span="5">
+                                <div  class="minfont thick" v-text="v.weather_data[0].date"></div>
+                                <mu-row>
+                                    <mu-col span="7">
+                                        <div class="minfont" >今天</div>
+                                        <div class="minfont"   v-text="v.weather_data[0].temperature"></div>
+                                    </mu-col>
+                                    <mu-col span="5">
+                                        <div class="minfont">
+                                            <img v-show="weatherForecast.isday" :src="v.weather_data[0].dayPictureUrl">
+                                            <img v-show="weatherForecast.isevenimg" :src="v.weather_data[0].nightPictureUrl">
+                                            <div class="minfont" v-text="v.weather_data[0].weather"></div>
+                                        </div>
+                                    </mu-col>
+                                </mu-row>
+                                <div class="minfont" v-text="v.weather_data[0].wind"></div>
+                                <div class="minfont" v-text="'空气质量指数:'+v.pm25"></div>
+                            </mu-col>
+                            <mu-col span="7">
+                                <mu-row>
+                                    <mu-col span="4" v-for="(wd,key) in v.weather_data" :key="key" v-show="key!==0">
+                                        <mu-ripple class="weather">
+                                            <div  class="minfont thick" v-text="wd.date"></div>
+                                            <div  class="minfont"><img :src="wd.dayPictureUrl"></div>
+                                            <div class="minfont" v-text="wd.weather"></div>
+                                            <div class="minfont" v-text="wd.temperature"></div>
+                                            <div class="minfont" v-text="wd.wind"></div>
+                                        </mu-ripple>
+                                    </mu-col>
+                                </mu-row>
+                            </mu-col>
+                        </mu-row>
+                    </div>
+                </div>
+             <br>
             <!--导航区域-->
             <mu-row>
-                <mu-col span="3"  v-for="v in btns" :key="v.id">
-                    <div  :z-depth="1">
+                <mu-col span="6"  v-for="v in btns" :key="v.id">
                         <router-link :to="v.router">
-                            <mu-ripple>
-                                <mu-flex justify-content="center" align-items="center">
-                                    <mu-icon size="36" :value="v.icon" color="blue500"></mu-icon>
-                                    <br>
-                                </mu-flex>
-                                <mu-flex justify-content="center" align-items="center">
-                                    <Caption>{{v.name}}</Caption>
-                                </mu-flex>
-                            </mu-ripple>
+                                <mu-button   :color="v.btcolor" class="block">
+                                    <div   :z-depth="1">
+                                        <mu-flex justify-content="center" align-items="center">
+                                            <mu-icon size="36" :value="v.icon" ></mu-icon>
+                                            {{v.name}}
+                                        </mu-flex>
+                                    </div>
+                                </mu-button>
                         </router-link>
-                    </div>
                 </mu-col>
             </mu-row> <br>
             <!--导航区域end-->
             <mu-divider></mu-divider>
             <!--轮播图-->
-            <mu-row>
+            <mu-row >
                 <mu-col span="12">
                     <div class="grid-cell">
                         <!-- swiper 轮播-->
-                        <swiper :options="swiperOption">
+                        <swiper :options="swiperOption" >
                             <swiper-slide v-for="v in slides" :key="v.id"
                                           :style="{'background':'url('+v.preview+')','background-repeat':'no-repeat','background-size':'cover' }"
                                           class="swiper-zoom-container">
@@ -65,6 +78,8 @@
                 </mu-col>
             </mu-row>
             <!--轮播图end-->
+            <!--热门文章-->
+            <!--热门文章end-->
         </div>
     </div>
 </template>
@@ -82,10 +97,10 @@
             return {
                 //按钮组
                 btns: [
-                    {id: 1, icon: 'search', name: '班线查询', router: "/RegularBus"},
-                    {id: 2, icon: 'directions_bus', name: '公交线路', router: "/BusRoute"},
-                    {id: 3, icon: 'directions_run', name: '开发中', router: "/*"},
-                    {id: 4, icon: 'directions_run', name: '开发中', router: "/*"},
+                    {id: 1, icon: 'search',btcolor:'primary', name: '班线查询', router: "/RegularBus"},
+                    {id: 2, icon: 'directions_bus',btcolor:'secondary',name: '公交线路', router: "/BusRoute"},
+                    {id: 3, icon: 'directions_run',btcolor:'success', name: '开发中', router: "/*"},
+                    {id: 4, icon: 'directions_run',btcolor:'warning', name: '开发中', router: "/*"},
                 ],
                 //轮播图
                 slides: [
@@ -176,7 +191,7 @@
     .swiper-zoom-container {
         max-width: 100%;
         width: 100%;
-        height: 200px;
+        height: 150px;
     }
 
     .content {
@@ -186,7 +201,6 @@
         width: 100%;
         height: 100%;
         margin-right: 16px;
-        border-radius: 4px;
         border-left-style: solid;
         border-width: 1px;
         border-color: #ffffff;
@@ -197,5 +211,21 @@
         background: -o-linear-gradient(#2196f3, #ffffff); /* Opera 11.1 - 12.0 */
         background: -moz-linear-gradient(#2196f3, #ffffff); /* Firefox 3.6 - 15 */
         background: linear-gradient(#2196f3, #ffffff); /* 标准的语法 */
+    }
+    .weathercontent{
+        padding: 4px 2px 2px 2px;
+    }
+    .minfont{
+        font-size: 70%;
+        text-align:center;
+        margin:0 auto;
+        padding-top: 4px;
+    }
+    .thick {font-weight: bold}
+    .block{
+        width:90%;
+        height: 100px;
+
+        margin: 10px;
     }
 </style>
