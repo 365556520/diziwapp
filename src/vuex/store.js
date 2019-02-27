@@ -14,6 +14,8 @@ const state={
         ak:'LQjsPOAqD3uooTTVrIUePWUm',//百度地图秘钥
         center:{lng: 0, lat: 0},//经纬度
         centername:'',//定位的地名
+        date:'',//更新时间
+        results: '', //天气预报信息
     }
 }
 //状态数据修改
@@ -36,7 +38,15 @@ const mutations={
     },
     //设置当前位置的地名
     setMapCenterName(state,centername){
-        state.userbaidumap.centername=centername;
+        state.userbaidumap.centername = centername;
+    },
+    /*设置更新天气预报时间*/
+    setMapdate(state,date){
+        state.userbaidumap.date = date;
+    },
+    /*天气预报信息*/
+    setMapresults(state,results){
+        state.userbaidumap.results=results;
     },
     //获取token方法
     getToken(state){

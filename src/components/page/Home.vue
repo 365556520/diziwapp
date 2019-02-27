@@ -3,7 +3,7 @@
         <!--顶部-->
         <v-header></v-header><!--顶部end-->
         <div class="content">
-            <div class="weatherbody" v-for="v in weatherForecast.results">
+            <div class="weatherbody" v-for="v in userbaidumap.results">
                 <div class="weathercontent">
                     <div></div>
                     <mu-row>
@@ -122,8 +122,6 @@
                 active: 0,
                 //天气预报信息
                 weatherForecast: {
-                    date: '', //时间
-                    results: '', //获得的信息
                     isday: false, //白天
                     isevenimg: false, //晚上
                 },
@@ -133,36 +131,12 @@
             ...mapState(['userbaidumap']),
         },
         methods: {
-            //弹出框关闭按钮
-            closeFullscreenDialog () {
-                this.openFullscreen = false;
-            },
-            //获天气预报
-            getWeatherForecast(){
-                var isurl = "http://api.map.baidu.com/telematics/v3/weather?location=" + this.userbaidumap.centername + "&output=json&ak=" + this.userbaidumap.ak;
-                this.axios.get('api/getWeatherForecast', {
-                    params: {
-                        url: isurl,
-                    }
-                }).then((response) => {
-                    if (response.data.code == 200) {
-                        var data = JSON.parse(response.data.data);
-                        this.weatherForecast.date =data.date;//获取时间
-                        this.weatherForecast.results = data.results;//获取信息
-                    }
-                    console.log('天气预报获取成功');
-                }).catch((error) => {
-                    alert(error);
-                });
-            },
             // 白天和晚上
             getMycount: function () {
                 let date = new Date();
                 var year = date.getFullYear(); //年
                 var month = date.getMonth()+1; //月
                 var isdate = date.getDate(); //日
-                this.getWeatherForecast();
-                console.log(this.weatherForecast.date);
                 if (date.getHours() < 18) {
                     this.weatherForecast.isday = true; //开启白天图片
                     console.log('白天');

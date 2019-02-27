@@ -69,9 +69,28 @@
                     var street = data.address.street?data.address.street:'';  //区村
                     var streetNumber = data.address.streetNumber?data.address.streetNumber:''; //街道和门牌号
                     var name = province+city+district+street+streetNumber; //所在地名
+                    _this.getWeatherForecast(name);//获取天气
                     _this.$store.commit('setMapCenterName',name);//设置定位后的名字
                     _this.baidumap.mapshow=false; //关闭地图定位渲染
                 }, {enableHighAccuracy: true})
+            },
+            //获天气预报
+            getWeatherForecast(centername){
+                var isurl = "http://api.map.baidu.com/telematics/v3/weather?location=" + centername + "&output=json&ak=" + this.userbaidumap.ak;
+                this.axios.get('api/getWeatherForecast', {
+                    params: {
+                        url: isurl,
+                    }
+                }).then((response) => {
+                    if (response.data.code == 200) {
+                        var data = JSON.parse(response.data.data);
+                        this.$store.commit('setMapdate',data.date);//设置时间
+                        this.$store.commit('setMapresults',data.results);//设置信息
+                        console.log('天气预报更新成功');
+                    }
+                }).catch((error) => {
+                    alert(error);
+                });
             },
         },
         watch:{
