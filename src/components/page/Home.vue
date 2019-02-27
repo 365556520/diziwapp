@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--顶部-->
-        <Sticky><v-header></v-header></Sticky><!--顶部end-->
+        <v-header></v-header><!--顶部end-->
         <div class="content">
             <div class="weatherbody" v-for="v in userbaidumap.results">
                 <div class="weathercontent">

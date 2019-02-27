@@ -1,7 +1,7 @@
 <template>
     <div class="bgimg">
         <!--顶部-->
-        <Sticky top="0px" z-ndex="1">
+        <Sticky top="0px" z-ndex="0">
             <mu-row>
                 <mu-col span="12">
                     <mu-appbar class="navtop" color="blue500" z-depth="0" >
