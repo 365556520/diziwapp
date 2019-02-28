@@ -69,7 +69,7 @@
                     var street = data.address.street?data.address.street:'';  //区村
                     var streetNumber = data.address.streetNumber?data.address.streetNumber:''; //街道和门牌号
                     var name = province+city+district+street+streetNumber; //所在地名
-                    _this.getWeatherForecast(name==''?'河南省南阳市西峡县':name);//获取天气
+                    _this.getWeatherForecast(name==''?'河南省南阳市西峡县':province+city+district);//获取天气
                     _this.$store.commit('setMapCenterName',name);//设置定位后的名字
                     _this.baidumap.mapshow=false; //关闭地图定位渲染
                 }, {enableHighAccuracy: true})
