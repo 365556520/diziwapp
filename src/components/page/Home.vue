@@ -52,7 +52,6 @@
                     </mu-button>
                 </mu-col>
             </mu-row>
-            <br>
             <!--导航区域end-->
             <mu-divider></mu-divider>
             <!--轮播图-->
@@ -158,7 +157,7 @@
     .swiper-zoom-container {
         max-width: 100%;
         width: 100%;
-        height: 150px;
+        height: 100px;
     }
 
     .content {
