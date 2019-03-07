@@ -49,7 +49,7 @@
         <!--内容-->
        <mu-paper class="demo-list-wrap">
                 <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" :loading-text="loadingtext">
-                    <div ref="container"   v-for="v in article.data.data" :key="v.id" >
+                    <div ref="container"   v-for="v in article.data" :key="v.id" >
                         <mu-list v-if="v.thumb.length === 2" textline="two-line">
                             <mu-list-item @click="openFullscreenDialog(v)" avatar :ripple="true" button>
                                 <mu-list-item-content >
@@ -58,10 +58,9 @@
                                             <img class="oneimg" v-for="value in v.thumb" v-if="value != ''" :src="imgurl+value">
                                         </mu-col>
                                         <mu-col span="9" sm="9" md="10" lg="10" xl="9">
-                                            <h3><span v-text="onearticle.title"></span></h3>
-                                            <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
-                                            <span class="OVERLINE" v-text="'作者:'+onearticle.get_user.name"></span><br>
-                                            <span class="body1" v-html="onearticle.content"></span>
+                                            <mu-list-item-title v-text="v.title"></mu-list-item-title>
+                                            <mu-list-item-after-text v-text="v.description"></mu-list-item-after-text><br>
+                                            <span class="OVERLINE" v-text="'更新时间:'+v.created_at"></span>
                                         </mu-col>
                                     </mu-row>
                                 </mu-list-item-content>
@@ -108,8 +107,8 @@
                 </Sticky>
                 <div style="padding: 3px 15px 3px 15px;" >
                     <h3><span v-text="onearticle.title"></span></h3>
-                    <span class="OVERLINE" v-text="'作者:'+onearticle.user_id"></span><br>
-                    <span class="OVERLINE" v-text="'更新时间:'+onearticle.created_at"></span><br>
+                    <span class="OVERLINE" v-text="'作者:'+onearticle.get_user.name"></span><br>
+                    <span class="OVERLINE" v-text="'更新时间:'+onearticle.updated_at"></span><br>
                     <span class="body1" v-html="onearticle.content"></span>
                 </div>
             <mu-button slot="actions" flat color="primary" @click="">评论</mu-button><br>
@@ -141,11 +140,11 @@
                         }
                     }).then((response) => {
                         if(response.data.code == '200'){
-                            this.article = response.data;
+                            this.article = response.data.data;
                             //总页数
                             this.params.pagecounts =  Math.ceil(response.data.data.count/this.params.limit);
                             //图片地址
-                            this.imgurl = this.GLOBAL.serverSrc+this.article.msg;
+                            this.imgurl = this.GLOBAL.serverSrc+response.data.msg;
                         }
                         console.log(this.article);
                     }).catch((error) =>{
@@ -165,15 +164,11 @@
                 openFullscreen: false, //弹出对话框
                 dialogpidding:5,
                 onearticle:{
-                    thumb:{},
-                    get_user:{}
+                    get_user:{},
+                    getComments:{}
                 },
                 article: {
-                    code:'',
-                    data:{
-                        get_user:{}
-                    },
-                    msg:''
+                    data:'',
                 },//文章数据
                 imgurl:'',
                 swiperOption: {
@@ -233,9 +228,9 @@
                                     articles_ids:this.params.articles_ids, //分类id数组
                                 }
                             }).then((response) => {
-                                if(response.data.code == '200'){
+                                if(response.data.code === '200'){
                                     this.refreshing = false;
-                                    this.article = response.data;
+                                    this.article = response.data.data;
                                     console.log('上滑加载'+this.article);
                                 }
                             }).catch((error) =>{
@@ -266,11 +261,11 @@
                                     articles_ids:this.params.articles_ids, //分类id数组
                                 }
                             }).then((response) => {
-                                if(response.data.code == '200'){
+                                if(response.data.code === '200'){
                                     this.loading = false;
-                                    this.article = response.data;
+                                    this.article = response.data.data;
                                 }
-                                console.log(response.data);
+                                console.log(this.article);
                             }).catch((error) =>{
                                 alert(error);
                             });
@@ -296,8 +291,8 @@
                         articles_ids:'', //分类id数组
                     }
                 }).then((response) => {
-                    if(response.data.code == '200'){
-                        this.article = response.data;
+                    if(response.data.code === '200'){
+                        this.article = response.data.data;
                         //总页数
                         this.params.pagecounts =  Math.ceil(response.data.data.count/this.params.limit);
                     }
@@ -320,8 +315,8 @@
                         articles_ids:'', //分类id数组
                     }
                 }).then((response) => {
-                    if(response.data.code == '200'){
-                        this.article = response.data;
+                    if(response.data.code === '200'){
+                        this.article = response.data.data;
                         //总页数
                         this.params.pagecounts =  Math.ceil(response.data.data.count/this.params.limit);
                     }
@@ -332,8 +327,17 @@
             },
             //开启弹出窗口
             openFullscreenDialog (onearticle) {
-                this.onearticle = onearticle;
-                this.openFullscreen = true;
+                this.axios.get('api/getArticlesContent/'+onearticle.id).then((response) => {
+                    if(response.data.code === '200'){
+                        this.onearticle = response.data.data[0];
+                        this.onearticle.title = onearticle.title; //标题
+                        this.openFullscreen = true;
+                        console.log(this.onearticle);
+                    }
+                }).catch((error) =>{
+                    alert(error);
+                });
+                console.log(onearticle);
             },
             //关闭弹出窗口
             closeFullscreenDialog () {
