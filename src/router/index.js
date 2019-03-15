@@ -8,6 +8,7 @@ import Nav from '@/components/common/Nav'
 import Error404 from '@/components/Error404'
 import RegularBus from '@/components/page/pageCommon/RegularBus'
 import BusRoute from '@/components/page/pageCommon/BusRoute'
+import Articles from '@/components/page/pageCommon/Articles'
 
 Vue.use(Router)
 
@@ -61,6 +62,13 @@ export default new Router({
             name: 'BusRoute',
             component: BusRoute,
             meta: { title: '公交线路' },
+        },
+        {
+            /*文章页面*/
+            path: '/Articles',
+            name: 'Articles',
+            component: Articles,
+            meta: { title: '',id:''},
         },
         {
             path: '*',

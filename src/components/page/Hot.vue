@@ -111,7 +111,13 @@
                     <span class="OVERLINE" v-text="'更新时间:'+onearticle.updated_at"></span><br>
                     <span class="body1" v-html="onearticle.content"></span>
                 </div>
-            <mu-button slot="actions" flat color="primary" @click="">评论</mu-button><br>
+            <mu-row>
+                <mu-col span="12">
+                    <mu-text-field placeholder="不允许超过300个字符" multi-line :rows="1" :max-length="300"></mu-text-field>
+
+                    <mu-button slot="actions" flat color="primary" @click="">评论</mu-button>
+                </mu-col>
+            </mu-row>
         </mu-dialog>
         <!--弹出窗口end-->
     </div>
@@ -327,7 +333,8 @@
             },
             //开启弹出窗口
             openFullscreenDialog (onearticle) {
-                this.axios.get('api/getArticlesContent/'+onearticle.id).then((response) => {
+                this.$router.replace({path:'/Articles',query:{title:onearticle.title,id:onearticle.id}})
+              /*  this.axios.get('api/getArticlesContent/'+onearticle.id).then((response) => {
                     if(response.data.code === '200'){
                         this.onearticle = response.data.data[0];
                         this.onearticle.title = onearticle.title; //标题
@@ -337,7 +344,7 @@
                 }).catch((error) =>{
                     alert(error);
                 });
-                console.log(onearticle);
+                console.log(onearticle);*/
             },
             //关闭弹出窗口
             closeFullscreenDialog () {
