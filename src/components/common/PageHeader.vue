@@ -10,7 +10,7 @@
                             <mu-icon size="36" value="keyboard_arrow_left"></mu-icon>
                         </mu-button>
                         <!--导航左侧 end-->
-                        {{title}}
+                        {{inputtitle}}
                     </mu-appbar>
                 </mu-col>
             </mu-row>
@@ -29,10 +29,11 @@
             return {
             }
         },
+        props:{//引用父类变量
+            inputtitle: '',
+        },
         computed: {
-            title:function () {
-                return this.$route.meta.title;
-            },
+
         },
         methods: {
             //返回

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--页面头-->
-        <p-header></p-header>
+        <p-header :inputtitle="this.$route.meta.title"></p-header>
         <!--页面头end-->
         <div class="content">
             <br><br>

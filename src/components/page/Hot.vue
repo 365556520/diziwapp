@@ -51,7 +51,7 @@
                 <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load" :loading-text="loadingtext">
                     <div ref="container"   v-for="v in article.data" :key="v.id" >
                         <mu-list v-if="v.thumb.length === 2" textline="two-line">
-                            <mu-list-item @click="openFullscreenDialog(v)" avatar :ripple="true" button>
+                            <mu-list-item @click="openArticles(v)" avatar :ripple="true" button>
                                 <mu-list-item-content >
                                     <mu-row>
                                         <mu-col span="3" sm="3" md="2" lg="2" xl="2">
@@ -67,7 +67,7 @@
                             </mu-list-item>
                         </mu-list>
                         <mu-list v-else-if="v.thumb.length >2"  textline="three-line">
-                            <mu-list-item @click="openFullscreenDialog(v)" avatar :ripple="true" button>
+                            <mu-list-item @click="openArticles(v)" avatar :ripple="true" button>
                                 <mu-list-item-content>
                                     <mu-row>
                                         <mu-col span="12" sm="12" md="12" lg="12" xl="12">
@@ -85,7 +85,7 @@
                             </mu-list-item>
                         </mu-list>
                         <mu-list v-else >
-                            <mu-list-item @click="openFullscreenDialog(v)" avatar :ripple="true" button>
+                            <mu-list-item @click="openArticles(v)" avatar :ripple="true" button>
                                 <mu-list-item-content>
                                     <mu-list-item-title v-text="v.title"></mu-list-item-title>
                                     <mu-list-item-sub-title v-text="v.description"></mu-list-item-sub-title>
@@ -96,30 +96,7 @@
                     </div>
                 </mu-load-more>
        </mu-paper>
-        <!--弹出窗口-->
-        <mu-dialog  width="100%"  transition="slide-left" scrollable  fullscreen   :open.sync="openFullscreen" :padding='dialogpidding'>
-                <Sticky top="0px" z-ndex="0">
-                    <mu-appbar color="primary" :title="onearticle.title">
-                        <mu-button slot="left" icon @click="closeFullscreenDialog">
-                            <mu-icon size="39" value="keyboard_arrow_left"></mu-icon>
-                        </mu-button>
-                    </mu-appbar>
-                </Sticky>
-                <div style="padding: 3px 15px 3px 15px;" >
-                    <h3><span v-text="onearticle.title"></span></h3>
-                    <span class="OVERLINE" v-text="'作者:'+onearticle.get_user.name"></span><br>
-                    <span class="OVERLINE" v-text="'更新时间:'+onearticle.updated_at"></span><br>
-                    <span class="body1" v-html="onearticle.content"></span>
-                </div>
-            <mu-row>
-                <mu-col span="12">
-                    <mu-text-field placeholder="不允许超过300个字符" multi-line :rows="1" :max-length="300"></mu-text-field>
 
-                    <mu-button slot="actions" flat color="primary" @click="">评论</mu-button>
-                </mu-col>
-            </mu-row>
-        </mu-dialog>
-        <!--弹出窗口end-->
     </div>
 </template>
 <script>
@@ -169,13 +146,9 @@
                 position: 'left',  //左边抽屉导航end
                 openFullscreen: false, //弹出对话框
                 dialogpidding:5,
-                onearticle:{
-                    get_user:{},
-                    getComments:{}
-                },
                 article: {
                     data:'',
-                },//文章数据
+                },//文章列表数据
                 imgurl:'',
                 swiperOption: {
                     slidesPerView: 4,
@@ -331,30 +304,10 @@
                     alert(error);
                 });
             },
-            //开启弹出窗口
-            openFullscreenDialog (onearticle) {
-                this.$router.replace({path:'/Articles',query:{title:onearticle.title,id:onearticle.id}})
-              /*  this.axios.get('api/getArticlesContent/'+onearticle.id).then((response) => {
-                    if(response.data.code === '200'){
-                        this.onearticle = response.data.data[0];
-                        this.onearticle.title = onearticle.title; //标题
-                        this.openFullscreen = true;
-                        console.log(this.onearticle);
-                    }
-                }).catch((error) =>{
-                    alert(error);
-                });
-                console.log(onearticle);*/
+            //打开文章
+            openArticles (onearticle) {
+                this.$router.push({path:'/Articles',query:{title:onearticle.title,id:onearticle.id}})
             },
-            //关闭弹出窗口
-            closeFullscreenDialog () {
-                //清空数据
-                this.onearticle = {
-                    thumb:{},
-                    get_user:{}
-                };
-                this.openFullscreen = false;
-            }
         },
         components: {
             MuRow,
