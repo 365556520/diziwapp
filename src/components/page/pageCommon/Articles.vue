@@ -11,21 +11,29 @@
                 <span class="body1" v-html="onearticle.content"></span>
             </div>
         </div>
-        <Sticky >
-            <div>
-                <mu-row>
-                    <mu-col span="12">
-                        <mu-text-field placeholder="不允许超过300个字符" multi-line :rows="1" :max-length="300"></mu-text-field>
-                        <mu-button slot="actions" flat color="primary" @click="">评论</mu-button>
-                    </mu-col>
-                </mu-row>
-            </div>
-        </Sticky>
+        <div class="navbottom">
+            <mu-row>
+                <mu-col span="8">
+                    <mu-text-field  v-model="comments.commentscontent"  full-width icon="comment"  color="success"placeholder="不允许超过500个字符" multi-line :rows="1" :max-length="500"></mu-text-field>
+                </mu-col>
+                <mu-col span="4">
+                        <mu-col span="12">
+                            <mu-flex  justify-content="center" >
+                                <mu-button small flat full-width color="success"  @click="">发表评论</mu-button>
+                            </mu-flex>
+                        </mu-col>
+                        <mu-col span="12">
+                            <mu-flex style="margin-top: 2px;" justify-content="center" >
+                                <mu-badge :content="comments.commentsnumber+'个评论'"  color="secondary"></mu-badge>
+                            </mu-flex>
+                        </mu-col>
+                </mu-col>
+            </mu-row>
+        </div>
     </div>
 </template>
 <script>
     import pHeader from '../../common/PageHeader.vue';  //分页顶部导航组件
-    import Sticky from 'vue-sticky-position' //vue-sticky-position粘性定位和固定顶部导航
     export default {
         name: 'RegularBus',
         mounted(){ //这个挂在第一次进入页面后运行一次
@@ -45,6 +53,11 @@
                     updated_at:'',
                     view:'',
                 },
+                comments:{
+                    commentsnumber:9998, //评论个数
+                    commentscontent:'',  //评论内容
+                }
+
             }
         },
         computed:{},
@@ -75,11 +88,17 @@
         margin: 49px 0px 50px 0px;
     }
 
-    .chaxun {
-        padding: 5px;
+    .navbottom {
+        background-color: #f6f7f6;
+        /*设置底部导航的位置和长宽*/
+        width: 100%;
+        height: 60px;
+        position: fixed;
+        max-width: 100%;
+        bottom: 0px;
+        left: 0px;
+        margin: 0;
+        padding: 0;
     }
 
-    .mymargin {
-        margin: 2px 25px 2px 5px;
-    }
 </style>
