@@ -12,18 +12,18 @@
             </div>
         </div>
         <div class="navbottom">
-            <mu-row>
+            <mu-row  >
                 <mu-col span="8">
-                    <mu-text-field  v-model="comments.commentscontent"  full-width icon="comment"  color="success"placeholder="不允许超过500个字符" multi-line :rows="1" :max-length="500"></mu-text-field>
+                    <mu-text-field  v-model="comments.commentscontent" @click="inputcomments"  full-width icon="comment"  color="success"placeholder="不允许超过500个字符" multi-line :rows="1" :max-length="500"></mu-text-field>
                 </mu-col>
-                <mu-col span="4">
-                        <mu-col span="12">
-                            <mu-flex  justify-content="center" >
+                <mu-col span="4" style="margin-top: 3px;" >
+                        <mu-col v-show="comments.commentssuccess" span="12">
+                            <mu-flex   justify-content="center" >
                                 <mu-button small flat full-width color="success"  @click="">发表评论</mu-button>
                             </mu-flex>
                         </mu-col>
                         <mu-col span="12">
-                            <mu-flex style="margin-top: 2px;" justify-content="center" >
+                            <mu-flex style="margin-top: 3px;" justify-content="center" >
                                 <mu-badge :content="comments.commentsnumber+'个评论'"  color="secondary"></mu-badge>
                             </mu-flex>
                         </mu-col>
@@ -56,8 +56,8 @@
                 comments:{
                     commentsnumber:9998, //评论个数
                     commentscontent:'',  //评论内容
+                    commentssuccess:false,
                 }
-
             }
         },
         computed:{},
@@ -73,6 +73,10 @@
                 }).catch((error) => {
                     alert(error);
                 });
+            },
+            //评论输入
+            inputcomments(){
+                this.comments.commentssuccess=true;
             }
         },
         components: {
