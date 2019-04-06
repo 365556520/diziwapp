@@ -174,7 +174,7 @@
                         }
                     });
                 }else{
-                    console.log("请登录");
+                    this.$toast.message("请用户登录，后再退出");
                 }
             }
         },

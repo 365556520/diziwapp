@@ -19,7 +19,7 @@
                 <mu-col span="4" style="margin-top: 3px;" >
                         <mu-col v-show="comments.commentssuccess" span="12">
                             <mu-flex   justify-content="center" >
-                                <mu-button small flat full-width color="success"  @click="">发表评论</mu-button>
+                                <mu-button small flat full-width color="success"  @click="submit()">发表评论</mu-button>
                             </mu-flex>
                         </mu-col>
                         <mu-col span="12">
@@ -33,6 +33,7 @@
     </div>
 </template>
 <script>
+    import {mapState} from 'vuex'; //mapState数据计算简化模式mapMutations方法的简化模式写法如下
     import pHeader from '../../common/PageHeader.vue';  //分页顶部导航组件
     export default {
         name: 'RegularBus',
@@ -43,6 +44,7 @@
             return {
                 //获取传入的参数
                 onearticle: {
+                    id:0,
                     get_user: {},
                     getComments: {},
                     title:'',
@@ -60,7 +62,9 @@
                 }
             }
         },
-        computed:{},
+        computed:{
+            ...mapState(['userToken','userdata']),
+        },
         methods: {
             //获取文章内容
             getArticles(id,title) {
@@ -68,6 +72,7 @@
                     if (response.data.code === '200') {
                         this.onearticle = response.data.data[0];
                         this.onearticle.title = title; //标题
+                        this.onearticle.id = id; //文章id
                         console.log(this.onearticle);
                     }
                 }).catch((error) => {
@@ -77,6 +82,20 @@
             //评论输入
             inputcomments(){
                 this.comments.commentssuccess=true;
+            },
+            //提交评论
+            submit(){
+                //判断是否登录
+                if(this.userToken!=""){
+                    if(this.comments.commentscontent!=''){
+                        console.log(this.onearticle.id);
+                        this.$toast.message('asv'+this.onearticle.id);
+                    }else {
+                        this.$toast.message("评论失败!不能发送空评论");
+                    }
+                }else{
+                    this.$toast.message("请登录！");
+                }
             }
         },
         components: {
