@@ -24,7 +24,7 @@
                         </mu-col>
                         <mu-col span="12">
                             <mu-flex style="margin-top: 3px;" justify-content="center" >
-                                <mu-badge :content="comments.commentsnumber+'个评论'"  color="secondary"></mu-badge>
+                                <mu-badge :content="onearticle.commentsnumber+'个评论'"  color="secondary"></mu-badge>
                             </mu-flex>
                         </mu-col>
                 </mu-col>
@@ -44,9 +44,7 @@
             return {
                 //获取传入的参数
                 onearticle: {
-                    id:0,
                     get_user: {},
-                    getComments: {},
                     title:'',
                     category_id:'',
                     content:'',
@@ -54,9 +52,9 @@
                     user_id:'',
                     updated_at:'',
                     view:'',
+                    commentsnumber:0,//评论个数
                 },
                 comments:{
-                    commentsnumber:9998, //评论个数
                     commentscontent:'',  //评论内容
                     commentssuccess:false,
                 }
@@ -70,7 +68,7 @@
             getArticles(id,title) {
                 this.axios.get('api/getArticlesContent/' + id).then((response) => {
                     if (response.data.code === '200') {
-                        this.onearticle = response.data.data[0];
+                        this.onearticle = response.data.data;
                         this.onearticle.title = title; //标题
                         this.onearticle.id = id; //文章id
                         console.log(this.onearticle);
