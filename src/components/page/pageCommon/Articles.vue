@@ -44,6 +44,7 @@
             return {
                 //获取传入的参数
                 onearticle: {
+                    id:'',
                     get_user: {},
                     title:'',
                     category_id:'',
@@ -57,6 +58,7 @@
                 comments:{
                     commentscontent:'',  //评论内容
                     commentssuccess:false,
+                    to_uid:''
                 }
             }
         },
@@ -86,8 +88,30 @@
                 //判断是否登录
                 if(this.userToken!=""){
                     if(this.comments.commentscontent!=''){
-                        console.log(this.onearticle.id);
-                        this.$toast.message('asv'+this.onearticle.id);
+                        this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' + this.userToken; //token认证响应头
+                        let usertoken =  {
+                            headers:{
+                                'Accept':'application/json',
+                            },
+                            data:{
+                                'topic_id':this.onearticle.id,
+                                'content':this.comments.commentscontent,
+                                'to_uid':this.comments.to_uid,
+                            }
+                        }
+                        this.axios.post('api/inputComments',usertoken).then((response) => {
+                            if(response.data.code == '200'){
+                                this.onearticle.commentsnumber += 1; //评论个数加1
+                                this.comments.commentscontent = ''; //清空输入框
+                                this.comments.commentssuccess=false; //隐藏按钮
+                                this.$toast.message(response.data.msg);
+                            }else{
+                                this.$toast.message(response.data.msg);
+                            }
+                            console.log(response.data);
+                        }).catch((error) =>{
+                            alert(error);
+                        });
                     }else {
                         this.$toast.message("评论失败!不能发送空评论");
                     }
