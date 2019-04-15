@@ -24,7 +24,7 @@
                         </mu-col>
                         <mu-col span="12">
                             <mu-flex style="margin-top: 3px;" justify-content="center" >
-                                <mu-badge :content="onearticle.commentsnumber+'个评论'"  color="secondary"></mu-badge>
+                                <mu-badge :content="onearticle.commentsnumber+'个评论'" @click="commentsall"  color="secondary"></mu-badge>
                             </mu-flex>
                         </mu-col>
                 </mu-col>
@@ -81,7 +81,7 @@
             },
             //评论输入
             inputcomments(){
-                this.comments.commentssuccess=true;
+                this.comments.commentssuccess=true; //显示发送评论按钮
             },
             //提交评论
             submit(){
@@ -116,8 +116,18 @@
                         this.$toast.message("评论失败!不能发送空评论");
                     }
                 }else{
-                    this.$toast.message("请登录！");
+                    this.$confirm('未登录，不能参与评论，请登录！', '提示').then(({ result }) => {
+                        if (result) {
+                            this.$toast.message('点击了确定');
+                        } else {
+                            this.$toast.message('点击了取消');
+                        }
+                    });
                 }
+            },
+            //查看全部评论
+            commentsall(){
+
             }
         },
         components: {
