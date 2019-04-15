@@ -17,34 +17,6 @@
                     </mu-list-item-content>
                 </mu-list-item>
             </mu-list>
-            <!--弹出框-->
-            <mu-dialog width="100%" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
-                <mu-appbar color="blue500" title="用户登录">
-                    <mu-button slot="left" icon @click="closeFullscreenDialog">
-                        <mu-icon value="close"></mu-icon>
-                    </mu-button>
-                </mu-appbar>
-                <div style="padding: 24px;">
-                    <mu-container>
-                        <mu-form ref="form" :model="validateForm" class="mu-demo-form">
-                            <mu-form-item label="用户名" help-text="请输入用户名" prop="username" :rules="usernameRules">
-                                <mu-text-field v-model="validateForm.username" prop="username"></mu-text-field>
-                            </mu-form-item>
-                            <mu-form-item label="密码" prop="password" :rules="passwordRules">
-                                <mu-text-field type="password" v-model="validateForm.password" prop="password"></mu-text-field>
-                            </mu-form-item>
-                            <mu-form-item prop="isAgree" >
-                                <mu-checkbox label="记住我" v-model="validateForm.isAgree"></mu-checkbox>
-                            </mu-form-item>
-                            <mu-form-item>
-                                <mu-button color="primary" @click="submit()">提交</mu-button>
-                                <mu-button @click="clear">重置</mu-button>
-                            </mu-form-item>
-                        </mu-form>
-                    </mu-container>
-                </div>
-            </mu-dialog>
-            <!--弹出框end-->
             <br>
             <mu-divider></mu-divider>
 
@@ -86,21 +58,6 @@
         data () {
             return {
                 size: 80,
-                //查询按钮弹出页面开关
-                openFullscreen: false,
-                usernameRules: [
-                    { validate: (val) => !!val, message: '必须填写用户名'},
-                    { validate: (val) => val.length >= 3, message: '用户名长度大于3'}
-                ],
-                passwordRules: [
-                    { validate: (val) => !!val, message: '必须填写密码'},
-                    { validate: (val) => val.length >= 3 && val.length <= 10, message: '密码长度大于3小于10'}
-                ],
-                validateForm: {
-                    username: '',
-                    password: '',
-                    isAgree: false,
-                },
             }
         },
         computed:{//数据计算
@@ -109,47 +66,12 @@
         methods: {
             //用vuex里面的方法
             ...mapMutations([
-                'setToken',
-                'setName',
                 'deleteUser'
             ]),
             login(){
                 if(this.userToken==''){
-                    this.openFullscreen = true;
+                    this.$router.push('/Login');
                 }
-            },
-            submit () { //登录提交按钮
-                this.$refs.form.validate().then((result) => {
-                    if(result){//验证成功
-                        let data = {
-                            username:this.validateForm.username,
-                            password:this.validateForm.password,
-                        }
-                        this.axios.post('api/login',data).then((response) => {
-                            if(response.status==200){
-                                this.setToken(response.data.token);//把token保存到vuex里面
-                                this.closeFullscreenDialog();//关闭登录
-                                this.$toast.message(response.data.message);//toast消息
-                                console.log(response);
-                            }
-                        }).catch((error) =>{
-                            alert(error);
-                        });
-                    }else {
-                    }
-                });
-            },
-            clear () {//重置
-                this.$refs.form.clear();
-                this.validateForm = {
-                    username: '',
-                    password: '',
-                    isAgree: false
-                };
-            },
-            //弹出框关闭按钮
-            closeFullscreenDialog () {
-                this.openFullscreen = false;
             },
             //退出用户
             quitUser(){

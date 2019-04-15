@@ -114,11 +114,14 @@
                         });
                     }else {
                         this.$toast.message("评论失败!不能发送空评论");
+                        this.$alert('不能发送空评论！', '评论失败', {
+                            okLabel: '知道了'
+                        });
                     }
                 }else{
                     this.$confirm('未登录，不能参与评论，请登录！', '提示').then(({ result }) => {
                         if (result) {
-                            this.$toast.message('点击了确定');
+                            this.$router.push('/Login'); //跳到登录页面
                         } else {
                             this.$toast.message('点击了取消');
                         }

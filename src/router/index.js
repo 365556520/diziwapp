@@ -9,6 +9,7 @@ import Error404 from '@/components/Error404'
 import RegularBus from '@/components/page/pageCommon/RegularBus'
 import BusRoute from '@/components/page/pageCommon/BusRoute'
 import Articles from '@/components/page/pageCommon/Articles'
+import Login from '@/components/auth/Login'
 
 Vue.use(Router)
 
@@ -62,6 +63,13 @@ export default new Router({
             name: 'BusRoute',
             component: BusRoute,
             meta: { title: '公交线路' },
+        },
+        {
+            /*登录页面*/
+            path: '/Login',
+            name: 'Login',
+            component: Login,
+            meta: { title: '用户登录' },
         },
         {
             /*文章页面*/
