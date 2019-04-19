@@ -9,6 +9,7 @@ import Error404 from '@/components/Error404'
 import RegularBus from '@/components/page/pageCommon/RegularBus'
 import BusRoute from '@/components/page/pageCommon/BusRoute'
 import Articles from '@/components/page/pageCommon/Articles'
+import Comments from '@/components/page/pageCommon/Comments'
 import Login from '@/components/auth/Login'
 
 Vue.use(Router)
@@ -77,6 +78,13 @@ export default new Router({
             name: 'Articles',
             component: Articles,
             meta: { title: '',id:''},
+        },
+        {
+            /*评论*/
+            path: '/Comments',
+            name: 'Comments',
+            component: Comments,
+            meta: { id:''},
         },
         {
             path: '*',
