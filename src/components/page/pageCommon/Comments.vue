@@ -5,12 +5,24 @@
         <!--页面头end-->
         <div class="content">
             <div style="padding: 3px 15px 3px 15px;">
-                <div v-for="v in comments" :key="v.id" >
-                    内容：{{v.content}}--评论id{{v.from_uid}}--目标id{{v.to_uid}}--评论名字{{v.get_from_uid.name}}
+                <div v-for="v in getcomments" :key="v.id" >
+                    <mu-row>
+                        <mu-col span="12">
+                            <div>
+                                <mu-flex justify-content="start" fill>
+                                    <div>{{v.get_from_uid.name}}:&nbsp;</div>
+                                    <div v-show="v.to_uid !== null">@{{v.to_uid}}:&nbsp;</div>
+                                    <div>
+                                        {{v.content}}<br>
+                                        <div v-text="v.created_at"></div>
+                                    </div>
+                                </mu-flex>
+                            </div>
+                        </mu-col>
+                    </mu-row>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 <script>
@@ -31,8 +43,28 @@
         },
         computed:{
             ...mapState(['userToken','userdata']),
+            //整理评论数据
+            getcomments: function () {
+                console.log(this.sortcommentsarry(this.comments));
+                return this.sortcommentsarry(this.comments);
+            }
         },
         methods: {
+
+            //递归评论
+            sortcommentsarry(data, to_uid = 0){
+                var result = [], temp;
+                for (var i in data) {
+                    if (data[i].to_uid == to_uid) {
+                        result.push(data[i]);
+                        temp = this.sortcommentsarry(data, data[i].id);
+                        if (temp.length > 0) {
+                            data[i]['children'] = temp;
+                        }
+                    }
+                }
+                return result;
+            },
             //获取该文章所有评论
             getcommentsall(id){
                 this.axios.get('api/getComments/' + id).then((response) => {
