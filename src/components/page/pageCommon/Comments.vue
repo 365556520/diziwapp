@@ -10,13 +10,13 @@
                         <mu-col span="12">
                             <div>
                                 <mu-flex justify-content="start" fill>
-                                    <div>{{v.get_from_uid.name}}:&nbsp;</div>
-                                    <div v-show="v.to_uid !== null">@{{v.to_uid}}:&nbsp;</div>
+                                    <div>{{v.get_from_uid.name}}&nbsp</div>
+                                    <div v-if="v.get_to_uid != null" >@&nbsp{{v.get_to_uid.name}}</div>
                                     <div>
-                                        {{v.content}}<br>
-                                        <div v-text="v.created_at"></div>
+                                       :&nbsp{{v.content}}<br>
                                     </div>
                                 </mu-flex>
+                                <mu-flex justify-content="end" fill> <div>{{v.created_at}}&nbsp&nbsp<a>回复</a></div></mu-flex>
                             </div>
                         </mu-col>
                     </mu-row>
@@ -45,17 +45,16 @@
             ...mapState(['userToken','userdata']),
             //整理评论数据
             getcomments: function () {
-                console.log(this.sortcommentsarry(this.comments));
-                return this.sortcommentsarry(this.comments);
+                return this.comments;
             }
         },
         methods: {
 
-            //递归评论
-            sortcommentsarry(data, to_uid = 0){
+            //递归
+            sortcommentsarry(data, pid = 0){
                 var result = [], temp;
                 for (var i in data) {
-                    if (data[i].to_uid == to_uid) {
+                    if (data[i].pid == pid) {
                         result.push(data[i]);
                         temp = this.sortcommentsarry(data, data[i].id);
                         if (temp.length > 0) {
