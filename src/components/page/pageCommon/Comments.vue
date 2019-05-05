@@ -10,18 +10,30 @@
                         <mu-col span="12">
                             <div>
                                 <mu-flex justify-content="start" fill>
-                                    <div>{{v.get_from_uid.name}}&nbsp</div>
-                                    <div v-if="v.get_to_uid != null" >@&nbsp{{v.get_to_uid.name}}</div>
-                                    <div>
-                                       :&nbsp{{v.content}}<br>
+                                    <div><a @click="huifu(v.get_from_uid.id,v.get_from_uid.name)">{{v.get_from_uid.name}}</a>&nbsp</div>
+                                    <div v-if="v.get_to_uid != null" >@&nbsp<a  @click="huifu(v.get_to_uid.id,v.get_to_uid.name)">{{v.get_to_uid.name}}</a></div>
+                                    <div v-html="':&nbsp'+v.content">
                                     </div>
                                 </mu-flex>
-                                <mu-flex justify-content="end" fill> <div>{{v.created_at}}&nbsp&nbsp<a>回复</a></div></mu-flex>
+                                <mu-flex justify-content="end" fill> <div><span style="font-size: 6px" v-html="v.created_at"></span>&nbsp&nbsp</div></mu-flex>
                             </div>
                         </mu-col>
+                        <mu-divider></mu-divider>
                     </mu-row>
                 </div>
             </div>
+        </div>
+        <div class="navbottom">
+            <mu-row  >
+                <mu-col span="11">
+                    <mu-text-field  v-model="inputcomments.commentscontent" :prefix="'@'+inputcomments.to_name+':'"  full-width icon="comment"  color="success"placeholder="不允许超过500个字符" multi-line :rows="1" :max-length="500"></mu-text-field>
+                </mu-col>
+                <mu-col span="11"  >
+                        <mu-flex   justify-content="end" >
+                            <mu-button small   color="success"  @click="submit()">发表评论</mu-button>
+                        </mu-flex>
+                </mu-col>
+            </mu-row>
         </div>
     </div>
 </template>
@@ -37,8 +49,13 @@
             return {
                 title:'评论',
                 //获取传入的参数
-                comments:{},
                 input:false,
+                comments:{},
+                inputcomments:{
+                    commentscontent:'',//回复内容
+                    to_name:'',
+                    to_uid:'',
+                },
             }
         },
         computed:{
@@ -49,7 +66,6 @@
             }
         },
         methods: {
-
             //递归
             sortcommentsarry(data, pid = 0){
                 var result = [], temp;
@@ -74,10 +90,6 @@
                 }).catch((error) => {
                     alert(error);
                 });
-            },
-            //评论输入
-            inputcomments(){
-                this.input=true; //显示发送评论按钮
             },
             //提交评论
             submit(){
@@ -124,7 +136,11 @@
                     });
                 }
             },
-
+            //回复
+            huifu(id,to_name){
+                this.inputcomments.to_uid=id;
+                this.inputcomments.to_name=to_name;
+            }
         },
         components: {
             pHeader
@@ -136,7 +152,18 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .content {
-        margin: 49px 0px 50px 0px;
+        margin: 49px 0px 100px 0px;
     }
-
+    .navbottom {
+        background-color: #f6f7f6;
+        /*设置底部导航的位置和长宽*/
+        width: 100%;
+        height: 100px;
+        position: fixed;
+        max-width: 100%;
+        bottom: 0px;
+        left: 0px;
+        margin: 0;
+        padding: 0;
+    }
 </style>

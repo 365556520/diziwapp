@@ -130,7 +130,10 @@
             },
             //查看全部评论
             commentsall(){
-                this.$router.push({path:'/Comments',query:{id:this.onearticle.id}})
+                if(this.onearticle.commentsnumber != 0){
+                    this.$router.push({path:'/Comments',query:{id:this.onearticle.id}})
+                }
+
             }
         },
         components: {
