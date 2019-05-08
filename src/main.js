@@ -45,6 +45,7 @@ import {
     LoadMore,
     Card,
     Badge,
+    Chip,
 } from 'muse-ui';
 import 'muse-ui/lib/styles/theme.less';
 import 'typeface-roboto';
@@ -76,6 +77,7 @@ Vue.use(AutoComplete);
 Vue.use(LoadMore);
 Vue.use(Card);
 Vue.use(Badge);
+Vue.use(Chip);
 //MuseUI插件
 import Toast from 'muse-ui-toast';  //这个Toast有依赖Snackbar所以必须先导入Snackbar
 Vue.use(Toast);

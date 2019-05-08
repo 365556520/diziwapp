@@ -24,11 +24,11 @@
             </div>
         </div>
         <div class="navbottom">
-            <mu-row  >
-                <mu-col span="11">
-                    <mu-text-field  v-model="inputcomments.commentscontent" :prefix="'@'+inputcomments.to_name+':'"  full-width icon="comment"  color="success"placeholder="不允许超过500个字符" multi-line :rows="1" :max-length="500"></mu-text-field>
+            <mu-row >
+                <mu-col span="10" offset="1">
+                    <mu-text-field  v-model="inputcomments.commentscontent" :prefix="inputcomments.to_name"  :action-click="clearprefix" full-width action-icon="close"  color="success"placeholder="不允许超过500个字符" multi-line :rows="1" :max-length="500"></mu-text-field>
                 </mu-col>
-                <mu-col span="11"  >
+                <mu-col span="10"  offset="1">
                         <mu-flex   justify-content="end" >
                             <mu-button small   color="success"  @click="submit()">发表评论</mu-button>
                         </mu-flex>
@@ -95,23 +95,24 @@
             submit(){
                 //判断是否登录
                 if(this.userToken!=""){
-                    if(this.comments.commentscontent!=''){
+                    if(this.inputcomments.commentscontent!=''){
                         this.axios.defaults.headers.common ['Authorization'] = 'Bearer ' + this.userToken; //token认证响应头
                         let usertoken =  {
                             headers:{
                                 'Accept':'application/json',
                             },
                             data:{
-                                'topic_id':this.onearticle.id,
-                                'content':this.comments.commentscontent,
-                                'to_uid':this.comments.to_uid,
+                                'topic_id':this.$route.query.id,//文章id
+                                'content':this.inputcomments.commentscontent, //恢复内容
+                                'to_uid':this.inputcomments.to_uid, //恢复目标id
                             }
                         }
                         this.axios.post('api/inputComments',usertoken).then((response) => {
                             if(response.data.code == '200'){
-                                this.onearticle.commentsnumber += 1; //评论个数加1
-                                this.comments.commentscontent = ''; //清空输入框
-                                this.comments.commentssuccess=false; //隐藏按钮
+                                this.inputcomments.commentscontent = ''; //清空输入框
+                                this.inputcomments.to_uid='';
+                                this.inputcomments.to_name='';
+                                this.getcommentsall(this.$route.query.id);
                                 this.$toast.message(response.data.msg);
                             }else{
                                 this.$toast.message(response.data.msg);
@@ -139,7 +140,12 @@
             //回复
             huifu(id,to_name){
                 this.inputcomments.to_uid=id;
-                this.inputcomments.to_name=to_name;
+                this.inputcomments.to_name='@'+to_name+':';
+            },
+            //清除目标用户
+            clearprefix(){
+                this.inputcomments.to_uid='';
+                this.inputcomments.to_name='';
             }
         },
         components: {
