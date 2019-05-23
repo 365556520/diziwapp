@@ -149,6 +149,7 @@
         margin: 49px 0px 50px 0px;
     }
 
+
     .navbottom {
         background-color: #f6f7f6;
         /*设置底部导航的位置和长宽*/
