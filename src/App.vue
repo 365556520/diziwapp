@@ -89,7 +89,7 @@
                         console.log('天气预报更新成功');
                     }
                 }).catch((error) => {
-                    alert(error);
+                    console.log(error);
                 });
             },
         },
