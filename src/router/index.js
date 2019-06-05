@@ -11,7 +11,7 @@ import BusRoute from '@/components/page/pageCommon/BusRoute'
 import Articles from '@/components/page/pageCommon/Articles'
 import Comments from '@/components/page/pageCommon/Comments'
 import Login from '@/components/auth/Login'
-import BusRouteApi from '@/components/map/BusRouteApi'
+import RouteBus from '@/components/map/RouteBus'
 
 Vue.use(Router)
 
@@ -89,9 +89,9 @@ export default new Router({
         },
         {
             /*公交线路查询api页面在其他程序中用到*/
-            path: '/BusRouteApi',
-            name: 'BusRouteApi',
-            component: BusRouteApi,
+            path: '/RouteBus',
+            name: 'RouteBus',
+            component: RouteBus,
             meta: { title: '公交线路' },
         },
         {
