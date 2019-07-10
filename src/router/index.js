@@ -12,6 +12,7 @@ import Articles from '@/components/page/pageCommon/Articles'
 import Comments from '@/components/page/pageCommon/Comments'
 import Login from '@/components/auth/Login'
 import RouteBus from '@/components/map/RouteBus'
+import BusesInfo from '@/components/map/BusesInfo'
 
 Vue.use(Router)
 
@@ -93,6 +94,13 @@ export default new Router({
             name: 'RouteBus',
             component: RouteBus,
             meta: { title: '公交线路' },
+        },
+        {
+            /*班车信息*/
+            path: '/BusesInfo/:busesname',
+            name: 'BusesInfo',
+            component: BusesInfo,
+            meta: { title: '班车信息'},
         },
         {
             path: '*',
