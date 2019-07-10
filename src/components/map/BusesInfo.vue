@@ -3,7 +3,7 @@
         <!--这里作用外面用到这个页面-->
         <!--获取个车辆信息-->
 
-            <mu-card style="width: 100%; max-width: 375px; margin: 0 auto;">
+            <mu-card style="width: 100%; margin: 0 auto;">
                 <mu-card-header :title="buses.buses_name" :sub-title="buses.buses_type+'班车 核载'+buses.buses_sit+'人'">
                 </mu-card-header>
                 <mu-card-text>
